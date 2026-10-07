@@ -1,0 +1,6 @@
+[2026-10-07T17:45:08] saved server props -> server_props.base9b.json
+[2026-10-07T17:45:08] tag=base9b port=8093 langs=['es', 'en']; done=0 this run=500 stop_at=2026-10-07 18:45:00
+[2026-10-07T17:45:55] (1/500) id=1 es finish=stop prompt=109 completion=2075 wall=46.5s
+[2026-10-07T17:46:12] (2/500) id=2 es finish=stop prompt=62 completion=744 wall=16.7s
+[2026-10-07T17:49:16] (3/500) id=3 es finish=length prompt=90 completion=8192 wall=184.7s
+[2026-10-07T17:49:47] (4/500) id=4 es finish=stop prompt=67 completion=1360 wall=30.5s

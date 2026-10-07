@@ -8,11 +8,15 @@ config.json = the original text_config with architectures
 copied bit-for-bit (same dtype), only names change. Prints parameter counts
 before/after.
 
-  .venv-train/bin/python scripts/make_text_only.py SRC_DIR DST_DIR
+  .venv-train/bin/python scripts/make_text_only.py SRC_DIR DST_DIR [--keep-mtp]
 
-The config keeps mtp_num_hidden_layers from the original, so convert the
-result with llama.cpp's convert_hf_to_gguf.py --no-mtp (otherwise it declares
-an MTP block whose tensors are absent and llama.cpp refuses to load it).
+Default (training checkpoint): MTP dropped. The config keeps
+mtp_num_hidden_layers from the original, so convert the result with llama.cpp's
+convert_hf_to_gguf.py --no-mtp (otherwise it declares an MTP block whose
+tensors are absent and llama.cpp refuses to load it).
+--keep-mtp (serving checkpoint, for MTP speculative decoding): the mtp.*
+tensors are kept under their original names, which the converter maps to the
+extra nextn block; convert without --no-mtp.
 """
 import json
 import shutil
@@ -30,6 +34,7 @@ SHARD_BYTES = 4 * 2**30
 
 def main():
     src, dst = Path(sys.argv[1]), Path(sys.argv[2])
+    keep_mtp = "--keep-mtp" in sys.argv[3:]
     dst.mkdir(parents=True, exist_ok=True)
     cfg = json.loads((src / "config.json").read_text())
     tcfg = dict(cfg["text_config"])
@@ -61,7 +66,7 @@ def main():
                 part = ("vision" if k.startswith("model.visual.") else
                         "mtp" if k.startswith("mtp.") else "text")
                 count[part] += t.numel()
-                if part != "text":
+                if part == "vision" or (part == "mtp" and not keep_mtp):
                     continue
                 nk = k.replace("model.language_model.", "model.", 1)
                 shard[nk] = t.contiguous()
@@ -74,7 +79,7 @@ def main():
          "weight_map": weight_map}, indent=2))
     tot = sum(count.values())
     print(json.dumps({"params_total_before": tot, "params_vision": count["vision"],
-                      "params_mtp": count["mtp"], "params_text_only_after": count["text"],
+                      "params_mtp": count["mtp"], "params_text_only_after": count["text"], "mtp_kept": keep_mtp,
                       "tensors_written": len(weight_map),
                       "lm_head_present": any(k.startswith("lm_head") for k in weight_map),
                       "tie_word_embeddings": tcfg["tie_word_embeddings"]}))

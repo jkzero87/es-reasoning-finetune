@@ -110,3 +110,51 @@ Spanish is reported but does not decide.
   it says nothing about 8-bit.
 - The `causal_conv1d` kernel is not installed (no `nvcc`); training uses
   transformers' PyTorch fallback for it.
+
+## Amendment 2026-10-07 18:00 (before any scoring)
+
+**Server config for ALL phase-1 and phase-3 runs (baseline, fine-tuned,
+control):** `scripts/serve_base.sh` with `--parallel N`, runners with
+`--workers N`. Changed after 4 serial records (a 5th was in flight when the
+run was stopped and is lost), for throughput only, before any scoring; those
+records are kept in `results/discarded_serial/` and not scored. N = 4,
+`-c 36864` (9216 tokens per slot: prompt + 8192-token completion), idle VRAM
+10.3 GB.
+
+**Served GGUF with the MTP head.** The served baseline is the text-only
+checkpoint **with** the official MTP tensors kept (vision still dropped),
+same conversion path otherwise:
+
+```
+.venv-train/bin/python scripts/make_text_only.py ~/models/Qwen3.5-9B-hf ~/models/Qwen3.5-9B-text-mtp --keep-mtp
+cd ~/llama.cpp && PYTHONPATH=~/llama.cpp/gguf-py ~/es-reasoning-finetune/.venv-train/bin/python \
+  convert_hf_to_gguf.py ~/models/Qwen3.5-9B-text-mtp --outtype q8_0 \
+  --outfile ~/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf
+```
+
+(9,786,060,160 bytes, sha256
+`a96c8c42919aa1b963fd827e5cfa3b0fe8a14a7ba82a992797ce617c6f438496`), served
+with the 27B's MTP flags (`--spec-type draft-mtp --spec-draft-n-max 3
+-ctkd q8_0 -ctvd q8_0`). The training checkpoint stays the one without MTP
+(`--no-mtp` GGUF above is no longer served).
+
+MTP speculative decoding is used for speed only; it verifies every drafted
+token, so outputs and token counts are unaffected. The fine-tuned model keeps
+the base MTP head untrained; acceptance may drop, which affects speed only.
+Precision: at temperature 1.0 verification preserves the model's output
+distribution (and so expected token counts), but an individual sampled
+output is not identical to a non-MTP run with the same seed (MGSM es id 2:
+626 tokens with MTP vs 744 without in the throughput probe). The 27B baseline
+in es-eval was also served with MTP.
+
+Measured 17:54–17:58 (MGSM es ids 1–4, 4 concurrent requests capped at 1024
+tokens; single stream uncapped id 1):
+
+| config | aggregate tok/s | draft acceptance |
+|---|---:|---:|
+| `--parallel 1` + MTP, single stream | 90.3 (id 1, correct, 1,460 tokens) | 76% |
+| `--parallel 4` + MTP | **168.6** | 64–77% per request |
+| `--parallel 4`, no MTP | 114.8 | — |
+| (`--parallel 1`, no MTP, serial run) | ≈ 45 | — |
+
+`--parallel 4` + MTP is the faster combination and is the config used.

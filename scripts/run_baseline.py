@@ -20,13 +20,18 @@ Resumable: skips (id, lang) already present.
 
 Options: --bench mgsm|belebele (default mgsm), --port (default 8093),
 --tag (default base9b), --langs (default es,en),
---limit N (at most N pending items, for testing),
+--limit N (at most N pending items, for testing), --workers N (N requests in
+flight, for a server started with --parallel N; same per-request payload and
+seed, records appended as they complete, so file order may differ from id
+order),
 --stop-at HH:MM (local time; no new item is started at or after it).
 """
 import argparse
+import concurrent.futures as cf
 import datetime as dt
 import json
 import sys
+import threading
 import time
 from pathlib import Path
 
@@ -51,6 +56,8 @@ def main():
     ap.add_argument("--tag", default="base9b")
     ap.add_argument("--langs", default="es,en", help="order matters (default: es,en)")
     ap.add_argument("--limit", type=int)
+    ap.add_argument("--workers", type=int, default=1,
+                    help="concurrent requests (match the server's --parallel); default 1")
     ap.add_argument("--stop-at", metavar="HH:MM")
     args = ap.parse_args()
     base = f"http://127.0.0.1:{args.port}"
@@ -87,14 +94,14 @@ def main():
     pending = [(l, it) for l in langs for it in items[l] if (it["id"], l) not in done]
     if args.limit is not None:
         pending = pending[:args.limit]
-    log(f"tag={args.tag} port={args.port} langs={langs}; done={len(done)} "
+    log(f"tag={args.tag} bench={args.bench} workers={args.workers} port={args.port} langs={langs}; done={len(done)} "
         f"this run={len(pending)} stop_at={stop_at}")
 
+    lock = threading.Lock()
     n_ok = 0
-    for n, (lang, it) in enumerate(pending, start=1):
-        if stop_at is not None and dt.datetime.now() >= stop_at:
-            log(f"stop_at {args.stop_at} reached; stopping before id={it['id']} {lang}")
-            break
+
+    def do_item(n, lang, it):
+        nonlocal n_ok
         if args.bench == "mgsm":
             content, gen, gold = PROMPTS[lang] + "\n\n" + it["question"], GENERATION, it["answer_number"]
         else:
@@ -102,12 +109,12 @@ def main():
         payload = {"messages": [{"role": "user", "content": content}], **gen}
         try:
             t0 = time.monotonic()
-            r = requests.post(f"{base}/v1/chat/completions", json=payload, timeout=1800)
+            r = requests.post(f"{base}/v1/chat/completions", json=payload, timeout=3600)
             r.raise_for_status()
             data = r.json()
         except Exception as e:
             log(f"id={it['id']} {lang}: FAILED ({e}); will retry next run")
-            continue
+            return
         wall = time.monotonic() - t0
         choice = data["choices"][0]
         msg = choice.get("message") or {}
@@ -125,13 +132,32 @@ def main():
         }
         if args.bench == "belebele":
             rec["qid"] = it["qid"]
-        with raw_out.open("a", encoding="utf-8") as f:
-            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
-        n_ok += 1
+        with lock:
+            with raw_out.open("a", encoding="utf-8") as f:
+                f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+            n_ok += 1
         u = rec["usage"] or {}
+        tt = rec["timings"] or {}
         log(f"({n}/{len(pending)}) id={it['id']} {lang} finish={rec['finish_reason']} "
             f"prompt={u.get('prompt_tokens', 0)} completion={u.get('completion_tokens', 0)} "
-            f"wall={wall:.1f}s")
+            f"wall={wall:.1f}s draft={tt.get('draft_n', 0)}/{tt.get('draft_n_accepted', 0)}")
+
+    # Up to --workers requests in flight (server --parallel N); items are
+    # submitted in order, and no new item is submitted at/after --stop-at
+    # (in-flight ones finish and are written).
+    with cf.ThreadPoolExecutor(max_workers=args.workers) as ex:
+        inflight = set()
+        for n, (lang, it) in enumerate(pending, start=1):
+            if stop_at is not None and dt.datetime.now() >= stop_at:
+                log(f"stop_at {args.stop_at} reached; not starting id={it['id']} {lang} or later")
+                break
+            if len(inflight) >= args.workers:
+                _, inflight = cf.wait(inflight, return_when=cf.FIRST_COMPLETED)
+                if stop_at is not None and dt.datetime.now() >= stop_at:
+                    log(f"stop_at {args.stop_at} reached; not starting id={it['id']} {lang} or later")
+                    break
+            inflight.add(ex.submit(do_item, n, lang, it))
+        cf.wait(inflight)
     log(f"run finished: {n_ok} written this run; total in file={len(done) + n_ok}/"
         f"{sum(len(v) for v in items.values())}")
 
