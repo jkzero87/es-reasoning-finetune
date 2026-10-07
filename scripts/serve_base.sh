@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
-# Start Qwen3-14B Q4_K_M on :8093 (not :8092, the 27B's port), detached.
+# Start the phase-1 base model (Qwen3.5-9B text-only, our own Q8_0 conversion,
+# results/plan.md) on :8093 (not :8092, the 27B's port), detached.
 # Same flags as the 27B production server (~/bin/manifiestate) minus MTP
-# (Qwen3-14B has no MTP head) and with -c 32768 (the model's native context).
-#   scripts/serve_14b.sh            start, wait for /health (<= 240 s)
-# Stop: kill the PID it prints (also in ~/logs/q14b_*.log's first lines).
+# (the MTP head is dropped in the text-only checkpoint) and with -c 32768.
+#   MODEL=... scripts/serve_base.sh   to serve another GGUF (e.g. the fine-tuned one)
+#   scripts/serve_base.sh           start, wait for /health (<= 240 s)
+# Stop: kill the PID it prints (log: ~/logs/base_*.log).
 set -u
 PORT=8093
-MODEL=/home/jkzero/models/Qwen3-14B/Qwen3-14B-Q4_K_M.gguf
-LOG=~/logs/q14b_$(date +%Y%m%d_%H%M).log
+MODEL=${MODEL:-/home/jkzero/models/Qwen3.5-9B-text-Q8_0/Qwen3.5-9B-text-Q8_0.gguf}
+LOG=~/logs/base_$(date +%Y%m%d_%H%M).log
 mkdir -p ~/logs
 if curl -sf "localhost:$PORT/health" >/dev/null; then echo "already up on :$PORT"; exit 0; fi
 GGML_CUDA_DISABLE_GRAPHS=1 setsid nohup /home/jkzero/llama.cpp/build/bin/llama-server \

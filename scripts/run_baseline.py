@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Phase 1: MGSM baseline (es then en) against a local llama-server.
+"""Phase 1: MGSM / Belebele baseline (es then en) against a local llama-server.
 
 Same prompts and generation settings as the 27B baseline (imported from the
 unmodified copy of es-eval's scripts/run_mgsm.py: temperature 1.0, top_p
@@ -7,13 +7,19 @@ unmodified copy of es-eval's scripts/run_mgsm.py: temperature 1.0, top_p
 server default). Reads data/mgsm_{lang}.jsonl, runs all ids of the first
 language before starting the next (default order: es, en).
 
-Appends one JSON line per item to results/mgsm_raw.<tag>.jsonl with the same
+--bench belebele: data/belebele_{lang}.jsonl restricted to the ids in
+results/belebele_sample_300.json, prompt and settings from the unmodified copy
+of es-eval's scripts/run_belebele.py (build_prompt, GENERATION), gold = letter;
+records also carry qid. Output results/belebele_raw.<tag>.jsonl.
+
+Appends one JSON line per item to results/<bench>_raw.<tag>.jsonl with the same
 fields as es-eval (id, lang, gold, content, reasoning_content, finish_reason,
 usage, timings, wall, tag), so score_mgsm.py --raw reads it unchanged.
 Saves GET /props to results/server_props.<tag>.json before the first item.
 Resumable: skips (id, lang) already present.
 
-Options: --port (default 8093), --tag (default q14b), --langs (default es,en),
+Options: --bench mgsm|belebele (default mgsm), --port (default 8093),
+--tag (default base9b), --langs (default es,en),
 --limit N (at most N pending items, for testing),
 --stop-at HH:MM (local time; no new item is started at or after it).
 """
@@ -28,6 +34,7 @@ import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from run_mgsm import GENERATION, PROMPTS  # noqa: E402
+import run_belebele  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS_DIR = ROOT / "results"
@@ -40,7 +47,8 @@ def log(msg):
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--port", type=int, default=8093)
-    ap.add_argument("--tag", default="q14b")
+    ap.add_argument("--bench", choices=["mgsm", "belebele"], default="mgsm")
+    ap.add_argument("--tag", default="base9b")
     ap.add_argument("--langs", default="es,en", help="order matters (default: es,en)")
     ap.add_argument("--limit", type=int)
     ap.add_argument("--stop-at", metavar="HH:MM")
@@ -54,7 +62,7 @@ def main():
         hh, mm = args.stop_at.split(":")
         stop_at = dt.datetime.now().replace(hour=int(hh), minute=int(mm), second=0, microsecond=0)
 
-    raw_out = RESULTS_DIR / f"mgsm_raw.{args.tag}.jsonl"
+    raw_out = RESULTS_DIR / f"{args.bench}_raw.{args.tag}.jsonl"
     props_out = RESULTS_DIR / f"server_props.{args.tag}.json"
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     if not props_out.exists():
@@ -63,8 +71,11 @@ def main():
         props_out.write_text(json.dumps(r.json(), indent=2, ensure_ascii=False), encoding="utf-8")
         log(f"saved server props -> {props_out.name}")
 
-    items = {l: [json.loads(x) for x in (ROOT / "data" / f"mgsm_{l}.jsonl").open(encoding="utf-8")
+    items = {l: [json.loads(x) for x in (ROOT / "data" / f"{args.bench}_{l}.jsonl").open(encoding="utf-8")
                  if x.strip()] for l in langs}
+    if args.bench == "belebele":
+        keep = set(json.loads((RESULTS_DIR / "belebele_sample_300.json").read_text())["ids"])
+        items = {l: [it for it in v if it["id"] in keep] for l, v in items.items()}
     done = set()
     if raw_out.exists():
         for line in raw_out.open(encoding="utf-8"):
@@ -84,10 +95,11 @@ def main():
         if stop_at is not None and dt.datetime.now() >= stop_at:
             log(f"stop_at {args.stop_at} reached; stopping before id={it['id']} {lang}")
             break
-        payload = {
-            "messages": [{"role": "user", "content": PROMPTS[lang] + "\n\n" + it["question"]}],
-            **GENERATION,
-        }
+        if args.bench == "mgsm":
+            content, gen, gold = PROMPTS[lang] + "\n\n" + it["question"], GENERATION, it["answer_number"]
+        else:
+            content, gen, gold = run_belebele.build_prompt(lang, it), run_belebele.GENERATION, it["gold"]
+        payload = {"messages": [{"role": "user", "content": content}], **gen}
         try:
             t0 = time.monotonic()
             r = requests.post(f"{base}/v1/chat/completions", json=payload, timeout=1800)
@@ -102,7 +114,7 @@ def main():
         rec = {
             "id": it["id"],
             "lang": lang,
-            "gold": it["answer_number"],
+            "gold": gold,
             "content": msg.get("content"),
             "reasoning_content": msg.get("reasoning_content"),
             "finish_reason": choice.get("finish_reason"),
@@ -111,6 +123,8 @@ def main():
             "wall": wall,
             "tag": args.tag,
         }
+        if args.bench == "belebele":
+            rec["qid"] = it["qid"]
         with raw_out.open("a", encoding="utf-8") as f:
             f.write(json.dumps(rec, ensure_ascii=False) + "\n")
         n_ok += 1
