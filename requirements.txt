@@ -1,0 +1,4 @@
+# Versiones del .venv de es-eval con que se midió la línea base del 27B.
+requests==2.34.2
+datasets==5.0.1
+lingua-language-detector==2.2.0

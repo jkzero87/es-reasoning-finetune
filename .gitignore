@@ -1,0 +1,18 @@
+# modelos y checkpoints
+*.gguf
+*.safetensors
+*.bin
+*.pt
+models/
+checkpoints/
+outputs/
+lora/
+adapters/
+# cachés de datos y de Python
+.hf_cache/
+.cache/
+__pycache__/
+*.pyc
+wandb/
+# entorno
+.venv/
