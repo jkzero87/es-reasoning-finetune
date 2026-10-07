@@ -20,6 +20,7 @@ Resumable: skips (id, lang) already present.
 
 Options: --bench mgsm|belebele (default mgsm), --port (default 8093),
 --tag (default base9b), --langs (default es,en),
+--order lang|interleave (default lang),
 --limit N (at most N pending items, for testing), --workers N (N requests in
 flight, for a server started with --parallel N; same per-request payload and
 seed, records appended as they complete, so file order may differ from id
@@ -56,6 +57,9 @@ def main():
     ap.add_argument("--tag", default="base9b")
     ap.add_argument("--langs", default="es,en", help="order matters (default: es,en)")
     ap.add_argument("--limit", type=int)
+    ap.add_argument("--order", choices=["lang", "interleave"], default="lang",
+                    help="lang: all of the first language, then the next; interleave: by id "
+                         "(pairs already started first), langs in --langs order")
     ap.add_argument("--workers", type=int, default=1,
                     help="concurrent requests (match the server's --parallel); default 1")
     ap.add_argument("--stop-at", metavar="HH:MM")
@@ -91,7 +95,17 @@ def main():
                 done.add((rec["id"], rec["lang"]))
             except (json.JSONDecodeError, KeyError):
                 pass
-    pending = [(l, it) for l in langs for it in items[l] if (it["id"], l) not in done]
+    if args.order == "lang":
+        pending = [(l, it) for l in langs for it in items[l] if (it["id"], l) not in done]
+    else:
+        # interleave: first complete the pairs already started (ids done in some
+        # language but not all), then id by id, langs in --langs order.
+        by_id = {l: {it["id"]: it for it in items[l]} for l in langs}
+        ids = sorted(set().union(*(by_id[l] for l in langs)))
+        started = [i for i in ids if any((i, l) in done for l in langs)]
+        rest = [i for i in ids if i not in set(started)]
+        pending = [(l, by_id[l][i]) for i in started + rest for l in langs
+                   if i in by_id[l] and (i, l) not in done]
     if args.limit is not None:
         pending = pending[:args.limit]
     log(f"tag={args.tag} bench={args.bench} workers={args.workers} port={args.port} langs={langs}; done={len(done)} "

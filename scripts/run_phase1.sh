@@ -7,5 +7,5 @@ set -u
 cd /home/jkzero/es-reasoning-finetune || exit 1
 STOP_AT=${STOP_AT:-18:45}
 WORKERS=${WORKERS:-4}
-.venv/bin/python -u scripts/run_baseline.py --bench mgsm --langs es,en --stop-at "$STOP_AT" --workers "$WORKERS"
+.venv/bin/python -u scripts/run_baseline.py --bench mgsm --langs es,en --order interleave --stop-at "$STOP_AT" --workers "$WORKERS"
 .venv/bin/python -u scripts/run_baseline.py --bench belebele --langs es,en --stop-at "$STOP_AT" --workers "$WORKERS"

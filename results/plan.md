@@ -193,3 +193,15 @@ fewer than 800 math items are eligible, take all and report.
 
 **Arm A split point:** every item's Spanish and English versions must contain
 exactly one `</think>`; items that don't are dropped and counted.
+
+## Amendment 2026-10-07 18:2x (before any scoring)
+
+Phase-1 MGSM order changed to interleaved at 18:2x for earlier paired
+visibility; per-request settings unchanged; done before any scoring. The
+remaining items run as: first the English side of ids already done in
+Spanish, then id by id (es id k, then en id k) (`run_baseline.py --order
+interleave`). Applying it required restarting the runner process (server
+untouched); requests in flight at the restart were dropped and re-run, so no
+record was written twice or skipped. Belebele order unchanged (es, then en).
+The gate (≥ 1.15) is applied only on all 250 MGSM pairs; any earlier paired
+look is informal and labeled as such.
