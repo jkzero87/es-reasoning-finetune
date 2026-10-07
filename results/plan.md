@@ -158,3 +158,38 @@ tokens; single stream uncapped id 1):
 | (`--parallel 1`, no MTP, serial run) | ≈ 45 | — |
 
 `--parallel 4` + MTP is the faster combination and is the config used.
+
+## Note 2026-10-07 18:1x
+
+Checked the cap's first reason against phase-1 data. ReasonXL Spanish samples
+(mean 4,452 / median 2,239 tokens, prompt included) are longer than the 9B's
+own MGSM es completions so far (mean 2,753 / median 1,810, completion only),
+consistent with that reason. The cap stands for all three reasons. The rule
+is unchanged.
+
+## Amendment 2026-10-07 18:2x (before any training and before any phase-1 scoring)
+
+**Three training arms**, all on the same 2,000 parallel ReasonXL-SFT items,
+same hyperparameters, same seed (`results/train_plan.md`):
+
+- **A (primary):** user turn **Spanish**, `<think>` = the **English**
+  version's reasoning, final answer = the **Spanish** version's final answer.
+  Rationale: the measured cost is doubt while reasoning, not writing Spanish;
+  ReasonXL Spanish reasoning is 1.21× English for the same items, so Spanish
+  reasoning sets a floor above criterion (1).
+- **B:** all Spanish.
+- **Control:** all English (was phase 2b).
+
+Phase 3 criteria (1)–(4) apply to A and B separately; criterion (5) compares
+each against the control. Order: A, then control, then B. Report % of
+reasoning in English for A (expected high) and in Spanish for B; reported,
+not decisive.
+
+**Draw, stratified by domain:** 40% math (800 items), the rest proportional to
+the eligible pool's other domains (categories and counts in
+`results/train_plan.md`). Same overlap filter. The ≤ 4096-token cap applies
+to **every arm's version** of each item (A's mixed sample must also fit). If
+fewer than 800 math items are eligible, take all and report.
+
+**Arm A split point:** every item's Spanish and English versions must contain
+exactly one `</think>`; items that don't are dropped and counted.
