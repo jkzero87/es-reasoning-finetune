@@ -21,10 +21,22 @@ sha256 `a3e9970c…`) is a faithful conversion of our text-only HF checkpoint
 - **Greedy decode:** 128 tokens from each side (temperature 0, same prompt,
   thinking as in phase 1), and report the first position where the two token
   sequences diverge (or "no divergence in 128").
+- **Two links, reported separately** (the comparison above is split into
+  these two; the greedy decode runs on the HF checkpoint and the Q8_0):
+  1. **HF → GGUF mapping:** transformers bf16 text-only checkpoint vs a
+     **BF16 GGUF** from the same conversion (same command as in
+     `results/plan.md`, `--outtype bf16` instead of `q8_0`; CPU offload is
+     fine), same 10 prompts: top-1 agreement + mean KL. This is the link that
+     needs libllama / the bindings (see method note).
+  2. **BF16 GGUF → Q8_0:** llama.cpp's own `llama-perplexity`, no custom
+     code: `--kl-divergence-base <file>` on the BF16 GGUF, then
+     `--kl-divergence` on the Q8_0, over the text of the same 10 prompts.
+     Report its KL and "same top" figures.
+  Delete the BF16 GGUF after the check (regenerable).
 - **Expected for a faithful Q8_0:** top-1 agreement well above 95%. If it is
   lower, **stop and report before resuming phase 1.**
-- Method note: llama-server returns probabilities only for generated tokens,
-  so per-position GGUF logits over the prompt need llama.cpp's own logits
+- Method note (link 1): llama-server returns probabilities only for generated
+  tokens, so per-position GGUF logits over the prompt need llama.cpp's own logits
   path (e.g. a small program on libllama with logits for all positions, or
   the llama-cpp-python bindings built against this llama.cpp,
   `3466812d1`). Record which one was used. Run on the GPU with the :8093
