@@ -16,3 +16,5 @@ __pycache__/
 wandb/
 # entorno
 .venv/
+unsloth_compiled_cache/
+.venv-train/
