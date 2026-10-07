@@ -31,7 +31,10 @@ sha256 `a3e9970c…`) is a faithful conversion of our text-only HF checkpoint
   2. **BF16 GGUF → Q8_0:** llama.cpp's own `llama-perplexity`, no custom
      code: `--kl-divergence-base <file>` on the BF16 GGUF, then
      `--kl-divergence` on the Q8_0, over the text of the same 10 prompts.
-     Report its KL and "same top" figures.
+     Report its KL and "same top" figures. Caveat: llama-perplexity splits
+     the text into chunks of `-c` tokens and scores only the second half of
+     each chunk; the 10 prompts are ~1k tokens in all, so use a small `-c`
+     (e.g. 128) and report how many positions were scored.
   Delete the BF16 GGUF after the check (regenerable).
 - **Expected for a faithful Q8_0:** top-1 agreement well above 95%. If it is
   lower, **stop and report before resuming phase 1.**
