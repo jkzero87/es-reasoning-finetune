@@ -18,3 +18,4 @@ wandb/
 .venv/
 unsloth_compiled_cache/
 .venv-train/
+data/train/

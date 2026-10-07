@@ -1,0 +1,48 @@
+{
+ "pool_rows": 39664,
+ "max_len": 4096,
+ "ngram": 13,
+ "seed": 20261007,
+ "pairs_aligned": 39664,
+ "dropped_es_too_long": 11761,
+ "dropped_en_too_long": 12200,
+ "both_within_max_len": 26989,
+ "benchmark_texts": {
+  "en": 10506,
+  "es": 1714
+ },
+ "gsm8k_questions": 8792,
+ "overlap": {
+  "ngram_en": 57,
+  "pairs_dropped": 57
+ },
+ "eligible_pairs": 26932,
+ "length_es": {
+  "n": 2000,
+  "mean": 1716.9,
+  "median": 1728,
+  "p90": 2783,
+  "max": 4092,
+  "sum": 3433772
+ },
+ "length_en": {
+  "n": 2000,
+  "mean": 1422.8,
+  "median": 1402,
+  "p90": 2281,
+  "max": 4073,
+  "sum": 2845662
+ },
+ "length_ratio_es_en_sum": 1.207,
+ "dataset_name_mix": {
+  "Nemotron-Cascade-SFT-Stage-1-general": 915,
+  "Nemotron-Cascade-SFT-Stage-2-general": 551,
+  "Nemotron-Science-v1": 162,
+  "Llama-Nemotron-Post-Training-Dataset": 162,
+  "Dolci-Think-SFT-7B": 72,
+  "Nemotron-Cascade-SFT-Stage-1-math": 67,
+  "Nemotron-Instruction-Following-Chat-v1": 30,
+  "Nemotron-Cascade-SFT-Stage-1-science": 25,
+  "Nemotron-Cascade-SFT-Stage-1-code": 16
+ }
+}
