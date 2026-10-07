@@ -9,6 +9,10 @@ copied bit-for-bit (same dtype), only names change. Prints parameter counts
 before/after.
 
   .venv-train/bin/python scripts/make_text_only.py SRC_DIR DST_DIR
+
+The config keeps mtp_num_hidden_layers from the original, so convert the
+result with llama.cpp's convert_hf_to_gguf.py --no-mtp (otherwise it declares
+an MTP block whose tensors are absent and llama.cpp refuses to load it).
 """
 import json
 import shutil

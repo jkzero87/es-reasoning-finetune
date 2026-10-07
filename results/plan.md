@@ -26,12 +26,15 @@ text-only weights, then the same conversion. Commands (llama.cpp
 ```
 .venv-train/bin/python scripts/make_text_only.py ~/models/Qwen3.5-9B-hf ~/models/Qwen3.5-9B-text
 cd ~/llama.cpp && PYTHONPATH=~/llama.cpp/gguf-py ~/es-reasoning-finetune/.venv-train/bin/python \
-  convert_hf_to_gguf.py ~/models/Qwen3.5-9B-text --outtype q8_0 \
+  convert_hf_to_gguf.py ~/models/Qwen3.5-9B-text --no-mtp --outtype q8_0 \
   --outfile ~/models/Qwen3.5-9B-text-Q8_0/Qwen3.5-9B-text-Q8_0.gguf
 ```
 
-Baseline GGUF: 9,527,501,280 bytes, sha256
-`d69faa4ac81dad5896a8bb69377639578dcb0c160d8096ebee36d28be3911c7c`.
+`--no-mtp` is required: the text-only config keeps `mtp_num_hidden_layers: 1`,
+and without the flag the converter declares an extra (MTP) block whose
+tensors were dropped, so llama.cpp refuses to load the file (first attempt,
+17:42, before any run). Baseline GGUF: 9,527,501,248 bytes, sha256
+`a3e9970cce275f548079a839eb58731f638788693f67be34a2c13ef635906edb`.
 
 **Metric:** mean total tokens per question (prompt + reasoning + answer),
 from the server's `usage` (prompt_tokens + completion_tokens).
