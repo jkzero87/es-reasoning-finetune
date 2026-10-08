@@ -5,6 +5,9 @@ stop_at 18:45; it will be partial. Update the counts below when it stops.
 
 ## Tomorrow, FIRST job (before resuming phase 1): conversion fidelity check
 
+> **Superseded por enmienda del 2026-10-08** (target GGUF and timing; see
+> `results/plan.md`, amendment 2026-10-08). Method below otherwise stands.
+
 Check that our Q8_0 GGUF (`~/models/Qwen3.5-9B-text-Q8_0/Qwen3.5-9B-text-Q8_0.gguf`,
 sha256 `a3e9970c…`) is a faithful conversion of our text-only HF checkpoint
 (`~/models/Qwen3.5-9B-text`, bf16, transformers). Write `results/conversion_check.md`.
@@ -46,6 +49,9 @@ sha256 `a3e9970c…`) is a faithful conversion of our text-only HF checkpoint
   server stopped (both models do not fit at once).
 
 ## Then: resume phase 1
+
+> **Superseded por enmienda del 2026-10-08**: phase 1 was resumed on
+> 2026-10-08 15:40 without the conversion check (see `results/plan.md`).
 
 Only if the conversion check passes:
 

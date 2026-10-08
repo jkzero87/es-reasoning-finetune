@@ -6,6 +6,9 @@ gate or criteria (1)–(5). Not run yet.
 
 ## Data
 
+> **Superseded por enmienda del 2026-10-08** (this whole Data section,
+> including the 2026-10-07 18:13 result; see the end of this file).
+
 `scripts/build_train_sets.py` (CPU only) → `data/train/es.jsonl` (phase 2)
 and `data/train/en.jsonl` (2b control), ids in `results/train_ids.json`,
 counts and length stats in `results/train_sets_stats.json`.
@@ -90,3 +93,90 @@ each.
   pattern" (a check aimed at Mistral tokenizers); to be cross-checked against
   llama.cpp's tokenization in the conversion fidelity check (NEXT.md) before
   training.
+
+## Amendment 2026-10-08 (before building the arm data; no training, no phase-1 scoring yet)
+
+Supersedes the **Data** section above (and its 2026-10-07 18:13 result,
+which is kept in git history; the es/en files it wrote are deleted). Implements
+the 2026-10-07 18:2x three-arm amendment of `results/plan.md`. The
+**Training** section applies unchanged to each arm (A, B, control) separately,
+except that the data file is `data/train/{A,B,control}.jsonl`. The time
+estimates above were for es/en and are not updated here.
+
+**Script:** `scripts/build_train_sets.py` as committed with this amendment
+(CPU only, no network: the pool is read from the cache below). Outputs
+`data/train/A.jsonl`, `data/train/B.jsonl`, `data/train/control.jsonl`
+(gitignored), `results/train_ids.json` (row_index + domain, in draw order),
+`results/train_sets_stats.json` (counts at each step).
+
+**Arms**, all on the **same 2,000 parallel items** of `toroe/ReasonXL-SFT`:
+
+- **A (primary):** the Spanish version's messages, except the final
+  assistant turn = the **English** version's text up to and including
+  `</think>` + the **Spanish** version's text after `</think>`.
+- **B:** the Spanish version, unchanged.
+- **Control:** the English version, unchanged.
+
+**Pool:** the first 39,664 global rows (Spanish shard 00000), English rows
+paired by `row_index` (checked equal together with `dataset_name` and
+`ds_uid`; mismatch = abort). Cached as `data/train/pool_{es,en}.jsonl`.
+
+**Filters, in this order; each drops the whole item (all three arms):**
+
+1. **Split point:** the Spanish and the English version must each contain
+   exactly one `</think>` over all messages, located in the last message,
+   which must be the assistant's. Otherwise dropped and counted.
+2. **Length cap 4096 tokens per arm:** every arm's version (A, B, control),
+   as the full chat-formatted sample (Qwen3.5 chat template, Qwen3.5
+   tokenizer from `~/models/Qwen3.5-9B-text`, no extra special tokens), must
+   be ≤ 4096 tokens. Longer = **dropped, not truncated**; counted per arm.
+3. **Overlap** (unchanged from 2026-10-07): normalised (NFKC, lowercase,
+   non-alphanumerics → space, whitespace collapsed) user turn exactly equal
+   to a normalised benchmark question, or any shared normalised word
+   **13-gram** with a benchmark text in the same language. Benchmarks: MGSM
+   en/es (250 each), GSM8K train + test (`openai/gsm8k`, main), Belebele
+   en/es (488 each: passage, question, options). A match in either language
+   drops the item.
+
+**Domain (preregistered definition of math):** an item is **"math"** if the
+substring `math` appears, case-insensitive, in its `dataset_name` or its
+`source` (Spanish row's fields; the code tests
+`"math" in (dataset_name + " " + source).lower()`, `source` None → ""). It is
+a substring test (e.g. "mathematics" also matches). Otherwise the item's
+domain is its `dataset_name`.
+
+Pool counts by domain, **before** any filter (39,664 items; computed from
+`data/train/pool_es.jsonl` on 2026-10-08):
+
+| domain | pool items |
+|---|---:|
+| Nemotron-Cascade-SFT-Stage-1-general | 12,910 |
+| Dolci-Think-SFT-7B (non-math) | 8,628 |
+| Nemotron-Cascade-SFT-Stage-2-general | 7,359 |
+| **math** | **4,060** |
+| Nemotron-Science-v1 | 2,490 |
+| Llama-Nemotron-Post-Training-Dataset | 2,174 |
+| Nemotron-Cascade-SFT-Stage-1-code | 866 |
+| Nemotron-Cascade-SFT-Stage-1-science | 757 |
+| Nemotron-Instruction-Following-Chat-v1 | 420 |
+
+math = Nemotron-Cascade-SFT-Stage-1-math 2,976 + Nemotron-Cascade-SFT-Stage-2-math
+669 + Dolci-Think-SFT-7B items whose `source` contains "math" 415.
+
+**Draw:** N = **2,000** items. Seed **20261007**: one
+`random.Random(20261007)` instance, used in this order: for each domain in
+sorted name order, `rng.sample(items of that domain sorted by row_index,
+quota)`; then `rng.shuffle` of the concatenated draw.
+
+- math quota = **min(800, eligible math items)**;
+- the remaining 2,000 − math quota split across the other domains in
+  proportion to their **eligible** counts (after filters 1–3), by the
+  **largest-remainder** method (floor of each share, then +1 to the domains
+  with the largest fractional parts until the total is reached).
+
+The exact per-domain quotas depend on the eligible counts after filters 1–3,
+which are only known by running the script; they are a deterministic
+function of the rule above and are reported, as numbers, in
+`results/train_sets_stats.json` (`eligible_by_domain`, `drawn_by_domain`)
+and in the results commit. **If eligible math < 800 or the draw is not 2,000
+items in each arm, stop and report; nothing is adjusted.**

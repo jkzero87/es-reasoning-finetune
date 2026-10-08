@@ -205,3 +205,28 @@ untouched); requests in flight at the restart were dropped and re-run, so no
 record was written twice or skipped. Belebele order unchanged (es, then en).
 The gate (≥ 1.15) is applied only on all 250 MGSM pairs; any earlier paired
 look is informal and labeled as such.
+
+## Amendment 2026-10-08 (before any phase-1 scoring and before any training)
+
+**Phase 1 was resumed on 2026-10-08 15:40 WITHOUT the conversion fidelity
+check that `NEXT.md` required first.** Recorded here; the check is moved,
+not dropped:
+
+- **Target:** the GGUF actually served in phase 1, the text-only checkpoint
+  **with** MTP, Q8_0 (`~/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf`,
+  sha256 `a96c8c42919aa1b963fd827e5cfa3b0fe8a14a7ba82a992797ce617c6f438496`),
+  against the text-only HF checkpoint it was converted from
+  (`~/models/Qwen3.5-9B-text-mtp`). Not the `--no-mtp` GGUF `a3e9970c…`,
+  which is not served. Method as in `NEXT.md` (top-1 agreement, mean KL,
+  greedy divergence; two links reported separately).
+- **When:** after phase 1 finishes (MGSM 500/500 and Belebele 600/600), with
+  the :8093 server stopped, and **before** phase-1 scoring is used for the
+  gate.
+- **Rule, fixed now:** if the check fails (pass threshold as in `NEXT.md`:
+  top-1 agreement well above 95%; a failure is top-1 agreement ≤ 95% on
+  either link), the phase-1 results are **invalidated** and phase 1 is
+  **repeated** after the conversion is fixed.
+
+**Training data (three arms):** the build is preregistered in
+`results/train_plan.md`, amendment 2026-10-08, including the definition of
+"math" (substring `math`, case-insensitive, in `dataset_name` or `source`).
