@@ -187,6 +187,9 @@ items in each arm, stop and report; nothing is adjusted.**
 
 ## Amendment 2026-10-08 (hyperparameters; before any training)
 
+> **Superseded por enmienda del 2026-10-08 ("alpha, weight decay, loss")** for
+> LoRA alpha, weight decay and the loss-over-a-step row; see the end of this file.
+
 Supersedes the hyperparameter values of the **Training** section above.
 Identical for the three arms (A, B, control); implemented as constants in
 `scripts/train_lora.py`, committed with this amendment. Rule applied: take
@@ -243,3 +246,27 @@ optimizer step are already counted as 8 samples.
 Post-training tooling committed with this amendment (written, not run):
 `scripts/merge_to_gguf.sh` (+ `merge_lora.py`, `gguf_compare.py`) and
 `scripts/conversion_check.py` (+ `llama_logits.c`).
+
+## Amendment 2026-10-08 (alpha, weight decay, loss; before any training)
+
+Supersedes three rows of the hyperparameter table above. Same for A, B,
+control; `scripts/train_lora.py` constants changed to match in the same
+commit (`LORA_ALPHA = 32`, `WEIGHT_DECAY = 0.0`).
+
+- **LoRA alpha = 32** and **weight decay = 0**, the 2026-10-07 values.
+  Reason: feasibility (`results/feasibility.md`) measured only peak memory
+  and speed, and neither alpha (a scalar on the adapter output) nor weight
+  decay (an optimizer update term) changes either, so feasibility gives no
+  reason to replace the values preregistered on 2026-10-07.
+- **Loss within an optimizer step (rule):** mean per token over the 8
+  samples of the step: every loss token of the step weighs the same (sum of
+  per-token cross-entropies over the 8 samples / their total loss-token
+  count), not a mean of per-sample means.
+- **LoRA targets unchanged, and linear attention has no LoRA:** in the
+  Gated DeltaNet (linear-attention) layers no module is named q/k/v/o_proj,
+  so those layers get LoRA only on their MLP (gate/up/down); q/k/v/o adapt
+  the full-attention layers. Same as feasibility. Trainable parameters:
+  **29,097,984 (29.1 M)** with alpha 32, identical to alpha 16 (alpha does
+  not change the count). Counted 2026-10-08 with peft on the text-only
+  config, meta device (no weights, no GPU): 29,097,984 for both alpha 16 and
+  32, and 0 target modules inside `linear_attn`.

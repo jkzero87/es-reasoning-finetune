@@ -47,9 +47,10 @@ BASE = "/home/jkzero/models/Qwen3.5-9B-text"
 CKPT_DIR = ROOT / "checkpoints"
 ARMS = ("A", "B", "control")
 
-# Hyperparameters (results/train_plan.md, amendment 2026-10-08). Same for all arms.
+# Hyperparameters (results/train_plan.md, amendment 2026-10-08 "alpha, weight decay,
+# loss"). Same for all arms.
 LORA_R = 16
-LORA_ALPHA = 16
+LORA_ALPHA = 32
 LORA_DROPOUT = 0.0
 TARGETS = ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
 MAX_LEN = 4096
@@ -58,7 +59,7 @@ BATCH = 1
 GRAD_ACCUM = 8
 LR = 1e-4
 WARMUP_FRAC = 0.03
-WEIGHT_DECAY = 0.01  # torch AdamW default, as in feasibility_lora.py
+WEIGHT_DECAY = 0.0
 MAX_GRAD_NORM = 1.0
 SEED = 20261007
 CKPT_EVERY = 50
