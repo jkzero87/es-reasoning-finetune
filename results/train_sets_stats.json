@@ -3,46 +3,101 @@
  "max_len": 4096,
  "ngram": 13,
  "seed": 20261007,
+ "n_train": 2000,
+ "n_math_target": 800,
  "pairs_aligned": 39664,
- "dropped_es_too_long": 11761,
- "dropped_en_too_long": 12200,
- "both_within_max_len": 26989,
+ "dropped_think_split": {
+  "es_bad": 384,
+  "en_bad": 384,
+  "pairs_dropped": 384
+ },
+ "too_long": {
+  "A": 12282,
+  "B": 11738,
+  "control": 12187
+ },
+ "all_arms_within_max_len": 26622,
  "benchmark_texts": {
   "en": 10506,
   "es": 1714
  },
- "gsm8k_questions": 8792,
  "overlap": {
   "ngram_en": 57,
   "pairs_dropped": 57
  },
- "eligible_pairs": 26932,
- "length_es": {
-  "n": 2000,
-  "mean": 1716.9,
-  "median": 1728,
-  "p90": 2783,
-  "max": 4092,
-  "sum": 3433772
+ "eligible": 26565,
+ "eligible_by_domain": {
+  "Nemotron-Cascade-SFT-Stage-1-general": 12675,
+  "Nemotron-Cascade-SFT-Stage-2-general": 7171,
+  "Nemotron-Science-v1": 2347,
+  "Llama-Nemotron-Post-Training-Dataset": 2081,
+  "math": 845,
+  "Dolci-Think-SFT-7B": 823,
+  "Nemotron-Cascade-SFT-Stage-1-science": 320,
+  "Nemotron-Cascade-SFT-Stage-1-code": 268,
+  "Nemotron-Instruction-Following-Chat-v1": 35
  },
- "length_en": {
+ "drawn_by_domain": {
+  "math": 800,
+  "Nemotron-Cascade-SFT-Stage-1-general": 591,
+  "Nemotron-Cascade-SFT-Stage-2-general": 335,
+  "Nemotron-Science-v1": 109,
+  "Llama-Nemotron-Post-Training-Dataset": 97,
+  "Dolci-Think-SFT-7B": 38,
+  "Nemotron-Cascade-SFT-Stage-1-science": 15,
+  "Nemotron-Cascade-SFT-Stage-1-code": 13,
+  "Nemotron-Instruction-Following-Chat-v1": 2
+ },
+ "length_A": {
   "n": 2000,
-  "mean": 1422.8,
-  "median": 1402,
-  "p90": 2281,
+  "mean": 1894.7,
+  "median": 1854,
+  "p90": 3131,
+  "max": 4077,
+  "sum": 3789393
+ },
+ "length_A_math": {
+  "n": 800,
+  "mean": 2432.4,
+  "median": 2424,
+  "p90": 3576,
+  "max": 4077,
+  "sum": 1945919
+ },
+ "length_B": {
+  "n": 2000,
+  "mean": 2034.9,
+  "median": 2010,
+  "p90": 3361,
+  "max": 4095,
+  "sum": 4069811
+ },
+ "length_B_math": {
+  "n": 800,
+  "mean": 2585.8,
+  "median": 2625,
+  "p90": 3752,
+  "max": 4095,
+  "sum": 2068674
+ },
+ "length_control": {
+  "n": 2000,
+  "mean": 1785.2,
+  "median": 1657,
+  "p90": 3084,
   "max": 4073,
-  "sum": 2845662
+  "sum": 3570319
  },
- "length_ratio_es_en_sum": 1.207,
- "dataset_name_mix": {
-  "Nemotron-Cascade-SFT-Stage-1-general": 915,
-  "Nemotron-Cascade-SFT-Stage-2-general": 551,
-  "Nemotron-Science-v1": 162,
-  "Llama-Nemotron-Post-Training-Dataset": 162,
-  "Dolci-Think-SFT-7B": 72,
-  "Nemotron-Cascade-SFT-Stage-1-math": 67,
-  "Nemotron-Instruction-Following-Chat-v1": 30,
-  "Nemotron-Cascade-SFT-Stage-1-science": 25,
-  "Nemotron-Cascade-SFT-Stage-1-code": 16
+ "length_control_math": {
+  "n": 800,
+  "mean": 2418.7,
+  "median": 2405,
+  "p90": 3541,
+  "max": 4073,
+  "sum": 1934969
+ },
+ "length_ratio_sum": {
+  "A/control": 1.061,
+  "B/control": 1.14
  }
 }
