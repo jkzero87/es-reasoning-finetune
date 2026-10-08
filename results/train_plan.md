@@ -54,6 +54,10 @@ Cascade Stage-1 science 25, Cascade Stage-1 code 16.
 
 ## Training (identical for phase 2 and 2b, except the data language)
 
+> **Superseded por enmienda del 2026-10-08 (hyperparameters)**: values
+> below are replaced by the table in "Amendment 2026-10-08 (hyperparameters)"
+> at the end of this file (alpha and weight decay change).
+
 - Base: `~/models/Qwen3.5-9B-text` (text-only, no MTP head; `results/plan.md`).
 - Unsloth (`FastLanguageModel`), base loaded in **8-bit** (bitsandbytes),
   LoRA adapters in **bf16**: r = 16, alpha = 32, dropout 0, bias none, on the
@@ -180,3 +184,62 @@ function of the rule above and are reported, as numbers, in
 `results/train_sets_stats.json` (`eligible_by_domain`, `drawn_by_domain`)
 and in the results commit. **If eligible math < 800 or the draw is not 2,000
 items in each arm, stop and report; nothing is adjusted.**
+
+## Amendment 2026-10-08 (hyperparameters; before any training)
+
+Supersedes the hyperparameter values of the **Training** section above.
+Identical for the three arms (A, B, control); implemented as constants in
+`scripts/train_lora.py`, committed with this amendment. Rule applied: take
+the value from `scripts/feasibility_lora.py` (option A run of
+`results/feasibility.md`) where feasibility set it; anything feasibility did
+not exercise is marked **NOT TESTED** and keeps the 2026-10-07 value.
+Feasibility was 5 optimizer steps measuring memory and speed only: no value
+below has been validated for training quality.
+
+| hyperparameter | value | source |
+|---|---|---|
+| base | `~/models/Qwen3.5-9B-text`, 8-bit bitsandbytes via Unsloth, bf16 compute | feasibility A |
+| LoRA r | 16 | feasibility A |
+| LoRA alpha | **16** (was 32 on 2026-10-07) | feasibility A (alpha 16) |
+| LoRA dropout / bias | 0 / none | feasibility A |
+| LoRA targets | q, k, v, o, gate, up, down projections (29.1 M trainable) | feasibility A |
+| max length | 4096 (no sample exceeds it; longer were dropped at build) | feasibility A (13,169 MiB peak) |
+| batch size | 1 | feasibility A |
+| gradient checkpointing | Unsloth's | feasibility A |
+| optimizer | torch AdamW, betas/eps default | feasibility A |
+| learning rate | 1e-4 | feasibility A (5 steps; not validated for quality) |
+| weight decay | **0.01** (torch AdamW default, implicit in feasibility; was 0 on 2026-10-07) | feasibility A |
+| gradient accumulation | 8 → **250 optimizer steps** per arm | NOT TESTED (2026-10-07) |
+| epochs | 1 | NOT TESTED (2026-10-07) |
+| LR schedule | cosine, warmup 3% = 8 steps | NOT TESTED (2026-10-07) |
+| max grad norm | 1.0 (feasibility had no clipping) | NOT TESTED (2026-10-07) |
+| seed | **20261007** (data order = build draw order; LoRA init `random_state`; torch/numpy/python RNG) | NOT TESTED (2026-10-07; feasibility used Unsloth's default 3407) |
+| loss | completion-only: final assistant turn from after `<|im_start|>assistant\n` through `<|im_end|>` | NOT TESTED (2026-10-07) |
+| loss over an accumulated step | token-weighted: sum of per-token losses of the 8 samples / their loss tokens | NOT TESTED; implementation choice of 2026-10-08 (no earlier value) |
+| checkpoints | every 50 optimizer steps + at stop_at; resumable | 2026-10-07 |
+| stop_at | 18:45 daily (no new optimizer step after it; save and exit) | 2026-10-07 |
+
+Target-module note: in Qwen3.5's linear-attention (Gated DeltaNet) layers the
+projections have other names (fused qkv, gate, out), so "q, k, v, o" adapt
+only the full-attention layers; gate/up/down adapt every layer's MLP. Same
+as feasibility (29.1 M trainable parameters).
+
+Dry run (`train_lora.py --dry-run`, 2026-10-08; tokens per optimizer step =
+8 samples):
+
+| arm | samples | optimizer steps | tokens/step mean (min–max) | total tokens | loss tokens |
+|---|---:|---:|---:|---:|---:|
+| A | 2,000 | 250 | 15,158 (8,401–22,010) | 3,789,393 | 3,571,463 (94.2%) |
+| B | 2,000 | 250 | 16,279 (8,933–23,505) | 4,069,811 | 3,851,881 (94.6%) |
+| control | 2,000 | 250 | 14,281 (7,986–21,567) | 3,570,319 | 3,379,937 (94.7%) |
+
+Estimated time, from feasibility A at L = 4096 (10.2 s per 4096-token
+optimizer step of batch 1, warm-up included), scaled linearly by tokens
+(10.2 / 4096 = 2.49 ms per token): **A ≈ 2.6 h, B ≈ 2.8 h, control ≈ 2.5 h**
+(7.9 h in all). Linear scaling ignores per-sample overhead (optimistic for
+short samples) and includes warm-up (pessimistic); the 8 backward passes per
+optimizer step are already counted as 8 samples.
+
+Post-training tooling committed with this amendment (written, not run):
+`scripts/merge_to_gguf.sh` (+ `merge_lora.py`, `gguf_compare.py`) and
+`scripts/conversion_check.py` (+ `llama_logits.c`).
