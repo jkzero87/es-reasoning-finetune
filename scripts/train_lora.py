@@ -29,6 +29,9 @@ length equals the build's n_tokens and is <= MAX_LEN.
 
   .venv-train/bin/python scripts/train_lora.py --arm A --dry-run
   .venv-train/bin/python scripts/train_lora.py --arm A --stop-at 18:45 [--resume]
+Resume test (throwaway, separate checkpoint root):
+  ... --arm A --ckpt-dir checkpoints/_resume_test --stop-after-step 10
+  ... --arm A --ckpt-dir checkpoints/_resume_test --stop-after-step 12 --resume
 """
 import argparse
 import datetime as dt
@@ -121,6 +124,10 @@ def main():
     ap.add_argument("--stop-at", help="HH:MM today; no new optimizer step at/after it")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--stop-after-step", type=int,
+                    help="save and exit once this optimizer step (absolute) is done; for the resume test")
+    ap.add_argument("--ckpt-dir", type=Path, default=CKPT_DIR,
+                    help=f"checkpoint root (default {CKPT_DIR}); use another for throwaway tests")
     args = ap.parse_args()
 
     stop_at = None
@@ -154,7 +161,7 @@ def main():
     from transformers import get_cosine_schedule_with_warmup
     from unsloth import FastLanguageModel
 
-    arm_dir = CKPT_DIR / args.arm
+    arm_dir = args.ckpt_dir / args.arm
     ck = latest_ckpt(arm_dir) if arm_dir.exists() else None
     if ck and not args.resume:
         raise SystemExit(f"{ck} exists; use --resume or move it")
@@ -234,6 +241,10 @@ def main():
             f"tokens={rec['tokens']} sec={rec['sec']}")
         if step % CKPT_EVERY == 0:
             save(step)
+        if args.stop_after_step is not None and step >= args.stop_after_step and step < total:
+            log(f"--stop-after-step {args.stop_after_step} reached")
+            save(step)
+            return
     save(step)
     model.save_pretrained(str(arm_dir / "final"))
     log(f"done: {arm_dir / 'final'}")

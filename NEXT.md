@@ -69,3 +69,54 @@ Belebele en.
 Score (score_mgsm.py / score_belebele.py with `--raw`), compute mean total
 tokens per question and the MGSM es/en ratio, apply the GATE (≥ 1.15) from
 `results/plan.md`.
+
+## Plan for 2026-10-09 (written 2026-10-08, in this order)
+
+Never touch the 27B server (:8092); it stays down while the 9B uses the GPU.
+
+a) **Belebele, if it did not finish on 2026-10-08:** resume as today
+   (resumable, skips done ids; same server, same settings):
+   ```
+   cd ~/es-reasoning-finetune && scripts/serve_base.sh
+   STOP_AT=18:45 setsid nohup scripts/run_phase1.sh >> results/phase1_run.log 2>&1 < /dev/null &
+   ```
+   (MGSM is already 500/500, so the chain goes straight to Belebele.) Save
+   the exact server line from `/proc/<pid>/cmdline` as on 2026-10-08
+   (`results/serve_cmd.base9b.txt`). Continue only when MGSM is 500/500 and
+   Belebele 600/600, with no duplicate (id, lang).
+b) **Commit phase-1 results.** Not the raw files
+   (`results/mgsm_raw.base9b.jsonl`, `results/belebele_raw.base9b.jsonl`:
+   not committed). Commit: `results/phase1_run.log`,
+   `results/serve_cmd.base9b.txt`, `results/server_props.base9b.json`, and
+   the scorers' output (`score_mgsm.py` / `score_belebele.py --raw ...`, which
+   print to stdout) saved as `results/score_mgsm.base9b.txt` and
+   `results/score_belebele.base9b.txt`. The plan does not name these summary
+   files; this is the list. The gate (MGSM es/en ≥ 1.15) is **not decided**
+   until c) passes (plan amendment 2026-10-08).
+c) **Conversion check:** stop :8093 (kill the llama-server PID), then
+   ```
+   .venv-train/bin/python scripts/conversion_check.py
+   ```
+   (served GGUF a96c8c42; HF side on CPU, ~18 GB RAM; creates and deletes a
+   ~18 GB BF16 GGUF). Commit `results/conversion_check.{md,json}` with the
+   verdict.
+   **If it FAILS** (top-1 ≤ 95% on either link): nothing is trained; phase-1
+   results are invalidated and phase 1 is repeated, per the rule
+   (results/plan.md, amendment 2026-10-08). Stop here and report.
+d) **If it passes, resume test of train_lora.py (throwaway, does not count
+   as arm A):**
+   ```
+   .venv-train/bin/python scripts/train_lora.py --arm A --ckpt-dir checkpoints/_resume_test --stop-after-step 10
+   .venv-train/bin/python scripts/train_lora.py --arm A --ckpt-dir checkpoints/_resume_test --stop-after-step 12 --resume
+   ```
+   Confirm: the second run logs `resumed from .../step-0010 at step 10/250`
+   and then steps 11 and 12; loss falls over steps 1–12
+   (`checkpoints/_resume_test/A/metrics.jsonl`); peak VRAM fits. Then delete
+   `checkpoints/_resume_test/` (it must not be reused as arm A).
+e) **Arm A, for real:**
+   ```
+   setsid nohup .venv-train/bin/python -u scripts/train_lora.py --arm A --stop-at 18:45 \
+       >> results/train_A.log 2>&1 < /dev/null &
+   ```
+   Next days: same command with `--resume` until `checkpoints/A/final/`
+   exists. Order of arms: A, then control, then B (results/plan.md).
