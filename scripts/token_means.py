@@ -40,20 +40,22 @@ def main():
     print(f"raw sha256: {hashlib.sha256(args.raw.read_bytes()).hexdigest()}")
     print()
     print(f"{'lang':<5} {'n':>4} {'mean_prompt':>12} {'mean_compl':>11} {'mean_total':>11}")
-    means = {}
+    means: dict[str, dict[str, float]] = {}
     for lang in sorted(recs, key=lambda l: (l != "es", l)):
         us = [r["usage"] for r in recs[lang].values()]
-        total = statistics.mean(u["prompt_tokens"] + u["completion_tokens"] for u in us)
-        means[lang] = total
+        m = {"prompt": statistics.mean(u["prompt_tokens"] for u in us),
+             "completion": statistics.mean(u["completion_tokens"] for u in us),
+             "total": statistics.mean(u["prompt_tokens"] + u["completion_tokens"] for u in us)}
+        means[lang] = m
         flag = "" if len(us) == args.expected_per_lang else f"  (partial: {len(us)}/{args.expected_per_lang})"
-        print(f"{lang:<5} {len(us):>4} {statistics.mean(u['prompt_tokens'] for u in us):>12.1f} "
-              f"{statistics.mean(u['completion_tokens'] for u in us):>11.1f} {total:>11.1f}{flag}")
+        print(f"{lang:<5} {len(us):>4} {m['prompt']:>12.1f} {m['completion']:>11.1f} {m['total']:>11.1f}{flag}")
     print()
     complete = all(len(recs.get(l, {})) == args.expected_per_lang for l in ("es", "en"))
     if complete:
-        print(f"es/en mean total tokens: {means['es'] / means['en']:.4f}")
+        for k in ("prompt", "completion", "total"):
+            print(f"es/en mean {k} tokens: {means['es'][k] / means['en'][k]:.4f}")
     else:
-        print("es/en ratio: not computed (a language is missing or partial)")
+        print("es/en ratios: not computed (a language is missing or partial)")
 
 
 if __name__ == "__main__":

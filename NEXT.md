@@ -14,7 +14,7 @@ Done today (plan for 2026-10-09 below):
 - c0) `llama-perplexity` rebuilt at 3466812d1 (18:24–18:32). Both
   `llama-server --version` and `llama-perplexity --version` show
   `build 10751, commit 3466812d1`.
-  **Open point for Juan, before c):** `cmake --target llama-perplexity` also
+  **libggml-cuda:** `cmake --target llama-perplexity` also
   recompiled ggml-cuda (the .cu sources were newer than this build dir's
   objects) and relinked the shared libs. All relinked libs are byte-identical
   to the copies taken at 18:30, EXCEPT `libggml-cuda.so.0.22.0`
@@ -23,20 +23,61 @@ Done today (plan for 2026-10-09 below):
   `libggml-base` / `libggml-cpu` had already been relinked at 18:24 before
   the backup, so their phase-1 bytes were not kept (the relinked ones match
   the backup). c)'s Q8_0 GPU side would run on the rebuilt libggml-cuda,
-  not byte-for-byte the one that served phase 1. Decide: run c) as is, or
-  with `LD_LIBRARY_PATH=~/llama-build-3466812d1-phase1-bak` for the Q8_0 side.
+  not byte-for-byte the one that served phase 1. Decided (Juan,
+  2026-10-09): serve with the phase-1 copy, see "Rule (2026-10-09)" below.
 - c1) guard in `scripts/conversion_check.py`, commit `ee536ad`: aborts unless
   `llama-perplexity --version` shows 3466812d1 (checked: real binary passes;
   segfault and stale build abort).
 
+## Rule (2026-10-09): serve with the phase-1 libggml-cuda
+
+Everything this project SERVES or evaluates with llama.cpp — c) and, if
+training happens, the evaluation of the arms — runs with
+`LD_LIBRARY_PATH=~/llama-build-3466812d1-phase1-bak`, i.e. with phase 1's
+`libggml-cuda.so.0.22.0` (sha256 `bf382e74cc5178cf…`, full hash in that
+dir's SHA256SUMS). The rebuilt one in `~/llama.cpp/build/bin`
+(`8b541eb1731fe8e3…`) is not used to serve.
+Limitation, as is: `libggml-base` and `libggml-cpu` were relinked (18:24)
+before the copy (18:30), so their phase-1 bytes cannot be verified: same
+sources and same commit, no byte-for-byte proof.
+
+**Precondition, pending Juan's OK (not done):** the backup dir holds only
+the versioned files (`libggml-cuda.so.0.22.0`, …), not the soname names the
+loader looks for (`libggml-cuda.so.0`, …). With the dir as it is,
+`LD_LIBRARY_PATH` finds nothing there and the RUNPATH (`build/bin`) wins:
+`ldd` shows the REBUILT lib. Checked 2026-10-09 18:35 in a scratch dir:
+with soname symlinks to the backup files, `ldd` resolves libggml-cuda.so.0
+to the bf382e74… file and `llama-perplexity --version` still shows
+3466812d1. To add them (symlinks only; the files are not touched):
+```
+cd ~/llama-build-3466812d1-phase1-bak && for f in *.so.*; do
+  so=$(readelf -d "$f" | sed -nE 's/.*SONAME.*\[(.*)\]/\1/p'); ln -s "$f" "$so"; done
+```
+(gives libggml-base.so.0, libggml-cpu.so.0, libggml-cuda.so.0, libggml.so.0,
+libllama-common.so.0, libllama.so.0; libllama-server-impl.so and
+llama-server need none.)
+
 ## Tomorrow (2026-10-10), FIRST: c) conversion check
 
 Nothing else before it (not d), not e)). :8093 must stay down; never touch
-:8092. Decide the libggml-cuda point above first. Then:
+:8092. The precondition above must be done (with Juan's OK). Then, in one
+shell:
 ```
-cd ~/es-reasoning-finetune && ~/llama.cpp/build/bin/llama-perplexity --version   # must show commit 3466812d1
+cd ~/es-reasoning-finetune
+export LD_LIBRARY_PATH=~/llama-build-3466812d1-phase1-bak
+# Pre-check: the libggml-cuda actually loaded must be phase 1's (bf382e74...); if not, nothing after it runs.
+precheck() {
+  lib=$(ldd ~/llama.cpp/build/bin/llama-perplexity | sed -nE 's/.*libggml-cuda\.so\.0 => ([^ ]+).*/\1/p')
+  want=$(awk '$2 == "libggml-cuda.so.0.22.0" {print $1}' ~/llama-build-3466812d1-phase1-bak/SHA256SUMS)
+  got=$(sha256sum "$(readlink -f "$lib")" | cut -d' ' -f1)
+  echo "loaded: $lib -> $got"
+  [ -n "$got" ] && [ "$got" = "$want" ] && [ "${got:0:8}" = bf382e74 ] || { echo "NOT phase-1 libggml-cuda: c) does not run"; return 1; }
+}
+precheck && ~/llama.cpp/build/bin/llama-perplexity --version && \
 .venv-train/bin/python scripts/conversion_check.py
 ```
+(The script's own logits helper is built with `-rpath build/bin`, i.e.
+RUNPATH, so the same `LD_LIBRARY_PATH` applies to it.)
 (HF side on CPU, ~18 GB RAM; 48 GB available on 2026-10-09; creates and
 deletes a ~18 GB BF16 GGUF, 79 GB free.) Commit
 `results/conversion_check.{md,json}` with the verdict, then apply the gate

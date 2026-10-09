@@ -6,4 +6,6 @@ lang     n  mean_prompt  mean_compl  mean_total
 es     300        247.5      2078.9      2326.4
 en     300        203.5      1307.1      1510.6
 
+es/en mean prompt tokens: 1.2162
+es/en mean completion tokens: 1.5905
 es/en mean total tokens: 1.5401
