@@ -143,6 +143,13 @@ def main():
     rev = run(["git", "-C", LLAMA, "rev-parse", "HEAD"]).stdout.strip()
     if rev != LLAMA_REV:
         raise SystemExit(f"llama.cpp at {rev}, expected {LLAMA_REV}")
+    # The checkout's HEAD says nothing about the binary: a stale llama-perplexity
+    # (2026-10-09: build 10434, 7e4c0a968) must not run silently.
+    ppl_ver = subprocess.run([str(LLAMA / "build" / "bin" / "llama-perplexity"), "--version"],
+                             capture_output=True, text=True)
+    if ppl_ver.returncode != 0 or f"commit {LLAMA_REV[:9]}" not in ppl_ver.stdout + ppl_ver.stderr:
+        raise SystemExit(f"llama-perplexity --version does not show commit {LLAMA_REV[:9]} "
+                         f"(rc {ppl_ver.returncode}): {(ppl_ver.stdout + ppl_ver.stderr).strip()[:200]!r}")
     log("sha256 of the served GGUF")
     if sha256(Q8) != Q8_SHA:
         raise SystemExit(f"{Q8}: sha256 is not {Q8_SHA}")
