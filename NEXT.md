@@ -1,7 +1,46 @@
 # NEXT
 
-Status 2026-10-07: phase 1 (results/plan.md) running since 17:45 on :8093,
-stop_at 18:45; it will be partial. Update the counts below when it stops.
+## Status 2026-10-09 18:33 (end of day)
+
+Done today (plan for 2026-10-09 below):
+- a) Belebele resumed 17:04 (2026-10-08's run had written nothing: the PC
+  shut down at 16:50:44 with 4 requests in flight). **Phase 1 complete:**
+  MGSM 500/500, Belebele 600/600 (18:23:42), no duplicate (id, lang).
+- b) Phase-1 commit `2df4b34`. Raw files not committed; sha256 in
+  `results/phase1_report.md`: `mgsm_raw.base9b.jsonl` 76fbf9fd…,
+  `belebele_raw.base9b.jsonl` 8f7ffbae…. Gate ratio 1.1235
+  (`results/gate_mgsm.base9b.txt`) **not applied** (needs c)).
+- :8093 stopped 18:24 (PID 18986). Nothing of this project is running.
+- c0) `llama-perplexity` rebuilt at 3466812d1 (18:24–18:32). Both
+  `llama-server --version` and `llama-perplexity --version` show
+  `build 10751, commit 3466812d1`.
+  **Open point for Juan, before c):** `cmake --target llama-perplexity` also
+  recompiled ggml-cuda (the .cu sources were newer than this build dir's
+  objects) and relinked the shared libs. All relinked libs are byte-identical
+  to the copies taken at 18:30, EXCEPT `libggml-cuda.so.0.22.0`
+  (bf382e74… → 8b541eb1…, same source rev, same nvcc 13.1.115). The phase-1
+  copy is kept in `~/llama-build-3466812d1-phase1-bak/` (SHA256SUMS there);
+  `libggml-base` / `libggml-cpu` had already been relinked at 18:24 before
+  the backup, so their phase-1 bytes were not kept (the relinked ones match
+  the backup). c)'s Q8_0 GPU side would run on the rebuilt libggml-cuda,
+  not byte-for-byte the one that served phase 1. Decide: run c) as is, or
+  with `LD_LIBRARY_PATH=~/llama-build-3466812d1-phase1-bak` for the Q8_0 side.
+- c1) guard in `scripts/conversion_check.py`, commit `ee536ad`: aborts unless
+  `llama-perplexity --version` shows 3466812d1 (checked: real binary passes;
+  segfault and stale build abort).
+
+## Tomorrow (2026-10-10), FIRST: c) conversion check
+
+Nothing else before it (not d), not e)). :8093 must stay down; never touch
+:8092. Decide the libggml-cuda point above first. Then:
+```
+cd ~/es-reasoning-finetune && ~/llama.cpp/build/bin/llama-perplexity --version   # must show commit 3466812d1
+.venv-train/bin/python scripts/conversion_check.py
+```
+(HF side on CPU, ~18 GB RAM; 48 GB available on 2026-10-09; creates and
+deletes a ~18 GB BF16 GGUF, 79 GB free.) Commit
+`results/conversion_check.{md,json}` with the verdict, then apply the gate
+with `results/gate_mgsm.base9b.txt` as in "Gate, after c)" below.
 
 ## Tomorrow, FIRST job (before resuming phase 1): conversion fidelity check
 
@@ -90,7 +129,8 @@ b) **Commit phase-1 results.** Not the raw files
    `results/serve_cmd.base9b.txt`, `results/server_props.base9b.json`, and
    the scorers' output (`score_mgsm.py` / `score_belebele.py --raw ...`, which
    print to stdout) saved as `results/score_mgsm.base9b.txt` and
-   `results/score_belebele.base9b.txt`. The plan does not name these summary
+   `results/score_belebele.base9b.txt` (added 2026-10-09:
+   `results/gate_mgsm.base9b.txt` and `scripts/gate_ratio.py`). The plan does not name these summary
    files; this is the list. The gate (MGSM es/en ≥ 1.15) is **not decided**
    until c) passes (plan amendment 2026-10-08).
 c) **Conversion check:** stop :8093 (kill the llama-server PID), then
@@ -103,7 +143,75 @@ c) **Conversion check:** stop :8093 (kill the llama-server PID), then
    **If it FAILS** (top-1 ≤ 95% on either link): nothing is trained; phase-1
    results are invalidated and phase 1 is repeated, per the rule
    (results/plan.md, amendment 2026-10-08). Stop here and report.
-d) **If it passes, resume test of train_lora.py (throwaway, does not count
+
+   *Added 2026-10-09, before c):*
+
+   c0) **Rebuild llama-perplexity** (with :8093 stopped). The installed
+       `~/llama.cpp/build/bin/llama-perplexity` (and
+       `libllama-perplexity-impl.so`) are from 2026-08-14, build 10434, commit
+       `7e4c0a968`, linked against the 3466812d1 libs (`libllama.so.0` →
+       0.3.0): it segfaults (rc 139) even on `--version`. Link 2 of c) needs
+       it. Rebuild only that target at 3466812d1:
+       ```
+       git -C ~/llama.cpp rev-parse HEAD   # must be 3466812d1f06728effe7c0f3c0671117f461672d
+       cmake --build ~/llama.cpp/build --target llama-perplexity -j
+       ~/llama.cpp/build/bin/llama-perplexity --version   # must show commit 3466812d1
+       ```
+   c1) **Guard in conversion_check.py**, own commit, BEFORE running c): abort
+       if `llama-perplexity --version` does not show the pinned commit
+       (today it only checks `git HEAD` of ~/llama.cpp, so a stale binary
+       that did not crash would have run silently).
+
+   **Gate, after c)** (`results/gate_mgsm.base9b.txt`, from
+   `scripts/gate_ratio.py`: MGSM es/en mean total tokens = **1.1235**,
+   computed 2026-10-09, not yet applied). Threshold and metric are not
+   touched:
+   - c) passes and ratio ≥ 1.15 → d).
+   - c) passes and ratio < 1.15 → nothing is trained. Write the result
+     "problem not reproduced on this model" per results/plan.md, compared
+     against the 27B's **1.34×** (decided 2026-10-09; es-eval's 2.15× is
+     lever 2's cost and is not used here). Label (decided 2026-10-09, the
+     chat template counts as part of the model):
+     **"Direct comparison of the models as served (model + template +
+     quant): 27B IQ3_S 1.34× vs 9B Q8_0 1.1235×. Same items, metric, runner,
+     scorer and build. Caveat: the quantization differs and can affect
+     reasoning length; the effect of model size cannot be separated from
+     the effect of the quant."**
+     Same (sha256):
+     - metric: mean of prompt_tokens + completion_tokens from `usage`, ratio
+       of means (es-eval `results/lever2_plan.md`, "Metric": en 493.9,
+       es 659.6, 1.34×; here `scripts/gate_ratio.py`);
+     - items: `data/mgsm_es.jsonl`
+       `f90f2eda3c16770c91a3b6a78da9ee7199db55b77d5d6b28e6556fa12caea905`,
+       `data/mgsm_en.jsonl`
+       `0cb0acbad091022b4ab3c4502f9e634025ae7f1d81aec0e1e13de4d2b763d6ed`
+       (identical in both repos, 250 ids each);
+     - prompts and sampling: `scripts/run_mgsm.py`
+       `2645434a7affdb3376af46e4fc12e91dfaea4e2d4c11d5cd61350ee40d14b5a9`
+       (identical; here called through `scripts/run_baseline.py`
+       `2f62b2eaaba3b151df3efc8ab12dd05b9c94ae3f02a2f37821b6c1d18b729ddd`);
+       no system prompt;
+     - scorer: `scripts/score_mgsm.py`
+       `0f4e71421d993c09c15c715b694db0cbec33180d927d15ca05ee2e466ea157bf`
+       (identical);
+     - build: llama.cpp b10751-3466812d1 (both `server_props`);
+     - mean prompt tokens: en 89.1, es 100.8 in both.
+     Differs:
+     - chat template (sha256 of `chat_template` in server props): 27B
+       `c3cf9e34abf4f9e36c2d72165aa9c132d3e2a725b6c2586aaa3a8af9d7a81041`,
+       9B `a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715`;
+     - quant: 27B `Qwen3.8-27B-GSQ-RCO-IQ3_S-mtp.gguf` (~3.5 bits/weight) vs
+       9B `Qwen3.5-9B-text-mtp-Q8_0.gguf`
+       `a96c8c42919aa1b963fd827e5cfa3b0fe8a14a7ba82a992797ce617c6f438496`;
+     - server: 1 slot, ctx 65536 vs 4 slots, ctx 36864.
+     Not recomputed. The "1.50 → 1.34" in point 5 of es-eval's README is a
+     different figure (lever 1, reasoning tokens) and is NOT used.
+   - c) fails → phase 1 is repeated per the rule.
+
+   `med_reas_tk` in `results/score_mgsm.base9b.txt` stays `nan`
+   (`--no-tokenize`: the scorer's /tokenize points at :8092, the 27B); not
+   the gate metric. Not addressed now.
+d) **If c) passes and the gate passes, resume test of train_lora.py (throwaway, does not count
    as arm A):**
    ```
    .venv-train/bin/python scripts/train_lora.py --arm A --ckpt-dir checkpoints/_resume_test --stop-after-step 10
@@ -113,7 +221,7 @@ d) **If it passes, resume test of train_lora.py (throwaway, does not count
    and then steps 11 and 12; loss falls over steps 1–12
    (`checkpoints/_resume_test/A/metrics.jsonl`); peak VRAM fits. Then delete
    `checkpoints/_resume_test/` (it must not be reused as arm A).
-e) **Arm A, for real:**
+e) **Arm A, for real (only if d) ran, i.e. c) passed and the gate passed):**
    ```
    setsid nohup .venv-train/bin/python -u scripts/train_lora.py --arm A --stop-at 18:45 \
        >> results/train_A.log 2>&1 < /dev/null &
