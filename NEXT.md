@@ -29,6 +29,18 @@ Done today (plan for 2026-10-09 below):
   `llama-perplexity --version` shows 3466812d1 (checked: real binary passes;
   segfault and stale build abort).
 
+## Port :8094 (2026-10-09)
+
+:8094 belongs to the multiplayer-ai thread (a separate 27B with `--jinja`
+for its F1 part 3; see `~/multiplayer-ai/README.md`). It is NOT part of this
+project and is used only AFTER this project's gate, never while :8093 or
+c) use the GPU (the 16 GB card cannot hold both). :8092 and
+`~/bin/manifiestate` are not touched by either thread.
+
+Order for 2026-10-10: c) (block below) → verdict + commit of
+`results/conversion_check.md` → gate with `results/gate_mgsm.base9b.txt` →
+only then, with the GPU free, multiplayer-ai on :8094.
+
 ## Rule (2026-10-09): serve with the phase-1 libggml-cuda
 
 Everything this project SERVES or evaluates with llama.cpp — c) and, if
