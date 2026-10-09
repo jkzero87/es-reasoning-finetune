@@ -1,0 +1,12 @@
+raw: results/mgsm_raw.base9b.jsonl
+raw sha256: 76fbf9fdac33c461024fdd1adf822e676adeb8b861e72b6508a204b9371b605c
+records: es 250, en 250; pairs 250/250
+
+lang     n  mean_prompt  mean_compl  mean_total
+es     250        100.8      2795.7      2896.5
+en     250         89.1      2489.1      2578.1
+
+GATE metric, es/en mean total tokens (prompt + completion): 1.1235 (threshold >= 1.15)
+informational only, es/en mean completion tokens: 1.1232
+
+The gate is NOT applied until the conversion check (NEXT.md c) passes (results/plan.md, amendment 2026-10-08).

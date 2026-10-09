@@ -1,0 +1,7 @@
+# llama-server PID 16262, started Thu Oct  8 15:39:37 2026, log /home/jkzero/logs/base_20261008_153937.log
+# exact argv from /proc/16262/cmdline; env from /proc/16262/environ
+GGML_CUDA_DISABLE_GRAPHS=1 '/home/jkzero/llama.cpp/build/bin/llama-server' '-m' '/home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf' '--spec-type' 'draft-mtp' '--spec-draft-n-max' '3' '-ctkd' 'q8_0' '-ctvd' 'q8_0' '-ngl' '99' '-fa' 'on' '-c' '36864' '-ub' '256' '-ctk' 'q8_0' '-ctv' 'q8_0' '-t' '6' '--parallel' '4' '--reasoning-effort' 'medium' '--port' '8093'
+
+# llama-server PID 18986, started Fri Oct  9 17:04:16 2026, log /home/jkzero/logs/base_20261009_170416.log
+# exact argv from /proc/18986/cmdline; env from /proc/18986/environ
+GGML_CUDA_DISABLE_GRAPHS=1 /home/jkzero/llama.cpp/build/bin/llama-server -m /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf --spec-type draft-mtp --spec-draft-n-max 3 -ctkd q8_0 -ctvd q8_0 -ngl 99 -fa on -c 36864 -ub 256 -ctk q8_0 -ctv q8_0 -t 6 --parallel 4 --reasoning-effort medium --port 8093

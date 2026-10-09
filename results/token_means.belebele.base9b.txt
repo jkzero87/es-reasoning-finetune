@@ -1,0 +1,9 @@
+DESCRIPTIVE, not the gate (gate: scripts/gate_ratio.py, MGSM).
+raw: results/belebele_raw.base9b.jsonl
+raw sha256: 8f7ffbae02b32d9110a7592b0a3a0ebfacefa57156d62efdf85529246ce4e81a
+
+lang     n  mean_prompt  mean_compl  mean_total
+es     300        247.5      2078.9      2326.4
+en     300        203.5      1307.1      1510.6
+
+es/en mean total tokens: 1.5401

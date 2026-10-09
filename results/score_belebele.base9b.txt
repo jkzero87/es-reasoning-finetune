@@ -1,0 +1,19 @@
+scored 600 records so far
+
+=== Per language ===
+lang     n     acc  med_compl  med_reas_tk   med_pps   mtp_acc  %length
+en     300  0.9800        896          nan     57.98    0.6735      0.3
+es     300  0.9500       1443          nan     57.17    0.6519      1.3
+zh       0     nan        nan          nan       nan       nan      nan
+
+=== prompt-language x detected language of reasoning_content ===
+prompt         en      es      zh   other    none
+en            300       0       0       0       0
+es            296       4       0       0       0
+zh              0       0       0       0       0
+
+=== prompt-language x detected language of content ===
+prompt         en      es      zh   other    none
+en            299       0       0       0       1
+es              0     295       1       0       4
+zh              0       0       0       0       0
