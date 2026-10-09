@@ -41,7 +41,7 @@ Limitation, as is: `libggml-base` and `libggml-cpu` were relinked (18:24)
 before the copy (18:30), so their phase-1 bytes cannot be verified: same
 sources and same commit, no byte-for-byte proof.
 
-**Precondition, pending Juan's OK (not done):** the backup dir holds only
+**Precondition — DONE 2026-10-09 18:37 (Juan's OK):** the backup dir holds only
 the versioned files (`libggml-cuda.so.0.22.0`, …), not the soname names the
 loader looks for (`libggml-cuda.so.0`, …). With the dir as it is,
 `LD_LIBRARY_PATH` finds nothing there and the RUNPATH (`build/bin`) wins:
@@ -56,12 +56,22 @@ cd ~/llama-build-3466812d1-phase1-bak && for f in *.so.*; do
 (gives libggml-base.so.0, libggml-cpu.so.0, libggml-cuda.so.0, libggml.so.0,
 libllama-common.so.0, libllama.so.0; libllama-server-impl.so and
 llama-server need none.)
+Done with that command: 6 symlinks, no file modified or moved
+(`sha256sum -c SHA256SUMS` OK before and after; SHA256SUMS unchanged).
+Pre-check below, run as written with the LD_LIBRARY_PATH, 18:37:
+```
+loaded: /home/jkzero/llama-build-3466812d1-phase1-bak/libggml-cuda.so.0 -> bf382e74cc5178cf9f0a00bf382a880626bb055053db6e80dc7ea3b72167124d
+PRECHECK_PASS
+llama-perplexity: version: 0.3.0-dev (build 10751, commit 3466812d1)
+llama-server:     version: 0.3.0-dev (build 10751, commit 3466812d1)
+```
+(`ldd llama-server` under the same LD_LIBRARY_PATH also loads the backup's
+libggml-cuda.so.0.)
 
 ## Tomorrow (2026-10-10), FIRST: c) conversion check
 
 Nothing else before it (not d), not e)). :8093 must stay down; never touch
-:8092. The precondition above must be done (with Juan's OK). Then, in one
-shell:
+:8092. The precondition above is done. Then, in one shell:
 ```
 cd ~/es-reasoning-finetune
 export LD_LIBRARY_PATH=~/llama-build-3466812d1-phase1-bak
