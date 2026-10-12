@@ -1,5 +1,28 @@
 # NEXT
 
+## Status 2026-10-12 14:25 (unattended run; stopped, nothing running)
+
+- Pre-check: dsh stack down, no compute processes, :8093 free.
+- c) conversion check: **BLOCKED, not decided.** Run exactly as "Tomorrow (2026-10-10), FIRST: c)" below,
+  14:16:18–14:20:14. Precheck PASS (`libggml-cuda.so.0 -> bf382e74…`, `llama-perplexity` build 10751 3466812d1).
+  Done before the failure: served-GGUF sha256, tokenization, Q8_0 greedy x10 (GPU, 14:19:22–14:19:54).
+  Failed at `link 1 / greedy: HF bf16 on CPU` (`scripts/conversion_check.py:199`): the HF Qwen3.5 gated-delta-rule
+  layers run `fla/ops/gated_delta_rule/chunk.py` (Triton, CUDA-only) →
+  `ValueError: Pointer argument cannot be accessed from Triton (cpu tensor?)`. Exit 1. No
+  `results/conversion_check.{md,json}` written. Log: `results/conversion_check.log`.
+  Not fixed (no improvised changes): the HF side as specified (bf16 on CPU) cannot run with this venv's
+  transformers/fla path. Options for Juan to decide: a torch fallback for fla on CPU, or the HF side on GPU (does
+  not fit 16 GB in bf16), or an amendment of the method. Any of them changes the check, so it needs an OK.
+- Left on disk (regenerable, reused by the script if present): `~/models/Qwen3.5-9B-text-mtp-BF16/
+  Qwen3.5-9B-text-mtp-BF16.gguf` (~18 GB; the script deletes it only at its end).
+- Gate (ratio 1.1235, `results/gate_mgsm.base9b.txt`): still NOT applied (needs c)).
+- Not run (training, waits for Juan): d) resume test, e) arm A. No `train_lora.py --dry-run` is listed here.
+- Push: not done. main is 11 commits ahead of origin and those include code commits (conversion_check.py guard,
+  train_lora.py, training scripts), so a results/docs-only push is not possible without them.
+
+**Resume point:** decide how the HF side of c) runs, then rerun c) with the command below (same precheck);
+then commit `results/conversion_check.{md,json}` and apply the gate.
+
 ## Status 2026-10-09 18:33 (end of day)
 
 Done today (plan for 2026-10-09 below):

@@ -1,0 +1,165 @@
+=== c) start 2026-10-12 14:16:18
+loaded: /home/jkzero/llama-build-3466812d1-phase1-bak/libggml-cuda.so.0 -> bf382e74cc5178cf9f0a00bf382a880626bb055053db6e80dc7ea3b72167124d
+version: 0.3.0-dev (build 10751, commit 3466812d1)
+built with GNU 15.2.0 for Linux x86_64
+[2026-10-12T14:16:21] $ git -C /home/jkzero/llama.cpp rev-parse HEAD
+[2026-10-12T14:16:21] sha256 of the served GGUF
+[transformers] The tokenizer you are loading from '/home/jkzero/models/Qwen3.5-9B-text-mtp' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+[2026-10-12T14:16:48] $ gcc -O2 -o /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/es-reasoning-finetune/scripts/llama_logits.c -I /home/jkzero/llama.cpp/include -I /home/jkzero/llama.cpp/ggml/include -L /home/jkzero/llama.cpp/build/bin -lllama -Wl,-rpath,/home/jkzero/llama.cpp/build/bin
+[2026-10-12T14:16:48] converting the BF16 GGUF (baseline command, --outtype bf16)
+[2026-10-12T14:16:48] $ /home/jkzero/es-reasoning-finetune/.venv-train/bin/python convert_hf_to_gguf.py /home/jkzero/models/Qwen3.5-9B-text-mtp --outtype bf16 --outfile /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf
+[2026-10-12T14:17:47] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmp3h6wx_pu/in.txt /tmp/tmp3h6wx_pu/tok.i32
+[2026-10-12T14:17:57] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmp3h6wx_pu/in.txt /tmp/tmp3h6wx_pu/tok.i32
+[2026-10-12T14:17:58] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmp3h6wx_pu/in.txt /tmp/tmp3h6wx_pu/tok.i32
+[2026-10-12T14:17:59] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmp3h6wx_pu/in.txt /tmp/tmp3h6wx_pu/tok.i32
+[2026-10-12T14:18:00] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmp3h6wx_pu/in.txt /tmp/tmp3h6wx_pu/tok.i32
+[2026-10-12T14:18:01] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmp3h6wx_pu/in.txt /tmp/tmp3h6wx_pu/tok.i32
+[2026-10-12T14:18:02] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmp3h6wx_pu/in.txt /tmp/tmp3h6wx_pu/tok.i32
+[2026-10-12T14:18:03] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmp3h6wx_pu/in.txt /tmp/tmp3h6wx_pu/tok.i32
+[2026-10-12T14:18:04] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmp3h6wx_pu/in.txt /tmp/tmp3h6wx_pu/tok.i32
+[2026-10-12T14:18:05] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmp3h6wx_pu/in.txt /tmp/tmp3h6wx_pu/tok.i32
+[2026-10-12T14:18:06] link 1: BF16 GGUF logits
+[2026-10-12T14:18:06] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmp3h6wx_pu/in.i32 /tmp/tmp3h6wx_pu/out.f32
+[2026-10-12T14:18:26] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmp3h6wx_pu/in.i32 /tmp/tmp3h6wx_pu/out.f32
+[2026-10-12T14:18:31] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmp3h6wx_pu/in.i32 /tmp/tmp3h6wx_pu/out.f32
+[2026-10-12T14:18:35] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmp3h6wx_pu/in.i32 /tmp/tmp3h6wx_pu/out.f32
+[2026-10-12T14:18:39] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmp3h6wx_pu/in.i32 /tmp/tmp3h6wx_pu/out.f32
+[2026-10-12T14:18:44] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmp3h6wx_pu/in.i32 /tmp/tmp3h6wx_pu/out.f32
+[2026-10-12T14:18:48] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmp3h6wx_pu/in.i32 /tmp/tmp3h6wx_pu/out.f32
+[2026-10-12T14:18:53] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmp3h6wx_pu/in.i32 /tmp/tmp3h6wx_pu/out.f32
+[2026-10-12T14:18:57] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmp3h6wx_pu/in.i32 /tmp/tmp3h6wx_pu/out.f32
+[2026-10-12T14:19:01] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmp3h6wx_pu/in.i32 /tmp/tmp3h6wx_pu/out.f32
+[2026-10-12T14:19:06] greedy: Q8_0
+[2026-10-12T14:19:06] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmp3h6wx_pu/in.i32 /tmp/tmp3h6wx_pu/gen.i32 128
+[2026-10-12T14:19:11] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmp3h6wx_pu/in.i32 /tmp/tmp3h6wx_pu/gen.i32 128
+[2026-10-12T14:19:17] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmp3h6wx_pu/in.i32 /tmp/tmp3h6wx_pu/gen.i32 128
+[2026-10-12T14:19:22] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmp3h6wx_pu/in.i32 /tmp/tmp3h6wx_pu/gen.i32 128
+[2026-10-12T14:19:27] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmp3h6wx_pu/in.i32 /tmp/tmp3h6wx_pu/gen.i32 128
+[2026-10-12T14:19:33] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmp3h6wx_pu/in.i32 /tmp/tmp3h6wx_pu/gen.i32 128
+[2026-10-12T14:19:38] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmp3h6wx_pu/in.i32 /tmp/tmp3h6wx_pu/gen.i32 128
+[2026-10-12T14:19:44] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmp3h6wx_pu/in.i32 /tmp/tmp3h6wx_pu/gen.i32 128
+[2026-10-12T14:19:49] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmp3h6wx_pu/in.i32 /tmp/tmp3h6wx_pu/gen.i32 128
+[2026-10-12T14:19:54] $ /tmp/tmp3h6wx_pu/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmp3h6wx_pu/in.i32 /tmp/tmp3h6wx_pu/gen.i32 128
+[2026-10-12T14:20:00] link 1 / greedy: HF bf16 on CPU
+/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/torchao/quantization/quant_api.py:1558: SyntaxWarning: invalid escape sequence '\.'
+  * regex for parameter names, must start with `re:`, e.g. `re:language\.layers\..+\.q_proj.weight`.
+W1012 14:20:03.848000 129544 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1012 14:20:03.949000 129544 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+Loading weights:   0%|          | 0/427 [00:00<?, ?it/s]Loading weights: 100%|██████████| 427/427 [00:00<00:00, 4565.67it/s]
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+Traceback (most recent call last):
+  File "/home/jkzero/es-reasoning-finetune/scripts/conversion_check.py", line 274, in <module>
+    main()
+  File "/home/jkzero/es-reasoning-finetune/scripts/conversion_check.py", line 199, in main
+    h = model(input_ids=torch.tensor([p["ids"]])).logits[0].float().numpy()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/transformers/utils/generic.py", line 939, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/transformers/models/qwen3_5/modeling_qwen3_5.py", line 1717, in forward
+    outputs: BaseModelOutputWithPast = self.model(
+                                       ^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/transformers/utils/generic.py", line 1068, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/transformers/utils/output_capturing.py", line 286, in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/transformers/models/qwen3_5/modeling_qwen3_5.py", line 1292, in forward
+    hidden_states = decoder_layer(
+                    ^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/transformers/modeling_layers.py", line 109, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/transformers/models/qwen3_5/modeling_qwen3_5.py", line 889, in forward
+    hidden_states = self.linear_attn(
+                    ^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/transformers/integrations/accelerate.py", line 1010, in wrapped
+    output = forward_func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/transformers/models/qwen3_5/modeling_qwen3_5.py", line 639, in forward
+    core_attn_out, last_recurrent_state = torch_chunk_gated_delta_rule(
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/transformers/integrations/hub_kernels.py", line 885, in wrapped
+    return implementation(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/torch/_dynamo/eval_frame.py", line 1548, in _fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/fla/ops/backends/__init__.py", line 214, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/torch/_dynamo/eval_frame.py", line 1548, in _fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/fla/ops/gated_delta_rule/chunk.py", line 567, in chunk_gated_delta_rule
+    o, final_state = ChunkGatedDeltaRuleFunction.apply(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/fla/utils/_decorators.py", line 152, in wrapper
+    return fn(*processed_args, **processed_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/torch/amp/autocast_mode.py", line 481, in decorate_fwd
+    return fwd(*args, **kwargs)  # pyrefly: ignore [not-callable]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/fla/ops/gated_delta_rule/chunk.py", line 282, in forward
+    q, q_rstd = l2norm_fwd(q)
+                ^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/torch/_dynamo/eval_frame.py", line 1548, in _fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/fla/ops/backends/__init__.py", line 214, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/fla/modules/l2norm.py", line 178, in l2norm_fwd
+    l2norm_fwd_kernel[grid](
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/triton/runtime/jit.py", line 374, in <lambda>
+    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/fla/ops/utils/cache.py", line 378, in run
+    return super().run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/triton/runtime/autotuner.py", line 249, in run
+    used_cached_result = self.check_disk_cache(key, pruned_configs, benchmark)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/triton/runtime/autotuner.py", line 207, in check_disk_cache
+    bench_fn()
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/triton/runtime/autotuner.py", line 240, in benchmark
+    timings = {config: self._bench(*args, config=config, **kwargs) for config in pruned_configs}
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/triton/runtime/autotuner.py", line 169, in _bench
+    return self.do_bench(kernel_call, quantiles=(0.5, 0.2, 0.8))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/triton/testing.py", line 272, in do_bench
+    fn()
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/triton/runtime/autotuner.py", line 155, in kernel_call
+    self.fn.run(
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/triton/runtime/jit.py", line 779, in run
+    kernel.run(grid_0, grid_1, grid_2, stream, kernel.function, kernel.packed_metadata, launch_metadata,
+  File "/home/jkzero/es-reasoning-finetune/.venv-train/lib/python3.12/site-packages/triton/backends/nvidia/driver.py", line 331, in __call__
+    self.launch(gridX, gridY, gridZ, stream, function, self.launch_cooperative_grid, self.launch_pdl,
+ValueError: Pointer argument cannot be accessed from Triton (cpu tensor?)
+=== c) exit 1 at 2026-10-12 14:20:14
