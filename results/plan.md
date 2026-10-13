@@ -230,3 +230,17 @@ not dropped:
 **Training data (three arms):** the build is preregistered in
 `results/train_plan.md`, amendment 2026-10-08, including the definition of
 "math" (substring `math`, case-insensitive, in `dataset_name` or `source`).
+
+## Amendment 2026-10-12 (before running the conversion check's link 1; no verdict, no gate applied)
+
+The HF bf16 side of the conversion check runs on CPU with transformers' reference PyTorch gated-delta kernels
+(`torch_chunk_gated_delta_rule` / `torch_recurrent_gated_delta_rule`, transformers 5.17.0
+`models/qwen3_5/modeling_qwen3_5.py:301,438`) instead of the flash-linear-attention Triton kernels, which are
+CUDA-only: the 2026-10-12 14:16 run failed at link 1 with `ValueError: Pointer argument cannot be accessed from
+Triton (cpu tensor?)` (`fla/ops/gated_delta_rule/chunk.py`; log `results/conversion_check.log`, commit 5b099ba).
+Mechanism: transformers picks the kernel at import time (`integrations/hub_kernels.py:829`, priority hub kernels ->
+`fla` package -> torch); `conversion_check.py` makes `fla` unimportable in its own process just before importing
+transformers, so the library takes its own torch path. causal_conv1d is not installed, so conv1d already uses its
+torch path. Same weights, same dtype (bf16), same prompts, same 128-token greedy decode, same GGUF side.
+Unchanged: the verdict rule (FAIL if top-1 agreement <= 95% on either link), the gate (MGSM es/en >= 1.15) and
+everything else in the method.

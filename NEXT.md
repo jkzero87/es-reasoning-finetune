@@ -20,8 +20,18 @@
 - Push: not done. main is 11 commits ahead of origin and those include code commits (conversion_check.py guard,
   train_lora.py, training scripts), so a results/docs-only push is not possible without them.
 
-**Resume point:** decide how the HF side of c) runs, then rerun c) with the command below (same precheck);
-then commit `results/conversion_check.{md,json}` and apply the gate.
+**Update 2026-10-12 20:15 (after hours, nothing run):** transformers 5.17.0 has reference torch kernels for the
+gated-delta layers (`modeling_qwen3_5.py:301,438`), chosen at import time (`integrations/hub_kernels.py:829`:
+hub kernels -> `fla` -> torch; no device check, no switch). Plan amendment 2026-10-12 (results/plan.md) + backend
+switch in `scripts/conversion_check.py` (`sys.modules["fla"] = None` before importing transformers; nothing else
+changed). Verified import-only: with the switch both functions resolve to the torch reference; without it, to fla.
+
+**Resume point (next day, before 18:40):** 1) estimate the HF CPU runtime on the torch path (the reference
+chunk kernel is far slower than fla; time one prompt's forward + a few greedy tokens in a scratch script, do not
+change conversion_check.py); if the full check (10 prompts: logits + 128 greedy tokens each) cannot finish by 18:40,
+report and do not start. 2) Run c) with the command below (same precheck). 3) Commit
+`results/conversion_check.{md,json}`, apply the gate exactly as written, update README/NEXT.md; delete the BF16
+GGUF only after a final verdict. 4) Push main (approved by Juan 2026-10-12, normal push, after the c) commit).
 
 ## Status 2026-10-09 18:33 (end of day)
 

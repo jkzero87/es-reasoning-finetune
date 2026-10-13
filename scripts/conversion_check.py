@@ -155,6 +155,9 @@ def main():
         raise SystemExit(f"{Q8}: sha256 is not {Q8_SHA}")
 
     import torch
+    # Backend selection only (plan amendment 2026-10-12): fla's gated-delta kernels are CUDA-only Triton and the
+    # HF side runs on CPU, so make fla unimportable here; transformers then uses its reference torch kernels.
+    sys.modules["fla"] = None
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
     tok = AutoTokenizer.from_pretrained(HF_DIR)
