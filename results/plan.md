@@ -244,3 +244,15 @@ transformers, so the library takes its own torch path. causal_conv1d is not inst
 torch path. Same weights, same dtype (bf16), same prompts, same 128-token greedy decode, same GGUF side.
 Unchanged: the verdict rule (FAIL if top-1 agreement <= 95% on either link), the gate (MGSM es/en >= 1.15) and
 everything else in the method.
+
+## Amendment 2026-11-12 (project objective; before the conversion-check verdict, no gate applied yet)
+
+Project objective, as stated by Juan on 2026-11-12 (verbatim, also at the top of `README.md`):
+
+"Brújula: que usar la IA en español no sea una desventaja. Objetivo: con una sola GPU
+de 16 GB, producir la mayor cantidad posible de datos abiertos y conclusiones prácticas
+sobre cuánto, dónde y por qué el español sale más caro en modelos abiertos, y qué
+remedios funcionan y cuáles no. El fine-tuning es una prueba más, no la meta."
+
+Unchanged: the gate (MGSM es/en ≥ 1.15), its threshold, the verdict rule of the conversion check, the phase-3
+criteria and every earlier amendment. The gate still decides whether anything is trained.

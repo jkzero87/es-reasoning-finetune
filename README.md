@@ -1,5 +1,10 @@
 # es-reasoning-finetune
 
+Brújula: que usar la IA en español no sea una desventaja. Objetivo: con una sola GPU
+de 16 GB, producir la mayor cantidad posible de datos abiertos y conclusiones prácticas
+sobre cuánto, dónde y por qué el español sale más caro en modelos abiertos, y qué
+remedios funcionan y cuáles no. El fine-tuning es una prueba más, no la meta.
+
 **Estado: en curso (iniciado 2026-10-07).**
 
 ## Objetivo
