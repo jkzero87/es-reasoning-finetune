@@ -256,3 +256,29 @@ remedios funcionan y cuáles no. El fine-tuning es una prueba más, no la meta."
 
 Unchanged: the gate (MGSM es/en ≥ 1.15), its threshold, the verdict rule of the conversion check, the phase-3
 criteria and every earlier amendment. The gate still decides whether anything is trained.
+
+## Amendment 2026-11-12 (descriptive efficiency metric; before it is computed; no gate)
+
+`scripts/efficiency_baseline.py` → `results/efficiency_baseline.{md,json}`. Descriptive only: it changes no gate, no threshold and no phase-3 criterion; the gate metric stays the MGSM es/en ratio of mean total tokens. Inputs: existing raw files (`results/*_raw.<tag>.jsonl` here, the 27B raws in `~/es-eval/results`), listed in `results/efficiency_manifest.json`. Belebele 27B is reported on its 488 ids and on the 300 ids of `results/belebele_sample_300.json`. Correctness comes from the existing scorers, imported unchanged (`score_mgsm.correct`, `score_belebele.correct`, `score_proxlite.parse_letter`).
+
+Per model × benchmark × language:
+
+- n, accuracy, mean prompt / completion / total tokens (server `usage`);
+- count of `finish_reason == "length"`;
+- count of empty answers: `content` missing or only whitespace;
+- count of looping outputs: `reasoning_content` or `content` holds one 60-character span at 5 or more non-overlapping positions;
+- **SUCCESS_PER_1K** = (records that are correct AND `finish_reason == "stop"`) / (sum of completion tokens over ALL records of that language) × 1000.
+
+Between languages: es/en and zh/en of SUCCESS_PER_1K as a percentage, next to the es/en and zh/en ratio of mean total tokens; and the paired count of ids where the es (zh) record has more total tokens than the en record.
+
+## Amendment 2026-11-12 (descriptive GPU queue; before any of its runs; no gate)
+
+zh baseline; reasoning-off runs; ProX-Lite on the 9B. Same server flags, same quant, same ids as Phase 1.
+
+Descriptive runs: none of them feeds the gate or a phase-3 criterion. Launched by Juan with `scripts/run_queue.sh` (server on :8093 with `scripts/serve_base.sh` and the phase-1 `libggml-cuda`, rule 2026-10-09; `--parallel 4`, runners `--workers 4`). Runner: `scripts/run_baseline.py`; per-request settings as phase 1 unless listed.
+
+- **q1, zh baseline, tag `base9b`:** MGSM zh 250 ids, Belebele zh on the 300 ids of `results/belebele_sample_300.json`. zh rows are appended to the phase-1 raw files; es/en rows are not re-run. `data/belebele_zh.jsonl` is exported with es-eval's `load_items()` like the es/en files (`SOURCE.md`): same 488 ids, same `qid` and `gold` per id, checked at export.
+- **q2, reasoning off, tag `noreason9b`:** es, en, zh; MGSM 250, Belebele the same 300 ids. Only difference from phase 1: each request carries `chat_template_kwargs: {"enable_thinking": false}` (the template then opens the answer with an empty `<think>` block). Prompts unchanged, so the MGSM prompt still says "step by step".
+- **q3, MMLU-ProX-Lite, tag `prox9b`:** es, en, zh; the 60 question_ids of es-eval's `results/proxlite_subset_60_strat.txt` (copied to `results/`), prompts from the unchanged copy of es-eval's `scripts/run_proxlite.py`, thinking on. Difference from the 27B run: `max_tokens` 8192 instead of 16384, because the phase-1 server gives each slot 9216 tokens. The 27B produced more than 8192 completion tokens on some ProX-Lite records, so a 27B-vs-9B comparison of this benchmark carries that caveat. Items are read from es-eval's local HF cache (`~/es-eval/.hf_cache`, revision `e82aafb9`); no ProX-Lite item text is tracked here.
+
+Smoke tests before the queue (2 items per language per run, tag `smoke`) are deleted afterwards and are not results.
