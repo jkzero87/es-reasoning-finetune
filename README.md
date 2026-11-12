@@ -5,7 +5,30 @@ de 16 GB, producir la mayor cantidad posible de datos abiertos y conclusiones pr
 sobre cuánto, dónde y por qué el español sale más caro en modelos abiertos, y qué
 remedios funcionan y cuáles no. El fine-tuning es una prueba más, no la meta.
 
-**Estado: en curso (iniciado 2026-10-07).**
+**Estado (2026-11-12):** línea base del 9B medida y compuerta aplicada. En MGSM el 9B gasta en español 1,1235 × los
+tokens del inglés, por debajo del umbral preregistrado de 1,15: **no se entrena**; resultado para MGSM: "problem not
+reproduced on this model" (el 27B dio 1,34 ×). En Belebele el mismo 9B gasta 1,5401 × (descriptivo, fuera de la
+compuerta). Decisión: `results/gate_decision.md`. Siguen corridas descriptivas (chino, sin razonamiento, ProX-Lite).
+
+<!-- TABLES:BEGIN (generado por scripts/update_readme_tables.py; no editar a mano) -->
+## Resultados
+
+Tablas completas: `results/efficiency_baseline.md`; hallazgos uno por fila: `results/CONCLUSIONES.md`.
+
+- Verificación de conversión del GGUF servido: PASS (falla si la coincidencia top-1 es ≤ 95.0% en algún enlace): **enlace 1 98.587%, enlace 2 98.81%** (`results/conversion_check.json`, 920 posiciones (enlace 1)).
+- Compuerta MGSM es/en ≥ 1.15: no se cumple en el 9B; no se entrena; resultado "problem not reproduced on this model": **1.1235 < 1.15** (`results/gate_mgsm.base9b.txt`, 250 pares).
+
+Éxito por 1k = respuestas correctas y completas por cada 1.000 tokens generados, como % del inglés (menos de 100 % = ese idioma sale más caro).
+
+| modelo | prueba | condición | n (en/es/zh) | tokens totales es/en | éxito por 1k, es vs en | tokens totales zh/en | éxito por 1k, zh vs en |
+|---|---|---|---:|---:|---:|---:|---:|
+| 27B IQ3_S | mgsm | thinking | 250/250/250 | 1.3355× | 70.7 % | 1.1565× | 79.2 % |
+| 27B IQ3_S | belebele | thinking, 488 ids | 488/488/488 | 1.3026× | 72.6 % | 1.0204× | 91.6 % |
+| 27B IQ3_S | belebele | thinking, same 300 ids | 300/300/300 | 1.3263× | 69.8 % | 1.0261× | 91.2 % |
+| 27B IQ3_S | proxlite | thinking, 60 ids, max_tokens 16384 | 60/60/60 | 1.2223× | 81.9 % | 1.0867× | 87.2 % |
+| 9B Q8_0 | mgsm | thinking | 250/250 | 1.1235× | 89.8 % | — | — |
+| 9B Q8_0 | belebele | thinking, same 300 ids | 300/300 | 1.5401× | 60.9 % | — | — |
+<!-- TABLES:END -->
 
 ## Objetivo
 

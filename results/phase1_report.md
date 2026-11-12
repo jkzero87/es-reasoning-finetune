@@ -63,12 +63,7 @@ part of the gate).
 
 ## Gate (MGSM es/en ≥ 1.15)
 
-**Pending c)** (conversion check; results/plan.md, amendment 2026-10-08: the
-gate is not applied until c) passes). Possible outcomes, per NEXT.md; none
-is chosen here:
-
-- c) passes and ratio ≥ 1.15 → d) (resume test, then arm A).
-- c) passes and ratio < 1.15 → nothing is trained; the result is "problem not
-  reproduced on this model" (results/plan.md), with the comparison above.
-- c) fails → phase-1 results are invalidated and phase 1 is repeated, per the
-  rule.
+**Applied 2026-11-12** (`results/gate_decision.md`). The conversion check passed (`results/conversion_check.md`:
+link 1 top-1 98.587%, link 2 same-top 98.81%). Ratio 1.1235 < 1.15 → the gate is not met: nothing is trained;
+the result for MGSM is "problem not reproduced on this model" (results/plan.md), with the comparison above
+(27B 1.34× vs 9B 1.1235×). Belebele's 1.5401 is descriptive and is not part of the gate.
