@@ -4,7 +4,7 @@
 
 Parameter counts, checked before writing, equal to `results/feasibility.md`: text-only 8,953,803,264; MTP dropped 243,290,624.
 
-Not checked: byte equality with the deleted original directory (no hash of it was ever recorded; shard boundaries can differ, tensor contents cannot).
+Not proven: byte equality with the deleted original directory (no hash of it was ever recorded). One extra check was run and did **not** match: converting the rebuilt base with the plan's command (`convert_hf_to_gguf.py … --no-mtp --outtype q8_0`, llama.cpp `3466812d1`) gives a GGUF of 9,527,501,248 bytes, the exact size `results/plan.md` records for the original no-MTP GGUF, 427 tensors, but sha256 `34a75e46adc7f1b400032be5493825f43c90a037370613aae62412b185f73bf8` instead of the recorded `a3e9970cce275f548079a839eb58731f638788693f67be34a2c13ef635906edb`. The cause was not established; the candidate is tensor order (the rebuild reads tensors in the order safetensors lists them, which need not be the order of the official shards), and it cannot be tested without the official checkpoint. That GGUF was deleted (it is not served and would sit at the plan's path with a different hash). If training is ever reopened, the amendment that reopens it must say which base is used: this rebuild (tensor values bit-for-bit from `-mtp`), or a fresh download of `Qwen/Qwen3.5-9B` rev. `c202236` run through `scripts/make_text_only.py`.
 
 Output of the script (sha256, file, bytes):
 
