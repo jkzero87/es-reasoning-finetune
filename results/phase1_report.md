@@ -1,6 +1,6 @@
-# Phase 1 report (baseline 9B) — DRAFT
+# Phase 1 report (baseline 9B)
 
-Draft 2026-10-09, not committed (goes in with NEXT.md b). Only metrics that
+Written 2026-10-09 (commit `2df4b34`). Only metrics that
 `results/plan.md` defines: items per language, accuracy (es-eval scorers,
 copied unchanged), and **mean total tokens per question** (prompt + reasoning
 + answer, from the server's `usage`: prompt_tokens + completion_tokens), with
@@ -14,8 +14,8 @@ b10751-3466812d1. Settings as in `results/plan.md`, phase 1.
 ## MGSM (250 ids per language)
 
 Raw: `results/mgsm_raw.base9b.jsonl` (sha256
-`76fbf9fdac33c461024fdd1adf822e676adeb8b861e72b6508a204b9371b605c`, not
-committed). Accuracy: `results/score_mgsm.base9b.txt`
+`76fbf9fdac33c461024fdd1adf822e676adeb8b861e72b6508a204b9371b605c`, tracked
+since 2026-11-12). Accuracy: `results/score_mgsm.base9b.txt`
 (`score_mgsm.py --raw results/mgsm_raw.base9b.jsonl --no-tokenize`). Tokens:
 `results/gate_mgsm.base9b.txt` (`scripts/gate_ratio.py`).
 
@@ -46,8 +46,8 @@ the effect of the quant. What matches and what differs, with sha256: NEXT.md,
 ## Belebele (sample of 300 ids per language, `results/belebele_sample_300.json`)
 
 Raw: `results/belebele_raw.base9b.jsonl` (sha256
-`8f7ffbae02b32d9110a7592b0a3a0ebfacefa57156d62efdf85529246ce4e81a`, not
-committed; 600/600 at 2026-10-09 18:23, the 300 sample ids per language, no
+`8f7ffbae02b32d9110a7592b0a3a0ebfacefa57156d62efdf85529246ce4e81a`, tracked
+since 2026-11-12; 600/600 at 2026-10-09 18:23, the 300 sample ids per language, no
 duplicate (id, lang)). Accuracy: `results/score_belebele.base9b.txt`
 (`score_belebele.py --raw results/belebele_raw.base9b.jsonl --no-tokenize`).
 Tokens: `results/token_means.belebele.base9b.txt` (`scripts/token_means.py`,
