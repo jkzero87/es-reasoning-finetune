@@ -1,0 +1,236 @@
+{
+ "date": "2026-11-12T14:31:17",
+ "llama_cpp": "3466812d1f06728effe7c0f3c0671117f461672d",
+ "hf_dir": "/home/jkzero/models/Qwen3.5-9B-text-mtp",
+ "q8_gguf": "/home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf",
+ "q8_sha256": "a96c8c42919aa1b963fd827e5cfa3b0fe8a14a7ba82a992797ce617c6f438496",
+ "bf16_gguf": "/home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf",
+ "ngl_bf16": 0,
+ "ngl_q8": 99,
+ "threshold_top1_pct": 95.0,
+ "generation_prompt_tail": "|im_end|>\n<|im_start|>assistant\n<think>\n",
+ "prompts": [
+  {
+   "lang": "es",
+   "id": 1,
+   "n_tokens": 109
+  },
+  {
+   "lang": "es",
+   "id": 2,
+   "n_tokens": 62
+  },
+  {
+   "lang": "es",
+   "id": 3,
+   "n_tokens": 90
+  },
+  {
+   "lang": "es",
+   "id": 4,
+   "n_tokens": 67
+  },
+  {
+   "lang": "es",
+   "id": 5,
+   "n_tokens": 158
+  },
+  {
+   "lang": "en",
+   "id": 1,
+   "n_tokens": 93
+  },
+  {
+   "lang": "en",
+   "id": 2,
+   "n_tokens": 54
+  },
+  {
+   "lang": "en",
+   "id": 3,
+   "n_tokens": 85
+  },
+  {
+   "lang": "en",
+   "id": 4,
+   "n_tokens": 63
+  },
+  {
+   "lang": "en",
+   "id": 5,
+   "n_tokens": 139
+  }
+ ],
+ "tokenizer_identical": [
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true
+ ],
+ "link1": {
+  "top1_agreement_pct": 98.587,
+  "positions": 920,
+  "mean_kl": 0.0005062507050044937,
+  "per_prompt": [
+   {
+    "lang": "es",
+    "id": 1,
+    "top1": 106,
+    "positions": 109,
+    "mean_kl": 0.00059071261784917,
+    "vocab_hf": 248320,
+    "vocab_gguf": 248320
+   },
+   {
+    "lang": "es",
+    "id": 2,
+    "top1": 61,
+    "positions": 62,
+    "mean_kl": 0.0003204251608577722,
+    "vocab_hf": 248320,
+    "vocab_gguf": 248320
+   },
+   {
+    "lang": "es",
+    "id": 3,
+    "top1": 88,
+    "positions": 90,
+    "mean_kl": 0.00048619553241030365,
+    "vocab_hf": 248320,
+    "vocab_gguf": 248320
+   },
+   {
+    "lang": "es",
+    "id": 4,
+    "top1": 66,
+    "positions": 67,
+    "mean_kl": 0.00046966085031531035,
+    "vocab_hf": 248320,
+    "vocab_gguf": 248320
+   },
+   {
+    "lang": "es",
+    "id": 5,
+    "top1": 157,
+    "positions": 158,
+    "mean_kl": 0.0006048401755639132,
+    "vocab_hf": 248320,
+    "vocab_gguf": 248320
+   },
+   {
+    "lang": "en",
+    "id": 1,
+    "top1": 92,
+    "positions": 93,
+    "mean_kl": 0.0003740591800625728,
+    "vocab_hf": 248320,
+    "vocab_gguf": 248320
+   },
+   {
+    "lang": "en",
+    "id": 2,
+    "top1": 54,
+    "positions": 54,
+    "mean_kl": 0.001190289469658275,
+    "vocab_hf": 248320,
+    "vocab_gguf": 248320
+   },
+   {
+    "lang": "en",
+    "id": 3,
+    "top1": 85,
+    "positions": 85,
+    "mean_kl": 0.0003947126004129704,
+    "vocab_hf": 248320,
+    "vocab_gguf": 248320
+   },
+   {
+    "lang": "en",
+    "id": 4,
+    "top1": 62,
+    "positions": 63,
+    "mean_kl": 0.0003428502016067988,
+    "vocab_hf": 248320,
+    "vocab_gguf": 248320
+   },
+   {
+    "lang": "en",
+    "id": 5,
+    "top1": 136,
+    "positions": 139,
+    "mean_kl": 0.0004064296533420461,
+    "vocab_hf": 248320,
+    "vocab_gguf": 248320
+   }
+  ]
+ },
+ "greedy": [
+  {
+   "lang": "es",
+   "id": 1,
+   "first_divergence": null
+  },
+  {
+   "lang": "es",
+   "id": 2,
+   "first_divergence": 77
+  },
+  {
+   "lang": "es",
+   "id": 3,
+   "first_divergence": 31
+  },
+  {
+   "lang": "es",
+   "id": 4,
+   "first_divergence": null
+  },
+  {
+   "lang": "es",
+   "id": 5,
+   "first_divergence": null
+  },
+  {
+   "lang": "en",
+   "id": 1,
+   "first_divergence": 17
+  },
+  {
+   "lang": "en",
+   "id": 2,
+   "first_divergence": null
+  },
+  {
+   "lang": "en",
+   "id": 3,
+   "first_divergence": null
+  },
+  {
+   "lang": "en",
+   "id": 4,
+   "first_divergence": 31
+  },
+  {
+   "lang": "en",
+   "id": 5,
+   "first_divergence": 81
+  }
+ ],
+ "link2": {
+  "same_top_pct": 98.81,
+  "same_top_pm": 0.484,
+  "mean_kld": 0.001418,
+  "mean_kld_pm": 0.000142,
+  "ctx": 128,
+  "chunks": 8,
+  "positions_scored_approx": 504
+ },
+ "bf16_deleted": true,
+ "verdict": "PASS"
+}

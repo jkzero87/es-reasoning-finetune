@@ -163,3 +163,104 @@ Traceback (most recent call last):
     self.launch(gridX, gridY, gridZ, stream, function, self.launch_cooperative_grid, self.launch_pdl,
 ValueError: Pointer argument cannot be accessed from Triton (cpu tensor?)
 === c) exit 1 at 2026-10-12 14:20:14
+
+===== run 2026-10-13 16:31:05 (torch gated-delta path, plan amendment 2026-10-12) =====
+loaded: /home/jkzero/llama-build-3466812d1-phase1-bak/libggml-cuda.so.0 -> bf382e74cc5178cf9f0a00bf382a880626bb055053db6e80dc7ea3b72167124d
+version: 0.3.0-dev (build 10751, commit 3466812d1)
+built with GNU 15.2.0 for Linux x86_64
+[2026-10-13T16:31:08] $ git -C /home/jkzero/llama.cpp rev-parse HEAD
+[2026-10-13T16:31:08] sha256 of the served GGUF
+[transformers] The tokenizer you are loading from '/home/jkzero/models/Qwen3.5-9B-text-mtp' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+[2026-10-13T16:31:29] $ gcc -O2 -o /tmp/tmpde0w2e5x/llama_logits /home/jkzero/es-reasoning-finetune/scripts/llama_logits.c -I /home/jkzero/llama.cpp/include -I /home/jkzero/llama.cpp/ggml/include -L /home/jkzero/llama.cpp/build/bin -lllama -Wl,-rpath,/home/jkzero/llama.cpp/build/bin
+[2026-10-13T16:31:29] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmpde0w2e5x/in.txt /tmp/tmpde0w2e5x/tok.i32
+[2026-10-13T16:31:31] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmpde0w2e5x/in.txt /tmp/tmpde0w2e5x/tok.i32
+[2026-10-13T16:31:32] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmpde0w2e5x/in.txt /tmp/tmpde0w2e5x/tok.i32
+[2026-10-13T16:31:33] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmpde0w2e5x/in.txt /tmp/tmpde0w2e5x/tok.i32
+[2026-10-13T16:31:34] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmpde0w2e5x/in.txt /tmp/tmpde0w2e5x/tok.i32
+[2026-10-13T16:31:35] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmpde0w2e5x/in.txt /tmp/tmpde0w2e5x/tok.i32
+[2026-10-13T16:31:37] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmpde0w2e5x/in.txt /tmp/tmpde0w2e5x/tok.i32
+[2026-10-13T16:31:38] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmpde0w2e5x/in.txt /tmp/tmpde0w2e5x/tok.i32
+[2026-10-13T16:31:39] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmpde0w2e5x/in.txt /tmp/tmpde0w2e5x/tok.i32
+[2026-10-13T16:31:40] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmpde0w2e5x/in.txt /tmp/tmpde0w2e5x/tok.i32
+[2026-10-13T16:31:41] link 1: BF16 GGUF logits
+[2026-10-13T16:31:41] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmpde0w2e5x/in.i32 /tmp/tmpde0w2e5x/out.f32
+[2026-10-13T16:32:01] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmpde0w2e5x/in.i32 /tmp/tmpde0w2e5x/out.f32
+[2026-10-13T16:32:05] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmpde0w2e5x/in.i32 /tmp/tmpde0w2e5x/out.f32
+[2026-10-13T16:32:10] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmpde0w2e5x/in.i32 /tmp/tmpde0w2e5x/out.f32
+[2026-10-13T16:32:14] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmpde0w2e5x/in.i32 /tmp/tmpde0w2e5x/out.f32
+[2026-10-13T16:32:19] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmpde0w2e5x/in.i32 /tmp/tmpde0w2e5x/out.f32
+[2026-10-13T16:32:23] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmpde0w2e5x/in.i32 /tmp/tmpde0w2e5x/out.f32
+[2026-10-13T16:32:28] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmpde0w2e5x/in.i32 /tmp/tmpde0w2e5x/out.f32
+[2026-10-13T16:32:32] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmpde0w2e5x/in.i32 /tmp/tmpde0w2e5x/out.f32
+[2026-10-13T16:32:36] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmpde0w2e5x/in.i32 /tmp/tmpde0w2e5x/out.f32
+[2026-10-13T16:32:41] greedy: Q8_0
+[2026-10-13T16:32:41] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmpde0w2e5x/in.i32 /tmp/tmpde0w2e5x/gen.i32 128
+[2026-10-13T16:32:47] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmpde0w2e5x/in.i32 /tmp/tmpde0w2e5x/gen.i32 128
+[2026-10-13T16:32:52] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmpde0w2e5x/in.i32 /tmp/tmpde0w2e5x/gen.i32 128
+[2026-10-13T16:32:57] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmpde0w2e5x/in.i32 /tmp/tmpde0w2e5x/gen.i32 128
+[2026-10-13T16:33:03] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmpde0w2e5x/in.i32 /tmp/tmpde0w2e5x/gen.i32 128
+[2026-10-13T16:33:08] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmpde0w2e5x/in.i32 /tmp/tmpde0w2e5x/gen.i32 128
+[2026-10-13T16:33:14] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmpde0w2e5x/in.i32 /tmp/tmpde0w2e5x/gen.i32 128
+[2026-10-13T16:33:19] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmpde0w2e5x/in.i32 /tmp/tmpde0w2e5x/gen.i32 128
+[2026-10-13T16:33:24] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmpde0w2e5x/in.i32 /tmp/tmpde0w2e5x/gen.i32 128
+[2026-10-13T16:33:30] $ /tmp/tmpde0w2e5x/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmpde0w2e5x/in.i32 /tmp/tmpde0w2e5x/gen.i32 128
+[2026-10-13T16:33:35] link 1 / greedy: HF bf16 on CPU
+W1013 16:33:35.838000 23383 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1013 16:33:35.874000 23383 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+Loading weights:   0%|          | 0/427 [00:00<?, ?it/s]Loading weights: 100%|██████████| 427/427 [00:00<00:00, 8692.54it/s]
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `chunk_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+[2026-10-13T16:36:34-05:00] STOPPED by the operator (priority change to dsh; not a failure, no verdict). HF CPU stage had run since 16:33:35.
+[2026-11-12T14:31:06-05:00] === run 2026-11-12: exact NEXT.md command (precheck, --version, conversion_check.py)
+loaded: /home/jkzero/llama-build-3466812d1-phase1-bak/libggml-cuda.so.0 -> bf382e74cc5178cf9f0a00bf382a880626bb055053db6e80dc7ea3b72167124d
+version: 0.3.0-dev (build 10751, commit 3466812d1)
+built with GNU 15.2.0 for Linux x86_64
+[2026-11-12T14:31:08] $ git -C /home/jkzero/llama.cpp rev-parse HEAD
+[2026-11-12T14:31:08] sha256 of the served GGUF
+[transformers] The tokenizer you are loading from '/home/jkzero/models/Qwen3.5-9B-text-mtp' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+[2026-11-12T14:31:17] $ gcc -O2 -o /tmp/tmpv813tza8/llama_logits /home/jkzero/es-reasoning-finetune/scripts/llama_logits.c -I /home/jkzero/llama.cpp/include -I /home/jkzero/llama.cpp/ggml/include -L /home/jkzero/llama.cpp/build/bin -lllama -Wl,-rpath,/home/jkzero/llama.cpp/build/bin
+[2026-11-12T14:31:17] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmpv813tza8/in.txt /tmp/tmpv813tza8/tok.i32
+[2026-11-12T14:31:19] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmpv813tza8/in.txt /tmp/tmpv813tza8/tok.i32
+[2026-11-12T14:31:20] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmpv813tza8/in.txt /tmp/tmpv813tza8/tok.i32
+[2026-11-12T14:31:21] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmpv813tza8/in.txt /tmp/tmpv813tza8/tok.i32
+[2026-11-12T14:31:22] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmpv813tza8/in.txt /tmp/tmpv813tza8/tok.i32
+[2026-11-12T14:31:23] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmpv813tza8/in.txt /tmp/tmpv813tza8/tok.i32
+[2026-11-12T14:31:24] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmpv813tza8/in.txt /tmp/tmpv813tza8/tok.i32
+[2026-11-12T14:31:25] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmpv813tza8/in.txt /tmp/tmpv813tza8/tok.i32
+[2026-11-12T14:31:27] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmpv813tza8/in.txt /tmp/tmpv813tza8/tok.i32
+[2026-11-12T14:31:28] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 0 tokenize /tmp/tmpv813tza8/in.txt /tmp/tmpv813tza8/tok.i32
+[2026-11-12T14:31:29] link 1: BF16 GGUF logits
+[2026-11-12T14:31:29] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmpv813tza8/in.i32 /tmp/tmpv813tza8/out.f32
+[2026-11-12T14:31:49] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmpv813tza8/in.i32 /tmp/tmpv813tza8/out.f32
+[2026-11-12T14:31:53] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmpv813tza8/in.i32 /tmp/tmpv813tza8/out.f32
+[2026-11-12T14:31:58] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmpv813tza8/in.i32 /tmp/tmpv813tza8/out.f32
+[2026-11-12T14:32:02] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmpv813tza8/in.i32 /tmp/tmpv813tza8/out.f32
+[2026-11-12T14:32:07] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmpv813tza8/in.i32 /tmp/tmpv813tza8/out.f32
+[2026-11-12T14:32:11] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmpv813tza8/in.i32 /tmp/tmpv813tza8/out.f32
+[2026-11-12T14:32:16] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmpv813tza8/in.i32 /tmp/tmpv813tza8/out.f32
+[2026-11-12T14:32:20] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmpv813tza8/in.i32 /tmp/tmpv813tza8/out.f32
+[2026-11-12T14:32:25] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf 0 logits /tmp/tmpv813tza8/in.i32 /tmp/tmpv813tza8/out.f32
+[2026-11-12T14:32:29] greedy: Q8_0
+[2026-11-12T14:32:29] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmpv813tza8/in.i32 /tmp/tmpv813tza8/gen.i32 128
+[2026-11-12T14:32:35] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmpv813tza8/in.i32 /tmp/tmpv813tza8/gen.i32 128
+[2026-11-12T14:32:40] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmpv813tza8/in.i32 /tmp/tmpv813tza8/gen.i32 128
+[2026-11-12T14:32:46] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmpv813tza8/in.i32 /tmp/tmpv813tza8/gen.i32 128
+[2026-11-12T14:32:51] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmpv813tza8/in.i32 /tmp/tmpv813tza8/gen.i32 128
+[2026-11-12T14:32:57] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmpv813tza8/in.i32 /tmp/tmpv813tza8/gen.i32 128
+[2026-11-12T14:33:02] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmpv813tza8/in.i32 /tmp/tmpv813tza8/gen.i32 128
+[2026-11-12T14:33:08] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmpv813tza8/in.i32 /tmp/tmpv813tza8/gen.i32 128
+[2026-11-12T14:33:13] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmpv813tza8/in.i32 /tmp/tmpv813tza8/gen.i32 128
+[2026-11-12T14:33:19] $ /tmp/tmpv813tza8/llama_logits /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf 99 greedy /tmp/tmpv813tza8/in.i32 /tmp/tmpv813tza8/gen.i32 128
+[2026-11-12T14:33:24] link 1 / greedy: HF bf16 on CPU
+W1112 14:33:25.147000 165138 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1112 14:33:25.177000 165138 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+Loading weights:   0%|          | 0/427 [00:00<?, ?it/s]Loading weights:  35%|███▌      | 151/427 [00:00<00:00, 1418.56it/s]Loading weights:  81%|████████  | 346/427 [00:00<00:00, 1722.58it/s]Loading weights: 100%|██████████| 427/427 [00:00<00:00, 1707.13it/s]
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `chunk_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+[transformers] `causal_conv1d_update` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `fused_recurrent_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+[2026-11-12T15:09:12] link 2: llama-perplexity KL, BF16 -> Q8_0
+[2026-11-12T15:09:12] $ /home/jkzero/llama.cpp/build/bin/llama-perplexity -m /home/jkzero/models/Qwen3.5-9B-text-mtp-BF16/Qwen3.5-9B-text-mtp-BF16.gguf -f /tmp/tmpv813tza8/text.txt -c 128 -ngl 0 --kl-divergence-base /tmp/tmpv813tza8/base.kld
+[2026-11-12T15:09:23] $ /home/jkzero/llama.cpp/build/bin/llama-perplexity -m /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf -c 128 -ngl 99 --kl-divergence-base /tmp/tmpv813tza8/base.kld --kl-divergence
+[2026-11-12T15:09:38] verdict PASS: link1 98.587%, link2 98.81%
+[2026-11-12T15:09:42-05:00] exit=0
