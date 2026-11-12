@@ -1,5 +1,41 @@
 # NEXT
 
+## Status 2026-11-12 (gate applied; nothing running; the local agent takes over after Juan's queue)
+
+Objective (Juan, 2026-11-12; verbatim in README.md and results/plan.md): data and practical conclusions on how much, where and why Spanish costs more in open models; fine-tuning is one test, not the goal.
+
+Done today:
+- **c) conversion check: PASS** (`results/conversion_check.md`, commit `7b40d9d`): link 1 top-1 98.587% (920 positions), link 2 same-top 98.81 ± 0.484%. Exact command of "Tomorrow (2026-10-10), FIRST" below, precheck bf382e74… passed. The script deleted the BF16 GGUF at its end (before the verdict commit, not after); nothing of it is left on disk.
+- **Gate applied as written** (`results/gate_decision.md`): MGSM es/en 1.1235 < 1.15 → **nothing is trained**; MGSM result "problem not reproduced on this model" (27B 1.34×). Belebele 1.5401 is descriptive. d) resume test and e) arm A below are **not run and not pending**.
+- New descriptive metric SUCCESS_PER_1K (`scripts/efficiency_baseline.py`, `results/efficiency_baseline.md`; plan amendment 2026-11-12), run on the 9B base raws and the 27B raws.
+- zh data fixed: `data/belebele_zh.jsonl` was es-eval's raw 976-line file (488 passage rows + 488 question rows, no options or gold); re-exported in the en/es format, 488 ids, qid and gold equal to en, sample ids 300/300 (`scripts/export_belebele_zh.py`, `SOURCE.md`).
+- Tracked: bench/, zh data, phase-1 raw files, token_split files. `scripts/peek_pairs.py` stays untracked on purpose.
+- `bench/CORRER.md`: the MTP note was wrong; MGSM and Belebele base9b both ran with MTP on b10751 (evidence there).
+- Training base `~/models/Qwen3.5-9B-text` was missing; rebuilt from `-mtp` by dropping only `mtp.*`, 8,953,803,264 params (`results/training_base_rebuild.md`). Caveat there: a Q8_0 conversion of the rebuild has the plan's exact byte size but not its sha256 (`34a75e46…` vs `a3e9970c…`; cause not established, test GGUF deleted). `~/models/Qwen3.5-9B-hf` and the no-MTP Q8_0 GGUF are not on disk; neither is needed unless training is reopened by a new amendment, which must then name the base.
+- `scripts/run_baseline.py` gained `--bench proxlite`, `--thinking off`, `--limit-per-lang` (defaults unchanged). Its sha256 `2f62b2ea…` quoted under "Gate, after c)" is the phase-1 version (commit `2df4b34`).
+- main pushed to origin with this commit (approved by Juan 2026-10-12 and again 2026-11-12).
+
+**Next, in order:**
+1. **Juan launches the GPU queue** (plan amendment 2026-11-12: q1 zh baseline, q2 reasoning off, q3 ProX-Lite). Command, preconditions and projected hours: `bench/CORRER.md`. :8092 must be down; the script refuses otherwise. Resumable with the same command; `results/QUEUE_DONE` is written only when every row count is exact.
+2. **Local agent (27B via dsh), CPU only:** `AGENTS.md`, then `bench/TAREAS_AGENTE.md` T1–T6 (counts, scorers, efficiency tables, CONCLUSIONES.md, README tables, local commit, audit). It never pushes.
+3. Juan reviews the agent's commit and pushes.
+
+Rules that still hold: never change the gate, the threshold or a committed amendment; new decisions go in as dated amendments in results/plan.md before the run they affect; serve with the phase-1 libggml-cuda (rule 2026-10-09); never touch :8092.
+
+Everything below is history, kept as written (dated figures such as "11 commits ahead" on 2026-10-12 or "79 GB free" on 2026-10-09 were true on their dates; on 2026-11-12: `df -h ~` 239G free before the rebuild).
+
+## TOMORROW, AFTER the dsh items (Juan 2026-10-13: dsh first): c) conversion check, ~50 min, must start by ~17:45
+
+- Timing 2026-10-13 16:29 (scratch script, conversion_check.py unchanged, torch gated-delta path): MGSM es id 1
+  (109 tokens): load 2.5 s, logits forward 29.3 s, cached forward 23.4 s, greedy 1.51 s/token -> ~245 s/prompt,
+  ~41 min for the 10 HF prompts; whole check ~47-55 min (BF16 GGUF already on disk, no conversion).
+- 2026-10-13 run: started 16:31:08 with the exact command below; precheck PASS (bf382e74…), BF16 logits and Q8_0
+  greedy done, HF CPU stage from 16:33:35; **stopped 16:40 by Juan's priority change (dsh first). Not a failure,
+  no verdict, nothing written** (log appended to `results/conversion_check.log`). BF16 GGUF still on disk (reused).
+- Plan: start it after the dsh items (stop the dsh stack first: nothing else on the GPU), same command as "Tomorrow (2026-10-10),
+  FIRST" below; then the rest of the 2026-10-12 resume point (verdict commit, gate as written with threshold 1.15,
+  delete BF16 GGUF only after the verdict, approved push of main).
+
 ## Status 2026-10-12 14:25 (unattended run; stopped, nothing running)
 
 - Pre-check: dsh stack down, no compute processes, :8093 free.
