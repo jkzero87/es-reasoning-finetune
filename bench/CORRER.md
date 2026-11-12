@@ -1,31 +1,70 @@
-# CORRER — benchmark base del 9B (sin tocar el 27B en :8092)
+# CORRER — cola de GPU del 9B (la lanza Juan)
 
-Medido igual que el 27B (`~/es-eval`): mismos prompts (`data/*.jsonl`), misma
-generación (temperature 1.0, top_p 0.95, top_k 20, seed 42, max_tokens 8192,
-sin system prompt) y misma métrica (tokens de `reasoning_content` y `content`
-vía `/tokenize` del servidor, como `es-eval/scripts/mgsm_token_split.py`).
+Enmienda 2026-11-12 de `results/plan.md`: corridas descriptivas, sin compuerta. Mismos flags de servidor, mismo
+cuantizado y mismos ids que la fase 1.
 
-**No ejecutar hasta que la GPU esté libre** (el 27B en :8092 la ocupa;
-`journalctl -k | grep Xid` antes de arrancar).
+| ítem | qué corre | etiqueta | filas nuevas |
+|---|---|---|---:|
+| q1 | zh: MGSM 250 + Belebele los mismos 300 ids | `base9b` (filas zh) | 550 |
+| q2 | razonamiento apagado, es/en/zh: MGSM 250 + Belebele 300 | `noreason9b` | 1650 |
+| q3 | MMLU-ProX-Lite es/en/zh, 60 ids de es-eval, `max_tokens` 8192 | `prox9b` | 180 |
 
-## 1. Servidor (llama-server, puerto 8093)
+## 1. Antes de lanzar
 
-Modelo: `~/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf`
-(Q8_0, MTP; sha256 `a96c8c42919aa1b963fd827e5cfa3b0fe8a14a7ba82a992797ce617c6f438496`).
-Llamada exacta (idéntica a la de `results/serve_cmd.base9b.txt` y a
-`scripts/serve_base.sh`; MTP incluido porque los raw base9b existentes se
-corrieron así):
+- **El 27B de :8092 tiene que estar detenido.** `scripts/run_queue.sh` se niega a arrancar si hay algo escuchando en
+  :8092 o en :8093 (la tarjeta de 16 GB no aguanta los dos). El script nunca toca :8092.
+- `nvidia-smi` sin procesos de cómputo.
+- q3 lee los ítems de la caché local de es-eval (`~/es-eval/.hf_cache`, sin red); no borrar esa carpeta.
+
+## 2. El comando (uno solo)
 
 ```bash
-GGML_CUDA_DISABLE_GRAPHS=1 setsid nohup /home/jkzero/llama.cpp/build/bin/llama-server \
-  -m /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf \
-  --spec-type draft-mtp --spec-draft-n-max 3 -ctkd q8_0 -ctvd q8_0 \
-  -ngl 99 -fa on -c 36864 -ub 256 -ctk q8_0 -ctv q8_0 \
-  -t 6 --parallel 4 --reasoning-effort medium \
-  --port 8093 > ~/logs/base_$(date +%Y%m%d_%H%M%S).log 2>&1 < /dev/null &
+cd ~/es-reasoning-finetune && setsid nohup scripts/run_queue.sh >> results/queue.log 2>&1 < /dev/null &
 ```
 
-Esperar a que `curl -sf localhost:8093/health` responda (~20 s).
+Qué hace, en orden: comprueba la `libggml-cuda` de la fase 1 (`bf382e74…`, regla 2026-10-09), arranca el 9B en :8093
+con `scripts/serve_base.sh` (los mismos flags que `results/serve_cmd.base9b.txt`, `--parallel 4`, MTP), guarda la
+línea exacta del servidor en `results/serve_cmd.queue.txt`, corre q1, q2 y q3 con `scripts/run_baseline.py
+--workers 4`, detiene el servidor y, **solo si todos los conteos son exactos** (`scripts/queue_counts.py`), escribe
+`results/QUEUE_DONE` con la hora y los conteos.
+
+- Seguir el avance: `tail -f results/queue.log`. Conteos en cualquier momento: `.venv/bin/python scripts/queue_counts.py`.
+- **Reanudable:** si se corta (apagón, `STOP_AT`, Ctrl-C al servidor), relanzar el mismo comando; salta los
+  `(id, lang)` ya escritos. Si el servidor quedó vivo: `kill $(pgrep -f 'llama-server.*--port 8093')` (NUNCA el de :8092).
+- Hora de corte opcional: anteponer `STOP_AT=18:45` al comando (`STOP_AT=18:45 setsid nohup …`); no empieza ítems
+  a esa hora ni después, termina incompleta (sin `QUEUE_DONE`) y se relanza al día siguiente.
+- Al terminar: levantar el 27B y darle al agente local `bench/TAREAS_AGENTE.md` (T1–T6).
+
+## 3. Horas proyectadas
+
+Medido: en la fase 1 el servidor dio **214–225 tokens de salida por segundo en total** con 4 peticiones en vuelo
+(`results/phase1_run.log`: 951.681 tokens en 4.240 s el 2026-10-08; 1.015.784 en 4.744 s el 2026-10-09). La
+proyección es tokens esperados / 214. Los tokens por registro de zh, sin razonamiento y ProX-Lite salen de la prueba
+de humo del 2026-11-12 (2 ítems por idioma: muy pocos, la incertidumbre es grande) y de las medias de la fase 1.
+
+| ítem | registros | tokens de salida por registro (supuesto) | de dónde sale el supuesto | proyección |
+|---|---:|---:|---|---:|
+| q1 MGSM zh | 250 | ~2.800 | media es de la fase 1 (2.795,7); humo zh: 1.594 y 8.192 (corte) | ~55 min |
+| q1 Belebele zh | 300 | ~1.700 | entre en (1.307) y es (2.079) de la fase 1; humo zh: 1.052 y 1.118 | ~40 min |
+| q2 MGSM sin razonamiento | 750 | ~220 | humo: 166–290 (6 registros en 7 s) | ~15 min |
+| q2 Belebele sin razonamiento | 900 | ~205 | humo: 77–420 (6 registros en 9 s) | ~25 min |
+| q3 ProX-Lite | 180 | ~5.000 | humo: media 6.000 con 3 de 6 cortados en 8.192 (6 registros en 202 s) | ~70 min |
+| **total** | 2.380 | | | **~3,5 h** |
+
+Rango razonable: **3 a 4,5 h**. Techo si q3 entero llegara al corte de 8.192: q3 115 min. La prueba de humo completa
+(22 registros, las 5 corridas) tardó 5 min 54 s de 15:10:07 a 15:16:01 incluyendo arranque y parada del servidor.
+
+Observaciones de la prueba de humo (no son resultados; sus filas se borraron):
+- `--thinking off` funciona: `reasoning_content` vacío en los 12 registros, todos terminan con la línea de respuesta.
+- ProX-Lite id 75: los tres idiomas llegaron al corte de 8.192 sin respuesta (`content` vacío). En el 9B habrá
+  cortes en q3; quedan contados en la columna `length` de `results/efficiency_baseline.md`.
+- MGSM zh id 1 llegó al corte (8.192).
+
+## 4. Cómo se midió la fase 1 (para comparar)
+
+Modelo: `~/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf` (Q8_0, MTP; sha256
+`a96c8c42919aa1b963fd827e5cfa3b0fe8a14a7ba82a992797ce617c6f438496`). Generación: temperature 1.0, top_p 0.95,
+top_k 20, seed 42, max_tokens 8192, sin system prompt. Línea del servidor: `results/serve_cmd.base9b.txt`.
 
 > Nota MTP (corregida 2026-11-12): los raw base9b de MGSM y de Belebele se
 > corrieron **con** MTP, en llama.cpp b10751-3466812d1. Evidencia: los 500
@@ -36,65 +75,8 @@ Esperar a que `curl -sf localhost:8093/health` responda (~20 s).
 > draft context"; `results/server_props.base9b.json` dice `b10751-3466812d1`.
 > "b10749" no aparece en ningún otro archivo del repo.
 
-## 2. Benchmark — trabajo pendiente: SOLO zh (es y en ya están completos)
-
-```bash
-cd ~/es-reasoning-finetune
-
-# MGSM (250/idioma; es+en completos, falta solo zh):
-.venv-train/bin/python -u bench/baseline_9b.py --bench mgsm --tag base9b --langs zh --stop-at 19:00 >> bench/mgsm_run.log 2>&1
-
-# Belebele (es+en ya tienen los 300 ids del sample; falta solo zh con ESE MISMO
-# sample de 300 ids — NO llenar el resto de los 488):
-.venv-train/bin/python -u bench/baseline_9b.py --bench belebele --tag base9b --langs zh --stop-at 19:00 >> bench/belebele_run.log 2>&1
-```
-
-- El reanudable salta los `(id, lang)` ya escritos en
-  `bench/<bench>_raw.base9b.jsonl`, así que en MGSM solo se corre zh.
-- Para correr SOLO zh: `--langs zh` (el reanudable salta lo que ya hay).
-- En Belebele, si el reanudable quisiera correr los es/en restantes (488−300),
-  NO se corren: la comparación con el 27B se hace sobre el sample de 300 ids
-  (`results/belebele_sample_300.json`) y ese ya está completo. El único trabajo
-  pendiente en GPU es **zh: MGSM 250 + Belebele 300 (mismo sample de ids del 9B
-  existente en es/en)**.
-- Ojo: `data/belebele_zh.jsonl` no tiene `gold` ni `options` (formato distinto al
-  de es/en; ver la nota en "Estado"). Para Belebele zh hay que preparar un
-  dataset con esos campos antes de correr (o `--limit 0`/revisar antes).
-
-Prueba corta antes de lanzar en serio:
-
-```bash
-.venv-train/bin/python -u bench/baseline_9b.py --bench mgsm --tag test --limit 2
-```
-
-- `--stop-at 19:00` (hora local): no empieza nada a esa hora ni después; lo
-  que esté en vuelo termina y se escribe. Para detener antes: `Ctrl-C`
-  (SIGINT/SIGTERM) → termina el item en vuelo, escribe y sale limpio.
-- **Reanudar al día siguiente**: re-lanzar el mismo comando; salta los
-  `(id, lang)` ya en `bench/<bench>_raw.<tag>.jsonl` y regenera el resumen.
-- `--limit N`: máximo de N pendientes por idioma (pruebas).
-
-## 3. Salidas (en `bench/`)
-
-| archivo | contenido |
-|---|---|
-| `<bench>_raw.base9b.jsonl` | crudo por petición (igual que es-eval) + `reasoning_tokens`, `answer_tokens` |
-| `<bench>_raw.base9b.csv` | tabla cruda por petición (id, lang, gold, tokens, wall) |
-| `server_props.base9b.json` | `GET /props` del 9B antes del primer item |
-| `<bench>_summary.base9b.json` | resumen por idioma: medias/min/max de reasoning/answer/total y ratios es/en, zh/en |
-
-Regenerar solo el resumen (sin tocar el servidor):
-
-```bash
-.venv-train/bin/python -u bench/baseline_9b.py --bench mgsm --tag base9b --summary-only
-```
-
-## 4. Cerrar
-
-```bash
-# par el llama-server del 9B (NUNCA el de :8092)
-kill $(pgrep -f 'llama-server.*--port 8093')   # o el PID que imprimió el arranque
-```
+`bench/baseline_9b.py` (runner alternativo del 2026-10-20 que escribe en `bench/`) **no se usa en la cola**: la cola
+usa el runner de la fase 1, `scripts/run_baseline.py`, y escribe en `results/`.
 
 ## 5. Estado
 
@@ -110,10 +92,7 @@ kill $(pgrep -f 'llama-server.*--port 8093')   # o el PID que imprimió el arran
   - Comparación justa (mismos ids, `bench/compare_27b_9b.py`):
     - Belebele 27B-488: es/en reason 1.4902 · 27B-300: 1.5507 · 9B-300: 1.6290.
     - MGSM 250 vs 250: 27B es/en reason 1.5015 · 9B 1.1200.
-- **Pendiente en GPU: solo zh** (MGSM 250 + Belebele 300 del sample).
-- `data/belebele_zh.jsonl`: 976 líneas = 2×488. Bloque 1 (ids int 1..488):
-  `id, link, flores_passage` (solo passage, como el raw del 27B). Bloque 2
-  (ids str `q<url>:<n>`): `id, link, question_number, flores_passage, question`
-  (versión HF completa de Belebele). Mismo set de 488 preguntas en ambos
-  bloques; **sin `options` ni `gold`** → para correrlo con `baseline_9b.py`
-  hay que añadir esos campos (o usar el bloque int tal cual para el prompt).
+- **Pendiente en GPU (2026-11-12):** la cola de arriba (q1, q2, q3).
+- `data/belebele_zh.jsonl` (corregido 2026-11-12): el archivo anterior era el crudo de es-eval, 976 líneas = 488 filas
+  de pasaje + 488 filas de pregunta, sin `options` ni `gold`. Ahora tiene el formato de en/es (488 ids; `qid` y `gold`
+  iguales a en en todos; los 300 ids de la muestra presentes), exportado con `scripts/export_belebele_zh.py`.
