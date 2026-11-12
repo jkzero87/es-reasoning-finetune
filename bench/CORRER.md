@@ -27,10 +27,14 @@ GGML_CUDA_DISABLE_GRAPHS=1 setsid nohup /home/jkzero/llama.cpp/build/bin/llama-s
 
 Esperar a que `curl -sf localhost:8093/health` responda (~20 s).
 
-> Nota: los raw base9b existentes de MGSM se corrieron **sin** MTP
-> (llama.cpp b10749, `results/phase1_report.md`); los de Belebele **con** MTP
-> (b10751). Con MTP las cifras de tokens cambian ligeramente; ver
-> `results/plan.md` si hace falta decidir antes de llenar el hueco de zh.
+> Nota MTP (corregida 2026-11-12): los raw base9b de MGSM y de Belebele se
+> corrieron **con** MTP, en llama.cpp b10751-3466812d1. Evidencia: los 500
+> registros de MGSM y los 600 de Belebele tienen `timings.draft_n > 0`; las
+> dos líneas de `results/serve_cmd.base9b.txt` llevan `--spec-type draft-mtp`;
+> los logs del servidor de las tres sesiones (`~/logs/base_20261007_175716.log`,
+> `base_20261008_153937.log`, `base_20261009_170416.log`) dicen "creating MTP
+> draft context"; `results/server_props.base9b.json` dice `b10751-3466812d1`.
+> "b10749" no aparece en ningún otro archivo del repo.
 
 ## 2. Benchmark — trabajo pendiente: SOLO zh (es y en ya están completos)
 
@@ -56,13 +60,6 @@ cd ~/es-reasoning-finetune
 - Ojo: `data/belebele_zh.jsonl` no tiene `gold` ni `options` (formato distinto al
   de es/en; ver la nota en "Estado"). Para Belebele zh hay que preparar un
   dataset con esos campos antes de correr (o `--limit 0`/revisar antes).
-
-> Nota MTP (observación, no se re-corre): los raw existentes de MGSM se
-> corrieron **sin** MTP (llama.cpp b10749, `results/phase1_report.md`) y los de
-> Belebele **con** MTP (b10751). MTP no cambia la longitud de las salidas
-> (acelera la decodificación por draft, no el contenido), así que esa
-> diferencia no se re-corre y queda como observación; para decidir antes de
-> llenar el hueco de zh ver `results/plan.md`.
 
 Prueba corta antes de lanzar en serio:
 
