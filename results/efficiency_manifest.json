@@ -1,0 +1,11 @@
+[
+ {"model": "27B IQ3_S", "bench": "mgsm", "setting": "thinking", "tag": "base27b", "raw": "/home/jkzero/es-eval/results/mgsm_raw.jsonl", "ids": null, "expected_n": 250},
+ {"model": "27B IQ3_S", "bench": "belebele", "setting": "thinking, 488 ids", "tag": "base27b", "raw": "/home/jkzero/es-eval/results/belebele_raw.jsonl", "ids": null, "expected_n": 488},
+ {"model": "27B IQ3_S", "bench": "belebele", "setting": "thinking, same 300 ids", "tag": "base27b", "raw": "/home/jkzero/es-eval/results/belebele_raw.jsonl", "ids": "results/belebele_sample_300.json", "expected_n": 300},
+ {"model": "27B IQ3_S", "bench": "proxlite", "setting": "thinking, 60 ids, max_tokens 16384", "tag": "base27b", "raw": "/home/jkzero/es-eval/results/proxlite_raw.jsonl", "ids": "results/proxlite_subset_60_strat.txt", "expected_n": 60},
+ {"model": "9B Q8_0", "bench": "mgsm", "setting": "thinking", "tag": "base9b", "raw": "results/mgsm_raw.base9b.jsonl", "ids": null, "expected_n": 250},
+ {"model": "9B Q8_0", "bench": "belebele", "setting": "thinking, same 300 ids", "tag": "base9b", "raw": "results/belebele_raw.base9b.jsonl", "ids": "results/belebele_sample_300.json", "expected_n": 300},
+ {"model": "9B Q8_0", "bench": "mgsm", "setting": "reasoning off", "tag": "noreason9b", "raw": "results/mgsm_raw.noreason9b.jsonl", "ids": null, "expected_n": 250},
+ {"model": "9B Q8_0", "bench": "belebele", "setting": "reasoning off, same 300 ids", "tag": "noreason9b", "raw": "results/belebele_raw.noreason9b.jsonl", "ids": "results/belebele_sample_300.json", "expected_n": 300},
+ {"model": "9B Q8_0", "bench": "proxlite", "setting": "thinking, 60 ids, max_tokens 8192", "tag": "prox9b", "raw": "results/proxlite_raw.prox9b.jsonl", "ids": "results/proxlite_subset_60_strat.txt", "expected_n": 60}
+]
