@@ -282,3 +282,9 @@ Descriptive runs: none of them feeds the gate or a phase-3 criterion. Launched b
 - **q3, MMLU-ProX-Lite, tag `prox9b`:** es, en, zh; the 60 question_ids of es-eval's `results/proxlite_subset_60_strat.txt` (copied to `results/`), prompts from the unchanged copy of es-eval's `scripts/run_proxlite.py`, thinking on. Difference from the 27B run: `max_tokens` 8192 instead of 16384, because the phase-1 server gives each slot 9216 tokens. The 27B produced more than 8192 completion tokens on some ProX-Lite records, so a 27B-vs-9B comparison of this benchmark carries that caveat. Items are read from es-eval's local HF cache (`~/es-eval/.hf_cache`, revision `e82aafb9`); no ProX-Lite item text is tracked here.
 
 Smoke tests before the queue (2 items per language per run, tag `smoke`) are deleted afterwards and are not results.
+
+## Amendment 2026-11-12 (label audit + causal test; before any of its runs; no gate)
+
+2026-11-12 label audit + causal test: (A) corrected Spanish for 11 items flagged as translation errors, (B) 5 repeats es/en of 22 correct-Spanish items from the worst tails. Same server flags, quants, max_tokens and ids as the original runs.
+
+Descriptive only: no gate, no threshold and no phase-3 criterion changes. Labels: `results/label_audit_2026-11-12.md` (sample from `scripts/label_sample.py`, seed 20261112). Corrected fields: `data/fixes_2026-11-12.jsonl`; `data/*.jsonl` are not modified. Repeat r (1..5) sends `seed` 42 + r instead of 42; every other per-request setting is the runner's unchanged `GENERATION`, so the 5 repeats are 5 new samples next to the original seed-42 record. Tags `fix27b`, `fix9b`, `rep27b`, `rep9b` write only new raw files. 27B: es-eval's `~/bin/manifiestate` flags, on :8093; 9B: `scripts/serve_base.sh`. One model on the GPU at a time.
