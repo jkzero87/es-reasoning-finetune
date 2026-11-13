@@ -1,5 +1,11 @@
 # NEXT
 
+## Status 2026-11-12 22:5x (causal test, interrupted for the night)
+
+Ran tonight: label audit (`results/label_audit_2026-11-12.md`), fixes (`data/fixes_2026-11-12.jsonl`), causal test jobs `fix27b` MGSM 30/30 and Belebele 25/25 (`results/*_raw.fix27b.jsonl`). `rep27b` started (partial rows may exist in `results/mgsm_raw.rep27b.jsonl`, not committed).
+Pending: `rep27b` (100 rows), `fix9b` (MGSM 30, Belebele 25), `rep9b` (120 rows); then `results/causal_test_2026-11-12.md` (regenerate with `.venv/bin/python scripts/causal_report.py`), `results/RESUMEN_REUNION.md`. Resume, with :8092 down: `cd ~/es-reasoning-finetune && setsid nohup scripts/run_causal.sh >> results/causal_run.log 2>&1 < /dev/null &` (skips rows already written).
+
+
 ## Status 2026-11-12 (gate applied; nothing running; the local agent takes over after Juan's queue)
 
 Objective (Juan, 2026-11-12; verbatim in README.md and results/plan.md): data and practical conclusions on how much, where and why Spanish costs more in open models; fine-tuning is one test, not the goal.
