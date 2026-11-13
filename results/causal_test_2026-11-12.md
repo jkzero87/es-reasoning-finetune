@@ -17,11 +17,28 @@ Raw: `results/mgsm_raw.fix27b.jsonl`.
 
 ## (A) mgsm 9b, tag `fix9b`
 
-Not run: `mgsm_raw.fix9b.jsonl` does not exist (see `results/causal_run.log`).
+Raw: `results/mgsm_raw.fix9b.jsonl`.
+
+| id | orig es | orig en | es repeats mean ± sd | en repeats mean | es correct / repeats | length es / en | orig es correct |
+|---:|---:|---:|---:|---:|---:|---:|---|
+| 215 | 17609 | 3743 | 6817 ± 2397 |  | 5/5 | 0 /  | no |
+| 39 | 16168 | 10204 | 7752 ± 4259 |  | 5/5 | 0 /  | no |
+| 71 | 26685 | 11324 | 17313 ± 3112 |  | 4/5 | 0 /  | no |
+| 199 | 21610 | 4486 | 4618 ± 1468 |  | 5/5 | 0 /  | no |
+| 111 | 15053 | 3236 | 9179 ± 1927 |  | 5/5 | 0 /  | yes |
+| 94 | 23505 | 12704 | 22405 ± 2881 |  | 1/5 | 1 /  | no |
 
 ## (A) belebele 9b, tag `fix9b`
 
-Not run: `belebele_raw.fix9b.jsonl` does not exist (see `results/causal_run.log`).
+Raw: `results/belebele_raw.fix9b.jsonl`.
+
+| id | orig es | orig en | es repeats mean ± sd | en repeats mean | es correct / repeats | length es / en | orig es correct |
+|---:|---:|---:|---:|---:|---:|---:|---|
+| 376 | 30476 | 4268 | 19493 ± 9094 |  | 3/5 | 1 /  | yes |
+| 388 | 26467 | 3007 | 4621 ± 1071 |  | 5/5 | 0 /  | no |
+| 224 | 24966 | 3344 | 7894 ± 2675 |  | 5/5 | 0 /  | yes |
+| 483 | 34224 | 16499 | 13564 ± 4004 |  | 5/5 | 0 /  | no |
+| 304 | 20641 | 3913 | 14003 ± 2223 |  | 5/5 | 0 /  | yes |
 
 ## (A) belebele 27b, tag `fix27b`
 
@@ -37,24 +54,39 @@ Raw: `results/belebele_raw.fix27b.jsonl`.
 
 ## (B) mgsm 27b, tag `rep27b`
 
-Raw: `results/mgsm_raw.rep27b.jsonl`. Incomplete: 88 es (1/5), 88 en (0/5), 177 es (1/5), 177 en (0/5), 158 es (1/5), 158 en (0/5), 17 es (1/5), 17 en (0/5), 236 es (1/5), 236 en (0/5), 202 es (1/5), 202 en (0/5), 13 es (1/5), 13 en (0/5), 187 es (1/5), 187 en (0/5), 237 es (1/5), 237 en (0/5), 79 es (1/5), 79 en (0/5); statistics use the repeats present.
+Raw: `results/mgsm_raw.rep27b.jsonl`.
 
 | id | orig es | orig en | es repeats mean ± sd | en repeats mean | es correct / repeats | length es / en | orig es correct |
 |---:|---:|---:|---:|---:|---:|---:|---|
-| 88 | | | no records | | | | |
-| 177 | | | no records | | | | |
-| 158 | | | no records | | | | |
-| 17 | | | no records | | | | |
-| 236 | | | no records | | | | |
-| 202 | | | no records | | | | |
-| 13 | | | no records | | | | |
-| 187 | | | no records | | | | |
-| 237 | | | no records | | | | |
-| 79 | | | no records | | | | |
+| 88 | 8346 | 1729 | 4473 ± 3478 | 2324 | 5/5 | 0 / 0 | yes |
+| 177 | 4283 | 489 | 3404 ± 2230 | 192 | 4/5 | 0 / 0 | yes |
+| 158 | 4272 | 1390 | 4469 ± 961 | 1652 | 0/5 | 0 / 0 | no |
+| 17 | 3235 | 761 | 3054 ± 937 | 869 | 2/5 | 0 / 0 | no |
+| 236 | 2619 | 452 | 1364 ± 1176 | 1453 | 5/5 | 0 / 0 | no |
+| 202 | 2381 | 808 | 2368 ± 1374 | 1045 | 5/5 | 0 / 0 | yes |
+| 13 | 4140 | 2602 | 3541 ± 1335 | 2868 | 4/5 | 0 / 0 | no |
+| 187 | 2144 | 670 | 2124 ± 920 | 943 | 5/5 | 0 / 0 | yes |
+| 237 | 2065 | 714 | 2145 ± 890 | 983 | 5/5 | 0 / 0 | yes |
+| 79 | 1931 | 629 | 2189 ± 445 | 936 | 5/5 | 0 / 0 | yes |
 
 ## (B) belebele 9b, tag `rep9b`
 
-Not run: `belebele_raw.rep9b.jsonl` does not exist (see `results/causal_run.log`).
+Raw: `results/belebele_raw.rep9b.jsonl`.
+
+| id | orig es | orig en | es repeats mean ± sd | en repeats mean | es correct / repeats | length es / en | orig es correct |
+|---:|---:|---:|---:|---:|---:|---:|---|
+| 270 | 23883 | 3364 | 7687 ± 1419 | 12416 | 5/5 | 0 / 0 | yes |
+| 33 | 24931 | 4436 | 9717 ± 2762 | 4950 | 5/5 | 0 / 0 | yes |
+| 487 | 34146 | 14155 | 35599 ± 1290 | 26836 | 1/5 | 4 / 1 | yes |
+| 127 | 23503 | 3981 | 18575 ± 6386 | 4585 | 5/5 | 0 / 0 | yes |
+| 278 | 22601 | 3131 | 21238 ± 9425 | 10349 | 5/5 | 0 / 0 | yes |
+| 374 | 22912 | 4471 | 13337 ± 7857 | 5971 | 5/5 | 0 / 0 | yes |
+| 203 | 33945 | 16122 | 21311 ± 4557 | 13084 | 5/5 | 0 / 0 | no |
+| 134 | 26828 | 11796 | 22357 ± 8725 | 19163 | 4/5 | 1 / 0 | yes |
+| 377 | 17194 | 3121 | 7513 ± 992 | 7585 | 5/5 | 0 / 0 | yes |
+| 466 | 23372 | 10344 | 26070 ± 9505 | 6097 | 3/5 | 2 / 0 | yes |
+| 324 | 15233 | 2832 | 19355 ± 4891 | 2475 | 5/5 | 0 / 0 | yes |
+| 140 | 26074 | 13852 | 24824 ± 5384 | 7997 | 0/5 | 0 / 0 | no |
 
 ## Group A (fixes): original vs corrected Spanish
 
@@ -63,11 +95,13 @@ Mean es = mean over items of the original record / of the repeat mean. es/en = �
 | bench | model | n | mean es original | mean es corrected | es/en original | es/en corrected |
 |---|---|---:|---:|---:|---:|---:|
 | mgsm | 27b | 6 | 7229 | 1309 | 6.021 | 1.090 |
+| mgsm | 9b | 6 | 20105 | 11347 | 2.640 | 1.490 |
+| belebele | 9b | 5 | 27355 | 11915 | 4.408 | 1.920 |
 | belebele | 27b | 5 | 1852 | 1751 | 1.810 | 1.711 |
 
 - mgsm 27b (n=6): mean es reasoning chars 7229 original, 1309 corrected; es/en against the original en 6.021 original, 1.090 corrected.
-- mgsm 9b: not run.
-- belebele 9b: not run.
+- mgsm 9b (n=6): mean es reasoning chars 20105 original, 11347 corrected; es/en against the original en 2.640 original, 1.490 corrected.
+- belebele 9b (n=5): mean es reasoning chars 27355 original, 11915 corrected; es/en against the original en 4.408 original, 1.920 corrected.
 - belebele 27b (n=5): mean es reasoning chars 1852 original, 1751 corrected; es/en against the original en 1.810 original, 1.711 corrected.
 
 ## Group B (repeats on correct Spanish)
@@ -76,8 +110,10 @@ Over 2× = es repeat chars > 2 × the same id's en repeat mean. es/en = Σ es re
 
 | bench | model | n items | original es > 2× original en | es repeats over 2× en | es/en (repeat means) |
 |---|---|---:|---:|---:|---:|
+| mgsm | 27b | 10 | 9/10 | 29/50 = 0.580 | 2.196 |
+| belebele | 9b | 12 | 11/12 | 27/60 = 0.450 | 1.873 |
 
-- mgsm 27b: no complete items.
-- belebele 9b: not run.
+- mgsm 27b (n=10): 9/10 original es records over 2× their en; 29/50 es repeats (0.580) over 2× the en repeat mean; es/en of repeat means 2.196.
+- belebele 9b (n=12): 11/12 original es records over 2× their en; 27/60 es repeats (0.450) over 2× the en repeat mean; es/en of repeat means 1.873.
 
 Command: `.venv/bin/python scripts/causal_report.py`
