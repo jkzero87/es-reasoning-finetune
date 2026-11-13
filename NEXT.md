@@ -1,9 +1,9 @@
 # NEXT
 
-## Status 2026-11-12 23:0x (causal test stopped for the night)
+## Status 2026-11-13 14:50 (causal test complete)
 
-Ran tonight: label audit (`results/label_audit_2026-11-12.md`, matches Juan's labels), fixes (`data/fixes_2026-11-12.jsonl`), causal test `fix27b` MGSM 30/30 and Belebele 25/25, `rep27b` 10/100 (repeat 1, es only). Written from these rows: `results/causal_test_2026-11-12.md` (missing jobs marked "not run"), `results/RESUMEN_REUNION.md`. Servers stopped; no GPU process.
-Pending: `rep27b` (90 rows), `fix9b` (MGSM 30, Belebele 25), `rep9b` (120 rows). With :8092 down: `cd ~/es-reasoning-finetune && setsid nohup scripts/run_causal.sh >> results/causal_run.log 2>&1 < /dev/null &` (skips rows already written). Then regenerate the report with `.venv/bin/python scripts/causal_report.py` and update the causal lines of `results/RESUMEN_REUNION.md`.
+Ran: label audit (`results/label_audit_2026-11-12.md`, matches Juan's labels), fixes (`data/fixes_2026-11-12.jsonl`), causal test all jobs complete, `results/CAUSAL_DONE` (fix27b 55, rep27b 100, fix9b 55, rep9b 120 rows; 2026-11-12 22:37–22:53 and 2026-11-13 13:22–14:50), 0 failed requests. Written: `results/causal_test_2026-11-12.md`, `results/RESUMEN_REUNION.md`. Servers stopped; no GPU compute process; :8092 left down.
+Pending: nothing from the causal test.
 
 **Next, in order:**
 1. **Juan launches the GPU queue** (plan amendment 2026-11-12: q1 zh baseline, q2 reasoning off, q3 ProX-Lite). Command, preconditions and projected hours: `bench/CORRER.md`. :8092 must be down; the script refuses otherwise. Resumable with the same command; `results/QUEUE_DONE` is written only when every row count is exact.
