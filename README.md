@@ -1,14 +1,8 @@
 # es-reasoning-finetune
 
-Brújula: que usar la IA en español no sea una desventaja. Objetivo: con una sola GPU
-de 16 GB, producir la mayor cantidad posible de datos abiertos y conclusiones prácticas
-sobre cuánto, dónde y por qué el español sale más caro en modelos abiertos, y qué
-remedios funcionan y cuáles no. El fine-tuning es una prueba más, no la meta.
+Norte: que usar un modelo de lenguaje en español no cueste más que usarlo en inglés. Es la dirección del trabajo, no lo que este proyecto promete resolver. Objetivo: identificar los factores que hacen más costoso usar modelos de lenguaje en español y atacarlos mediante fine-tuning, reentrenando sobre una NVIDIA RTX 5060 Ti de 16 GB, para obtener conclusiones que aporten a reducir esa desventaja. El fine-tuning es el centro del proyecto.
 
-**Estado (2026-11-12):** línea base del 9B medida y compuerta aplicada. En MGSM el 9B gasta en español 1,1235 × los
-tokens del inglés, por debajo del umbral preregistrado de 1,15: **no se entrena**; resultado para MGSM: "problem not
-reproduced on this model" (el 27B dio 1,34 ×). En Belebele el mismo 9B gasta 1,5401 × (descriptivo, fuera de la
-compuerta). Decisión: `results/gate_decision.md`. Siguen corridas descriptivas (chino, sin razonamiento, ProX-Lite).
+**Estado (2026-11-13):** fase de diagnóstico concluida (27B y 9B; en, es y zh) y prueba causal sobre errores de traducción hecha (`results/causal_test_2026-11-12.md`). La compuerta de MGSM de la fase 1 se aplicó tal como estaba escrita: en matemáticas el 9B gasta en español 1,1235 × los tokens del inglés, por debajo de 1,15, y ese resultado queda publicado (`results/gate_decision.md`). Desde la enmienda del 2026-11-13 el fine-tuning es el eje del proyecto: ataca el sobrecosto medido en lectura (1,5401 ×) y el que persiste con español bien traducido, con criterios fijados antes de entrenar.
 
 <!-- TABLES:BEGIN (generado por scripts/update_readme_tables.py; no editar a mano) -->
 ## Resultados
@@ -65,8 +59,8 @@ Dos palancas sin reentrenar quedaron descartadas allí:
    ni cabeza MTP), convertido por nosotros a GGUF Q8_0 y servido con
    llama-server local, con los mismos ajustes de generación que la línea
    base del 27B.
-2. **Ajuste fino**: LoRA bf16 sobre la base en 8 bits (Unsloth), en la
-   tarjeta local de 16 GB, con la parte en español de ReasonXL-SFT
+2. **Fine-tuning**: LoRA bf16 sobre la base en 8 bits (Unsloth), en la
+   NVIDIA RTX 5060 Ti de 16 GB, con la parte en español de ReasonXL-SFT
    (muestras de más de 4096 tokens descartadas), más un control con la
    parte en inglés.
 3. **Pruebas de falsación**: criterios fijados antes de mirar los resultados.

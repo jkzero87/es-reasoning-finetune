@@ -1,9 +1,6 @@
 # AGENTS.md — es-reasoning-finetune
 
-**Objetivo (Juan, 2026-11-12):** "Brújula: que usar la IA en español no sea una desventaja. Objetivo: con una sola GPU
-de 16 GB, producir la mayor cantidad posible de datos abiertos y conclusiones prácticas
-sobre cuánto, dónde y por qué el español sale más caro en modelos abiertos, y qué
-remedios funcionan y cuáles no. El fine-tuning es una prueba más, no la meta."
+**Objetivo (Juan, 2026-11-13):** "Norte: que usar un modelo de lenguaje en español no cueste más que usarlo en inglés. Es la dirección del trabajo, no lo que este proyecto promete resolver. Objetivo: identificar los factores que hacen más costoso usar modelos de lenguaje en español y atacarlos mediante fine-tuning, reentrenando sobre una NVIDIA RTX 5060 Ti de 16 GB, para obtener conclusiones que aporten a reducir esa desventaja. El fine-tuning es el centro del proyecto."
 
 ## Reglas duras (sin excepciones)
 

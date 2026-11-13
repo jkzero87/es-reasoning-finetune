@@ -288,3 +288,16 @@ Smoke tests before the queue (2 items per language per run, tag `smoke`) are del
 2026-11-12 label audit + causal test: (A) corrected Spanish for 11 items flagged as translation errors, (B) 5 repeats es/en of 22 correct-Spanish items from the worst tails. Same server flags, quants, max_tokens and ids as the original runs.
 
 Descriptive only: no gate, no threshold and no phase-3 criterion changes. Labels: `results/label_audit_2026-11-12.md` (sample from `scripts/label_sample.py`, seed 20261112). Corrected fields: `data/fixes_2026-11-12.jsonl`; `data/*.jsonl` are not modified. Repeat r (1..5) sends `seed` 42 + r instead of 42; every other per-request setting is the runner's unchanged `GENERATION`, so the 5 repeats are 5 new samples next to the original seed-42 record. Tags `fix27b`, `fix9b`, `rep27b`, `rep9b` write only new raw files. 27B: es-eval's `~/bin/manifiestate` flags, on :8093; 9B: `scripts/serve_base.sh`. One model on the GPU at a time.
+
+
+## Amendment 2026-11-13 (project objective restated; fine-tuning becomes the core; before any training)
+
+Objective as restated by Juan on 2026-11-13 (verbatim, Spanish; replaces the 2026-11-12 wording in README.md and AGENTS.md):
+
+"Norte: que usar un modelo de lenguaje en español no cueste más que usarlo en inglés. Es la dirección del trabajo, no lo que este proyecto promete resolver. Objetivo: identificar los factores que hacen más costoso usar modelos de lenguaje en español y atacarlos mediante fine-tuning, reentrenando sobre una NVIDIA RTX 5060 Ti de 16 GB, para obtener conclusiones que aporten a reducir esa desventaja. El fine-tuning es el centro del proyecto."
+
+Consequences, decided before any training run:
+1. The 2026-11-12 objective text stays in this file as history; README.md, AGENTS.md and results/RESUMEN_REUNION.md now carry this one.
+2. The Phase-1 gate (MGSM es/en >= 1.15) was applied as written and its result stands: "problem not reproduced on this model" for MGSM. It no longer decides whether the project trains.
+3. Fine-tuning (arms A, B, control) is the core of the project. It targets the overcost measured on Belebele (9B es/en 1.5401) and the overcost that persists on correctly translated Spanish (results/causal_test_2026-11-12.md).
+4. Success criteria, the evaluation set (cleaned of translation errors) and the guards (accuracy must not drop; non-terminating answers must not rise) will be written as a separate dated amendment BEFORE the first training run. No arm is trained until that amendment exists.
