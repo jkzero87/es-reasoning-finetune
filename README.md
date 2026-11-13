@@ -26,8 +26,11 @@ Tablas completas: `results/efficiency_baseline.md`; hallazgos uno por fila: `res
 | 27B IQ3_S | belebele | thinking, 488 ids | 488/488/488 | 1.3026× | 72.6 % | 1.0204× | 91.6 % |
 | 27B IQ3_S | belebele | thinking, same 300 ids | 300/300/300 | 1.3263× | 69.8 % | 1.0261× | 91.2 % |
 | 27B IQ3_S | proxlite | thinking, 60 ids, max_tokens 16384 | 60/60/60 | 1.2223× | 81.9 % | 1.0867× | 87.2 % |
-| 9B Q8_0 | mgsm | thinking | 250/250 | 1.1235× | 89.8 % | — | — |
-| 9B Q8_0 | belebele | thinking, same 300 ids | 300/300 | 1.5401× | 60.9 % | — | — |
+| 9B Q8_0 | mgsm | thinking | 250/250/250 | 1.1235× | 89.8 % | 1.7901× | 43.6 % |
+| 9B Q8_0 | belebele | thinking, same 300 ids | 300/300/300 | 1.5401× | 60.9 % | 1.4238× | 64.6 % |
+| 9B Q8_0 | mgsm | reasoning off | 250/250/250 | 1.0849× | 91.0 % | 0.9750× | 94.0 % |
+| 9B Q8_0 | belebele | reasoning off, same 300 ids | 300/300/300 | 1.0197× | 114.8 % | 0.9276× | 105.0 % |
+| 9B Q8_0 | proxlite | thinking, 60 ids, max_tokens 8192 | 60/60/60 | 0.9957× | 117.2 % | 1.0510× | 99.2 % |
 <!-- TABLES:END -->
 
 ## Objetivo

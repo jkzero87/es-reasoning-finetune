@@ -42,7 +42,39 @@ Generado por `scripts/make_conclusions.py` a partir de `results/efficiency_basel
 | 36 | 9B Q8_0, mgsm, thinking: respuestas correctas y completas por 1.000 tokens generados, español como % del inglés | 89.8% (0.3305 vs 0.3680) | `results/mgsm_raw.base9b.jsonl` | 250 pares |
 | 37 | 9B Q8_0, mgsm, thinking: preguntas en que español gasta más tokens totales que inglés | 160/250 | `results/mgsm_raw.base9b.jsonl` | 250 pares |
 | 38 | 9B Q8_0, mgsm, thinking: exactitud español vs inglés; cortes por max_tokens español vs inglés | 0.9240 vs 0.9160; 7 vs 14 | `results/mgsm_raw.base9b.jsonl` | 250 y 250 |
-| 39 | 9B Q8_0, belebele, thinking, same 300 ids: tokens totales por pregunta, español / inglés | 1.5401× | `results/belebele_raw.base9b.jsonl` | 300 pares |
-| 40 | 9B Q8_0, belebele, thinking, same 300 ids: respuestas correctas y completas por 1.000 tokens generados, español como % del inglés | 60.9% (0.4570 vs 0.7498) | `results/belebele_raw.base9b.jsonl` | 300 pares |
-| 41 | 9B Q8_0, belebele, thinking, same 300 ids: preguntas en que español gasta más tokens totales que inglés | 251/300 | `results/belebele_raw.base9b.jsonl` | 300 pares |
-| 42 | 9B Q8_0, belebele, thinking, same 300 ids: exactitud español vs inglés; cortes por max_tokens español vs inglés | 0.9500 vs 0.9800; 4 vs 1 | `results/belebele_raw.base9b.jsonl` | 300 y 300 |
+| 39 | 9B Q8_0, mgsm, thinking: tokens totales por pregunta, chino / inglés | 1.7901× | `results/mgsm_raw.base9b.jsonl` | 250 pares |
+| 40 | 9B Q8_0, mgsm, thinking: respuestas correctas y completas por 1.000 tokens generados, chino como % del inglés | 43.6% (0.1606 vs 0.3680) | `results/mgsm_raw.base9b.jsonl` | 250 pares |
+| 41 | 9B Q8_0, mgsm, thinking: preguntas en que chino gasta más tokens totales que inglés | 202/250 | `results/mgsm_raw.base9b.jsonl` | 250 pares |
+| 42 | 9B Q8_0, mgsm, thinking: exactitud chino vs inglés; cortes por max_tokens chino vs inglés | 0.7280 vs 0.9160; 59 vs 14 | `results/mgsm_raw.base9b.jsonl` | 250 y 250 |
+| 43 | 9B Q8_0, belebele, thinking, same 300 ids: tokens totales por pregunta, español / inglés | 1.5401× | `results/belebele_raw.base9b.jsonl` | 300 pares |
+| 44 | 9B Q8_0, belebele, thinking, same 300 ids: respuestas correctas y completas por 1.000 tokens generados, español como % del inglés | 60.9% (0.4570 vs 0.7498) | `results/belebele_raw.base9b.jsonl` | 300 pares |
+| 45 | 9B Q8_0, belebele, thinking, same 300 ids: preguntas en que español gasta más tokens totales que inglés | 251/300 | `results/belebele_raw.base9b.jsonl` | 300 pares |
+| 46 | 9B Q8_0, belebele, thinking, same 300 ids: exactitud español vs inglés; cortes por max_tokens español vs inglés | 0.9500 vs 0.9800; 4 vs 1 | `results/belebele_raw.base9b.jsonl` | 300 y 300 |
+| 47 | 9B Q8_0, belebele, thinking, same 300 ids: tokens totales por pregunta, chino / inglés | 1.4238× | `results/belebele_raw.base9b.jsonl` | 300 pares |
+| 48 | 9B Q8_0, belebele, thinking, same 300 ids: respuestas correctas y completas por 1.000 tokens generados, chino como % del inglés | 64.6% (0.4846 vs 0.7498) | `results/belebele_raw.base9b.jsonl` | 300 pares |
+| 49 | 9B Q8_0, belebele, thinking, same 300 ids: preguntas en que chino gasta más tokens totales que inglés | 239/300 | `results/belebele_raw.base9b.jsonl` | 300 pares |
+| 50 | 9B Q8_0, belebele, thinking, same 300 ids: exactitud chino vs inglés; cortes por max_tokens chino vs inglés | 0.9500 vs 0.9800; 4 vs 1 | `results/belebele_raw.base9b.jsonl` | 300 y 300 |
+| 51 | 9B Q8_0, mgsm, reasoning off: tokens totales por pregunta, español / inglés | 1.0849× | `results/mgsm_raw.noreason9b.jsonl` | 250 pares |
+| 52 | 9B Q8_0, mgsm, reasoning off: respuestas correctas y completas por 1.000 tokens generados, español como % del inglés | 91.0% (2.0295 vs 2.2293) | `results/mgsm_raw.noreason9b.jsonl` | 250 pares |
+| 53 | 9B Q8_0, mgsm, reasoning off: preguntas en que español gasta más tokens totales que inglés | 164/250 | `results/mgsm_raw.noreason9b.jsonl` | 250 pares |
+| 54 | 9B Q8_0, mgsm, reasoning off: exactitud español vs inglés; cortes por max_tokens español vs inglés | 0.9320 vs 0.9520; 0 vs 1 | `results/mgsm_raw.noreason9b.jsonl` | 250 y 250 |
+| 55 | 9B Q8_0, mgsm, reasoning off: tokens totales por pregunta, chino / inglés | 0.9750× | `results/mgsm_raw.noreason9b.jsonl` | 250 pares |
+| 56 | 9B Q8_0, mgsm, reasoning off: respuestas correctas y completas por 1.000 tokens generados, chino como % del inglés | 94.0% (2.0952 vs 2.2293) | `results/mgsm_raw.noreason9b.jsonl` | 250 pares |
+| 57 | 9B Q8_0, mgsm, reasoning off: preguntas en que chino gasta más tokens totales que inglés | 60/250 | `results/mgsm_raw.noreason9b.jsonl` | 250 pares |
+| 58 | 9B Q8_0, mgsm, reasoning off: exactitud chino vs inglés; cortes por max_tokens chino vs inglés | 0.8840 vs 0.9520; 1 vs 1 | `results/mgsm_raw.noreason9b.jsonl` | 250 y 250 |
+| 59 | 9B Q8_0, belebele, reasoning off, same 300 ids: tokens totales por pregunta, español / inglés | 1.0197× | `results/belebele_raw.noreason9b.jsonl` | 300 pares |
+| 60 | 9B Q8_0, belebele, reasoning off, same 300 ids: respuestas correctas y completas por 1.000 tokens generados, español como % del inglés | 114.8% (5.1149 vs 4.4555) | `results/belebele_raw.noreason9b.jsonl` | 300 pares |
+| 61 | 9B Q8_0, belebele, reasoning off, same 300 ids: preguntas en que español gasta más tokens totales que inglés | 191/300 | `results/belebele_raw.noreason9b.jsonl` | 300 pares |
+| 62 | 9B Q8_0, belebele, reasoning off, same 300 ids: exactitud español vs inglés; cortes por max_tokens español vs inglés | 0.9467 vs 0.9833; 0 vs 0 | `results/belebele_raw.noreason9b.jsonl` | 300 y 300 |
+| 63 | 9B Q8_0, belebele, reasoning off, same 300 ids: tokens totales por pregunta, chino / inglés | 0.9276× | `results/belebele_raw.noreason9b.jsonl` | 300 pares |
+| 64 | 9B Q8_0, belebele, reasoning off, same 300 ids: respuestas correctas y completas por 1.000 tokens generados, chino como % del inglés | 105.0% (4.6783 vs 4.4555) | `results/belebele_raw.noreason9b.jsonl` | 300 pares |
+| 65 | 9B Q8_0, belebele, reasoning off, same 300 ids: preguntas en que chino gasta más tokens totales que inglés | 81/300 | `results/belebele_raw.noreason9b.jsonl` | 300 pares |
+| 66 | 9B Q8_0, belebele, reasoning off, same 300 ids: exactitud chino vs inglés; cortes por max_tokens chino vs inglés | 0.9500 vs 0.9833; 0 vs 0 | `results/belebele_raw.noreason9b.jsonl` | 300 y 300 |
+| 67 | 9B Q8_0, proxlite, thinking, 60 ids, max_tokens 8192: tokens totales por pregunta, español / inglés | 0.9957× | `results/proxlite_raw.prox9b.jsonl` | 60 pares |
+| 68 | 9B Q8_0, proxlite, thinking, 60 ids, max_tokens 8192: respuestas correctas y completas por 1.000 tokens generados, español como % del inglés | 117.2% (0.1589 vs 0.1355) | `results/proxlite_raw.prox9b.jsonl` | 60 pares |
+| 69 | 9B Q8_0, proxlite, thinking, 60 ids, max_tokens 8192: preguntas en que español gasta más tokens totales que inglés | 36/60 | `results/proxlite_raw.prox9b.jsonl` | 60 pares |
+| 70 | 9B Q8_0, proxlite, thinking, 60 ids, max_tokens 8192: exactitud español vs inglés; cortes por max_tokens español vs inglés | 0.7167 vs 0.6167; 10 vs 15 | `results/proxlite_raw.prox9b.jsonl` | 60 y 60 |
+| 71 | 9B Q8_0, proxlite, thinking, 60 ids, max_tokens 8192: tokens totales por pregunta, chino / inglés | 1.0510× | `results/proxlite_raw.prox9b.jsonl` | 60 pares |
+| 72 | 9B Q8_0, proxlite, thinking, 60 ids, max_tokens 8192: respuestas correctas y completas por 1.000 tokens generados, chino como % del inglés | 99.2% (0.1345 vs 0.1355) | `results/proxlite_raw.prox9b.jsonl` | 60 pares |
+| 73 | 9B Q8_0, proxlite, thinking, 60 ids, max_tokens 8192: preguntas en que chino gasta más tokens totales que inglés | 33/60 | `results/proxlite_raw.prox9b.jsonl` | 60 pares |
+| 74 | 9B Q8_0, proxlite, thinking, 60 ids, max_tokens 8192: exactitud chino vs inglés; cortes por max_tokens chino vs inglés | 0.6500 vs 0.6167; 14 vs 15 | `results/proxlite_raw.prox9b.jsonl` | 60 y 60 |

@@ -298,6 +298,19 @@
     "correct_and_stop": 231,
     "completion_tokens_all": 698931,
     "success_per_1k": 0.33050472793451713
+   },
+   "zh": {
+    "n": 250,
+    "accuracy": 0.728,
+    "mean_prompt": 81.22,
+    "mean_completion": 4533.928,
+    "mean_total": 4615.148,
+    "length": 59,
+    "empty": 54,
+    "looping": 6,
+    "correct_and_stop": 182,
+    "completion_tokens_all": 1133482,
+    "success_per_1k": 0.1605671726591159
    }
   },
   "pairs": {
@@ -306,11 +319,15 @@
     "total_token_ratio": 1.1235082199177076,
     "paired_ids": 250,
     "ids_more_tokens_than_en": 160
+   },
+   "zh": {
+    "success_per_1k_pct_of_en": 43.63142967834733,
+    "total_token_ratio": 1.790115929077222,
+    "paired_ids": 250,
+    "ids_more_tokens_than_en": 202
    }
   },
-  "missing_langs": [
-   "zh"
-  ]
+  "missing_langs": []
  },
  {
   "model": "9B Q8_0",
@@ -347,6 +364,19 @@
     "correct_and_stop": 285,
     "completion_tokens_all": 623661,
     "success_per_1k": 0.45697903187789524
+   },
+   "zh": {
+    "n": 300,
+    "accuracy": 0.95,
+    "mean_prompt": 190.31,
+    "mean_completion": 1960.43,
+    "mean_total": 2150.74,
+    "length": 4,
+    "empty": 4,
+    "looping": 8,
+    "correct_and_stop": 285,
+    "completion_tokens_all": 588129,
+    "success_per_1k": 0.4845875649729906
    }
   },
   "pairs": {
@@ -355,11 +385,15 @@
     "total_token_ratio": 1.540051502827801,
     "paired_ids": 300,
     "ids_more_tokens_than_en": 251
+   },
+   "zh": {
+    "success_per_1k_pct_of_en": 64.63194889112381,
+    "total_token_ratio": 1.4237685329637957,
+    "paired_ids": 300,
+    "ids_more_tokens_than_en": 239
    }
   },
-  "missing_langs": [
-   "zh"
-  ]
+  "missing_langs": []
  },
  {
   "model": "9B Q8_0",
@@ -369,9 +403,63 @@
   "raw": "results/mgsm_raw.noreason9b.jsonl",
   "ids": null,
   "expected_n": 250,
-  "status": "not run",
-  "langs": {},
-  "pairs": {}
+  "status": "ok",
+  "langs": {
+   "en": {
+    "n": 250,
+    "accuracy": 0.952,
+    "mean_prompt": 91.052,
+    "mean_completion": 427.032,
+    "mean_total": 518.084,
+    "length": 1,
+    "empty": 0,
+    "looping": 2,
+    "correct_and_stop": 238,
+    "completion_tokens_all": 106758,
+    "success_per_1k": 2.229341126660297
+   },
+   "es": {
+    "n": 250,
+    "accuracy": 0.932,
+    "mean_prompt": 102.824,
+    "mean_completion": 459.232,
+    "mean_total": 562.056,
+    "length": 0,
+    "empty": 0,
+    "looping": 0,
+    "correct_and_stop": 233,
+    "completion_tokens_all": 114808,
+    "success_per_1k": 2.029475297888649
+   },
+   "zh": {
+    "n": 250,
+    "accuracy": 0.884,
+    "mean_prompt": 83.22,
+    "mean_completion": 421.916,
+    "mean_total": 505.136,
+    "length": 1,
+    "empty": 0,
+    "looping": 0,
+    "correct_and_stop": 221,
+    "completion_tokens_all": 105479,
+    "success_per_1k": 2.0952037846395966
+   }
+  },
+  "pairs": {
+   "es": {
+    "success_per_1k_pct_of_en": 91.03475792100689,
+    "total_token_ratio": 1.0848742674933025,
+    "paired_ids": 250,
+    "ids_more_tokens_than_en": 164
+   },
+   "zh": {
+    "success_per_1k_pct_of_en": 93.98309480695548,
+    "total_token_ratio": 0.9750079137746004,
+    "paired_ids": 250,
+    "ids_more_tokens_than_en": 60
+   }
+  },
+  "missing_langs": []
  },
  {
   "model": "9B Q8_0",
@@ -381,9 +469,63 @@
   "raw": "results/belebele_raw.noreason9b.jsonl",
   "ids": "results/belebele_sample_300.json",
   "expected_n": 300,
-  "status": "not run",
-  "langs": {},
-  "pairs": {}
+  "status": "ok",
+  "langs": {
+   "en": {
+    "n": 300,
+    "accuracy": 0.9833333333333333,
+    "mean_prompt": 205.52,
+    "mean_completion": 220.70333333333335,
+    "mean_total": 426.22333333333336,
+    "length": 0,
+    "empty": 0,
+    "looping": 0,
+    "correct_and_stop": 295,
+    "completion_tokens_all": 66211,
+    "success_per_1k": 4.455453021401278
+   },
+   "es": {
+    "n": 300,
+    "accuracy": 0.9466666666666667,
+    "mean_prompt": 249.52666666666667,
+    "mean_completion": 185.08,
+    "mean_total": 434.6066666666667,
+    "length": 0,
+    "empty": 0,
+    "looping": 0,
+    "correct_and_stop": 284,
+    "completion_tokens_all": 55524,
+    "success_per_1k": 5.114905266191197
+   },
+   "zh": {
+    "n": 300,
+    "accuracy": 0.95,
+    "mean_prompt": 192.31,
+    "mean_completion": 203.06333333333333,
+    "mean_total": 395.37333333333333,
+    "length": 0,
+    "empty": 0,
+    "looping": 0,
+    "correct_and_stop": 285,
+    "completion_tokens_all": 60919,
+    "success_per_1k": 4.678343373988411
+   }
+  },
+  "pairs": {
+   "es": {
+    "success_per_1k_pct_of_en": 114.80101443382553,
+    "total_token_ratio": 1.0196688746901077,
+    "paired_ids": 300,
+    "ids_more_tokens_than_en": 191
+   },
+   "zh": {
+    "success_per_1k_pct_of_en": 105.00264174072767,
+    "total_token_ratio": 0.9276201052656275,
+    "paired_ids": 300,
+    "ids_more_tokens_than_en": 81
+   }
+  },
+  "missing_langs": []
  },
  {
   "model": "9B Q8_0",
@@ -393,8 +535,62 @@
   "raw": "results/proxlite_raw.prox9b.jsonl",
   "ids": "results/proxlite_subset_60_strat.txt",
   "expected_n": 60,
-  "status": "not run",
-  "langs": {},
-  "pairs": {}
+  "status": "ok",
+  "langs": {
+   "en": {
+    "n": 60,
+    "accuracy": 0.6166666666666667,
+    "mean_prompt": 256.1666666666667,
+    "mean_completion": 4549.75,
+    "mean_total": 4805.916666666667,
+    "length": 15,
+    "empty": 10,
+    "looping": 10,
+    "correct_and_stop": 37,
+    "completion_tokens_all": 272985,
+    "success_per_1k": 0.1355385827060095
+   },
+   "es": {
+    "n": 60,
+    "accuracy": 0.7166666666666667,
+    "mean_prompt": 274.6333333333333,
+    "mean_completion": 4510.8,
+    "mean_total": 4785.433333333333,
+    "length": 10,
+    "empty": 9,
+    "looping": 4,
+    "correct_and_stop": 43,
+    "completion_tokens_all": 270648,
+    "success_per_1k": 0.15887795217404155
+   },
+   "zh": {
+    "n": 60,
+    "accuracy": 0.65,
+    "mean_prompt": 217.13333333333333,
+    "mean_completion": 4833.816666666667,
+    "mean_total": 5050.95,
+    "length": 14,
+    "empty": 11,
+    "looping": 3,
+    "correct_and_stop": 39,
+    "completion_tokens_all": 290029,
+    "success_per_1k": 0.1344693116895207
+   }
+  },
+  "pairs": {
+   "es": {
+    "success_per_1k_pct_of_en": 117.2197237141371,
+    "total_token_ratio": 0.995737892528307,
+    "paired_ids": 60,
+    "ids_more_tokens_than_en": 36
+   },
+   "zh": {
+    "success_per_1k_pct_of_en": 99.21109473395623,
+    "total_token_ratio": 1.0509857640755318,
+    "paired_ids": 60,
+    "ids_more_tokens_than_en": 33
+   }
+  },
+  "missing_langs": []
  }
 ]

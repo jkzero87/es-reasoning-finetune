@@ -1,0 +1,48 @@
+--subset proxlite_subset_60_strat.txt: 60/60 listed ids have all 3 langs; scoring only those
+scored 180 records so far
+
+=== Per language ===
+lang     n     acc  %unpars  med_compl  med_reas_tk   med_pps   mtp_acc  %length
+en      60  0.6167     25.0       4402          nan     51.54    0.6242     25.0
+es      60  0.7167     16.7       4371          nan     53.23    0.6194     16.7
+zh      60  0.6500     23.3       4664          nan     52.39    0.6157     23.3
+
+=== Category-weighted accuracy (weights = category share of the full 588 ids) ===
+lang     n     acc   w_acc   cats  min n/cat
+en      60  0.6167  0.6199  14/14          2
+es      60  0.7167  0.7156  14/14          2
+zh      60  0.6500  0.6523  14/14          2
+
+=== prompt-language x detected language of reasoning_content ===
+prompt         en      es      zh   other    none
+en             60       0       0       0       0
+es             59       1       0       0       0
+zh             60       0       0       0       0
+
+=== prompt-language x detected language of content ===
+prompt         en      es      zh   other    none
+en             50       0       0       0      10
+es              0      51       0       0       9
+zh              0       0      49       0      11
+
+=== Per-category accuracy (n) ===
+category                       en            es            zh  full n
+biology               0.750 (  4)   1.000 (  4)   0.500 (  4)      36
+business              0.500 (  4)   0.750 (  4)   0.500 (  4)      40
+chemistry             0.333 (  6)   0.833 (  6)   0.667 (  6)      56
+computer science      1.000 (  2)   1.000 (  2)   0.500 (  2)      20
+economics             0.250 (  4)   0.250 (  4)   0.500 (  4)      42
+engineering           0.200 (  5)   0.400 (  5)   0.200 (  5)      48
+health                0.667 (  3)   0.667 (  3)   0.667 (  3)      35
+history               0.500 (  2)   0.500 (  2)   0.500 (  2)      19
+law                   0.200 (  5)   0.000 (  5)   0.000 (  5)      48
+math                  1.000 (  7)   1.000 (  7)   1.000 (  7)      68
+other                 0.600 (  5)   0.600 (  5)   0.800 (  5)      46
+philosophy            1.000 (  2)   1.000 (  2)   1.000 (  2)      25
+physics               0.857 (  7)   1.000 (  7)   1.000 (  7)      65
+psychology            1.000 (  4)   1.000 (  4)   1.000 (  4)      40
+
+=== Paired vs en (ids run in both languages; unparsed = wrong) ===
+pair         n  both✓  both✗  en✓ x✗  x✓ en✗  McNemar p
+es vs en    60     36     16       1       7    0.07031
+zh vs en    60     34     18       3       5     0.7266

@@ -68,46 +68,73 @@ Raw: `/home/jkzero/es-eval/results/proxlite_raw.jsonl`, ids: `results/proxlite_s
 
 Raw: `results/mgsm_raw.base9b.jsonl`.
 
-No records yet for: zh.
-
 | lang | n | accuracy | mean prompt | mean completion | mean total | length | empty | looping | correct AND stop | SUCCESS_PER_1K |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | en | 250 | 0.9160 | 89.1 | 2489.1 | 2578.1 | 14 | 14 | 15 | 229 | 0.3680 |
 | es | 250 | 0.9240 | 100.8 | 2795.7 | 2896.5 | 7 | 6 | 18 | 231 | 0.3305 |
+| zh | 250 | 0.7280 | 81.2 | 4533.9 | 4615.1 | 59 | 54 | 6 | 182 | 0.1606 |
 
 | pair | SUCCESS_PER_1K, % of en | total-token ratio (old metric) | ids with more total tokens than en |
 |---|---:|---:|---:|
 | es/en | 89.8% | 1.1235 | 160/250 |
+| zh/en | 43.6% | 1.7901 | 202/250 |
 
 ## 9B Q8_0 · belebele · thinking, same 300 ids (tag `base9b`)
 
 Raw: `results/belebele_raw.base9b.jsonl`, ids: `results/belebele_sample_300.json`.
 
-No records yet for: zh.
-
 | lang | n | accuracy | mean prompt | mean completion | mean total | length | empty | looping | correct AND stop | SUCCESS_PER_1K |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | en | 300 | 0.9800 | 203.5 | 1307.1 | 1510.6 | 1 | 1 | 48 | 294 | 0.7498 |
 | es | 300 | 0.9500 | 247.5 | 2078.9 | 2326.4 | 4 | 4 | 79 | 285 | 0.4570 |
+| zh | 300 | 0.9500 | 190.3 | 1960.4 | 2150.7 | 4 | 4 | 8 | 285 | 0.4846 |
 
 | pair | SUCCESS_PER_1K, % of en | total-token ratio (old metric) | ids with more total tokens than en |
 |---|---:|---:|---:|
 | es/en | 60.9% | 1.5401 | 251/300 |
+| zh/en | 64.6% | 1.4238 | 239/300 |
 
 ## 9B Q8_0 · mgsm · reasoning off (tag `noreason9b`)
 
 Raw: `results/mgsm_raw.noreason9b.jsonl`.
 
-Not run yet (no records).
+| lang | n | accuracy | mean prompt | mean completion | mean total | length | empty | looping | correct AND stop | SUCCESS_PER_1K |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| en | 250 | 0.9520 | 91.1 | 427.0 | 518.1 | 1 | 0 | 2 | 238 | 2.2293 |
+| es | 250 | 0.9320 | 102.8 | 459.2 | 562.1 | 0 | 0 | 0 | 233 | 2.0295 |
+| zh | 250 | 0.8840 | 83.2 | 421.9 | 505.1 | 1 | 0 | 0 | 221 | 2.0952 |
+
+| pair | SUCCESS_PER_1K, % of en | total-token ratio (old metric) | ids with more total tokens than en |
+|---|---:|---:|---:|
+| es/en | 91.0% | 1.0849 | 164/250 |
+| zh/en | 94.0% | 0.9750 | 60/250 |
 
 ## 9B Q8_0 · belebele · reasoning off, same 300 ids (tag `noreason9b`)
 
 Raw: `results/belebele_raw.noreason9b.jsonl`, ids: `results/belebele_sample_300.json`.
 
-Not run yet (no records).
+| lang | n | accuracy | mean prompt | mean completion | mean total | length | empty | looping | correct AND stop | SUCCESS_PER_1K |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| en | 300 | 0.9833 | 205.5 | 220.7 | 426.2 | 0 | 0 | 0 | 295 | 4.4555 |
+| es | 300 | 0.9467 | 249.5 | 185.1 | 434.6 | 0 | 0 | 0 | 284 | 5.1149 |
+| zh | 300 | 0.9500 | 192.3 | 203.1 | 395.4 | 0 | 0 | 0 | 285 | 4.6783 |
+
+| pair | SUCCESS_PER_1K, % of en | total-token ratio (old metric) | ids with more total tokens than en |
+|---|---:|---:|---:|
+| es/en | 114.8% | 1.0197 | 191/300 |
+| zh/en | 105.0% | 0.9276 | 81/300 |
 
 ## 9B Q8_0 · proxlite · thinking, 60 ids, max_tokens 8192 (tag `prox9b`)
 
 Raw: `results/proxlite_raw.prox9b.jsonl`, ids: `results/proxlite_subset_60_strat.txt`.
 
-Not run yet (no records).
+| lang | n | accuracy | mean prompt | mean completion | mean total | length | empty | looping | correct AND stop | SUCCESS_PER_1K |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| en | 60 | 0.6167 | 256.2 | 4549.8 | 4805.9 | 15 | 10 | 10 | 37 | 0.1355 |
+| es | 60 | 0.7167 | 274.6 | 4510.8 | 4785.4 | 10 | 9 | 4 | 43 | 0.1589 |
+| zh | 60 | 0.6500 | 217.1 | 4833.8 | 5050.9 | 14 | 11 | 3 | 39 | 0.1345 |
+
+| pair | SUCCESS_PER_1K, % of en | total-token ratio (old metric) | ids with more total tokens than en |
+|---|---:|---:|---:|
+| es/en | 117.2% | 0.9957 | 36/60 |
+| zh/en | 99.2% | 1.0510 | 33/60 |

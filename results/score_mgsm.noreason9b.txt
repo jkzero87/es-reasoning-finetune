@@ -1,0 +1,21 @@
+scored 750 records so far
+
+=== Per language ===
+lang     n     acc  med_compl  med_reas_tk   med_pps   mtp_acc  %length
+en     250  0.9520        340          nan     62.27    0.7639      0.4
+es     250  0.9320        366          nan     57.33    0.6927      0.0
+zh     250  0.8840        280          nan     58.48    0.6782      0.4
+
+=== prompt-language x detected language of reasoning_content ===
+prompt         en      es      zh   other    none
+en              0       0       0       0     250
+es              0       0       0       0     250
+zh              0       0       0       0     250
+
+=== prompt-language x detected language of content ===
+prompt         en      es      zh   other    none
+en            250       0       0       0       0
+es              0     250       0       0       0
+zh              0       0     250       0       0
+
+no /home/jkzero/es-reasoning-finetune/results/fertility.csv, skipping fertility split

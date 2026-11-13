@@ -1,0 +1,2 @@
+# queue 2026-11-12T15:22:23-05:00, llama-server PID 199082, LD_LIBRARY_PATH=/home/jkzero/llama-build-3466812d1-phase1-bak
+/home/jkzero/llama.cpp/build/bin/llama-server -m /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf --spec-type draft-mtp --spec-draft-n-max 3 -ctkd q8_0 -ctvd q8_0 -ngl 99 -fa on -c 36864 -ub 256 -ctk q8_0 -ctv q8_0 -t 6 --parallel 4 --reasoning-effort medium --port 8093 
