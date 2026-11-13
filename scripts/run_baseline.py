@@ -37,6 +37,14 @@ carry category and n_options. Output results/proxlite_raw.<tag>.jsonl.
 --thinking off: each request carries chat_template_kwargs
 {"enable_thinking": false}; records then carry "thinking": "off".
 --limit-per-lang N: at most N pending items of each language (smoke tests).
+
+Added 2026-11-12 for the causal test (results/plan.md, amendment 2026-11-12,
+label audit + causal test; defaults leave earlier behaviour unchanged):
+--ids 1,2,3: only these ids (mgsm/belebele).
+--fixes FILE: rows of data/fixes_*.jsonl for this bench replace the listed field
+of the es item; records of a replaced item carry "fixed": FILE's name.
+--repeat R (R >= 1): the request seed is 42 + R; records carry "repeat" and
+"seed", and resume skips (id, lang, repeat) instead of (id, lang).
 """
 import argparse
 import concurrent.futures as cf
@@ -84,8 +92,15 @@ def main():
                     help="off: send chat_template_kwargs {\"enable_thinking\": false} (default: on, server default)")
     ap.add_argument("--limit-per-lang", type=int, metavar="N",
                     help="at most N pending items of each language (for testing)")
+    ap.add_argument("--ids", help="comma-separated ids (mgsm/belebele only)")
+    ap.add_argument("--fixes", type=Path, help="data/fixes_*.jsonl: replace fields of es items")
+    ap.add_argument("--repeat", type=int, help="repeat number R >= 1: seed 42 + R")
     args = ap.parse_args()
-    base = f"http://127.0.0.1:{args.port}"
+    if args.repeat is not None and args.repeat < 1:
+        ap.error("--repeat must be >= 1")
+    if (args.ids or args.fixes) and args.bench == "proxlite":
+        ap.error("--ids/--fixes apply to mgsm and belebele only")
+    base =f"http://127.0.0.1:{args.port}"
     langs = [l.strip() for l in args.langs.split(",") if l.strip()]
     if not langs or set(langs) - set(PROMPTS):
         ap.error(f"--langs must be a subset of {','.join(PROMPTS)}")
@@ -114,12 +129,33 @@ def main():
     if args.bench == "belebele":
         keep = set(json.loads((RESULTS_DIR / "belebele_sample_300.json").read_text())["ids"])
         items = {l: [it for it in v if it["id"] in keep] for l, v in items.items()}
+    if args.ids:
+        want = {int(x) for x in args.ids.split(",")}
+        items = {l: [it for it in v if it["id"] in want] for l, v in items.items()}
+        for l, v in items.items():
+            if {it["id"] for it in v} != want:
+                ap.error(f"--ids: {sorted(want - {it['id'] for it in v})} not in the {l} items")
+    fixed_ids = set()
+    if args.fixes:
+        by_id = {it["id"]: it for it in items.get("es", [])}
+        for row in map(json.loads, args.fixes.open(encoding="utf-8")):
+            if row["bench"] != args.bench or row["id"] not in by_id:
+                continue
+            it = by_id[row["id"]]
+            if it[row["field"]] != row["original"]:
+                sys.exit(f"STOP: {args.fixes.name} id={row['id']} {row['field']}: original differs from data/")
+            it[row["field"]] = row["fixed"]
+            fixed_ids.add(row["id"])
+        if not fixed_ids:
+            ap.error(f"--fixes: no {args.bench} es row matches the selected items")
+    seed = None if args.repeat is None else GENERATION["seed"] + args.repeat
     done = set()
     if raw_out.exists():
         for line in raw_out.open(encoding="utf-8"):
             try:
                 rec = json.loads(line)
-                done.add((rec["id"], rec["lang"]))
+                if args.repeat is None or rec.get("repeat") == args.repeat:
+                    done.add((rec["id"], rec["lang"]))
             except (json.JSONDecodeError, KeyError):
                 pass
     if args.order == "lang":
@@ -160,6 +196,8 @@ def main():
             content, gold = run_proxlite.build_prompt(lang, it), it["gold"]
             gen = {**run_proxlite.GENERATION, "max_tokens": PROX_MAX_TOKENS}
         payload = {"messages": [{"role": "user", "content": content}], **gen}
+        if seed is not None:
+            payload["seed"] = seed
         if args.thinking == "off":
             payload["chat_template_kwargs"] = {"enable_thinking": False}
         try:
@@ -191,6 +229,10 @@ def main():
             rec["category"], rec["n_options"] = it["category"], len(it["options"])
         if args.thinking == "off":
             rec["thinking"] = "off"
+        if seed is not None:
+            rec["repeat"], rec["seed"] = args.repeat, seed
+        if lang == "es" and it["id"] in fixed_ids:
+            rec["fixed"] = args.fixes.name
         with lock:
             with raw_out.open("a", encoding="utf-8") as f:
                 f.write(json.dumps(rec, ensure_ascii=False) + "\n")
