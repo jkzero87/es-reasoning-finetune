@@ -5,13 +5,13 @@ label audit + causal test). Descriptive; no gate.
 
 Per item: original es (and en) reasoning_content characters from the original
 seed-42 record of the same model, mean +- sd of the es repeats, mean of the en
-repeats where run, correct count (es repeats; score_mgsm.correct /
-score_belebele.correct, unchanged).
-(A) fixes, per model x bench: excess = sum(es - en) with en = original en record;
-removed share = 1 - excess(fixed mean) / excess(original).
+repeats where run, correct count / repeats (es; score_mgsm.correct /
+score_belebele.correct, unchanged), finish_reason == "length" count (es / en).
+(A) fixes, per model x bench: mean es chars original vs corrected, and es/en
+against the original en record of the same ids, original and corrected.
 (B) repeats, per model x bench: share of es repeats with reasoning chars > 2 x the
-item's en repeat mean, next to the same share for the original seed-42 es record
-against its own en record.
+same id's en repeat mean, and es/en of the repeat means.
+A job that was skipped or is incomplete is reported as such, not stopped on.
 Usage: scripts/causal_report.py [--results DIR]  (default: results/)
 """
 import argparse
@@ -64,55 +64,73 @@ def main():
            "`results/label_audit_2026-11-12.md`. Chars = `reasoning_content` characters. "
            f"Original = the seed-42 record of the same model; repeats r = 1..{REPEATS} use seed 42 + r.", ""]
     summary = {"A": [], "B": []}
+    lines = {"A": [], "B": []}
     for part, bench, model, tag, ids, langs in JOBS:
         raw = args.results / f"{bench}_raw.{tag}.jsonl"
+        head = f"## ({part}) {bench} {model}, tag `{tag}`"
+        if not raw.exists():
+            out += [head, "", f"Not run: `{raw.name}` does not exist (see `results/causal_run.log`).", ""]
+            lines[part].append(f"- {bench} {model}: not run.")
+            continue
         recs = {}
         for line in raw.open(encoding="utf-8"):
             r = json.loads(line)
             recs.setdefault((r["id"], r["lang"]), []).append(r)
-        for i in ids:
-            for l in langs:
-                got = sorted(r["repeat"] for r in recs.get((i, l), []))
-                if got != list(range(1, REPEATS + 1)):
-                    sys.exit(f"STOP: {raw.name} id={i} {l}: repeats {got}, expected 1..{REPEATS}")
+        missing = [f"{i} {l} ({len(recs.get((i, l), []))}/{REPEATS})" for i in ids for l in langs
+                   if sorted(r["repeat"] for r in recs.get((i, l), [])) != list(range(1, REPEATS + 1))]
         o = orig[(bench, model)]
-        head = f"## ({part}) {bench} {model}, tag `{tag}`"
-        out += [head, "", "| id | orig es | orig en | es repeats mean ± sd | en repeats mean | es correct /5 | orig es correct |",
-                "|---:|---:|---:|---:|---:|---:|---|"]
+        out += [head, "", f"Raw: `results/{raw.name}`."
+                + (f" Incomplete: {', '.join(missing)}; statistics use the repeats present." if missing else ""), "",
+                "| id | orig es | orig en | es repeats mean ± sd | en repeats mean | es correct / repeats | length es / en | orig es correct |",
+                "|---:|---:|---:|---:|---:|---:|---:|---|"]
         rows = []
         for i in ids:
-            es = [chars(r) for r in recs[(i, "es")]]
-            en = [chars(r) for r in recs[(i, "en")]] if "en" in langs else None
-            ok = sum(CORRECT[bench](r) for r in recs[(i, "es")])
+            res, ren = recs.get((i, "es"), []), recs.get((i, "en"), [])
+            if not res or ("en" in langs and not ren):
+                out.append(f"| {i} | | | no records | | | | |")
+                continue
+            es = [chars(r) for r in res]
+            en = [chars(r) for r in ren] if "en" in langs else None
+            ok = sum(CORRECT[bench](r) for r in res)
+            ln_es = sum(r.get("finish_reason") == "length" for r in res)
+            ln_en = sum(r.get("finish_reason") == "length" for r in ren)
             oes, oen = chars(o[(i, "es")]), chars(o[(i, "en")])
             rows.append((i, oes, oen, es, en))
-            out.append(f"| {i} | {oes} | {oen} | {st.mean(es):.0f} ± {st.stdev(es):.0f} | "
-                       f"{'' if en is None else f'{st.mean(en):.0f}'} | {ok}/{REPEATS} | "
-                       f"{'yes' if CORRECT[bench](o[(i, 'es')]) else 'no'} |")
+            sd = f"{st.stdev(es):.0f}" if len(es) > 1 else "n/a"
+            out.append(f"| {i} | {oes} | {oen} | {st.mean(es):.0f} ± {sd} | "
+                       f"{'' if en is None else f'{st.mean(en):.0f}'} | {ok}/{len(res)} | "
+                       f"{ln_es} / {'' if en is None else ln_en} | {'yes' if CORRECT[bench](o[(i, 'es')]) else 'no'} |")
         out.append("")
+        if not rows:
+            lines[part].append(f"- {bench} {model}: no complete items.")
+            continue
         if part == "A":
-            ex0 = sum(oes - oen for _, oes, oen, _, _ in rows)
-            ex1 = sum(st.mean(es) - oen for _, _, oen, es, _ in rows)
-            summary["A"].append(f"| {bench} | {model} | {len(rows)} | {ex0} | {ex1:.0f} | "
-                                f"{sum(oes for _, oes, _, _, _ in rows) / sum(oen for _, _, oen, _, _ in rows):.3f} | "
-                                f"{sum(st.mean(es) for *_, es, _ in rows) / sum(oen for _, _, oen, _, _ in rows):.3f} | "
-                                f"{'n/a (no original excess)' if ex0 <= 0 else f'{1 - ex1 / ex0:.3f}'} |")
+            m0 = st.mean(oes for _, oes, _, _, _ in rows)
+            m1 = st.mean(st.mean(es) for *_, es, _ in rows)
+            sen = sum(oen for _, _, oen, _, _ in rows)
+            r0 = sum(oes for _, oes, _, _, _ in rows) / sen
+            r1 = sum(st.mean(es) for *_, es, _ in rows) / sen
+            summary["A"].append(f"| {bench} | {model} | {len(rows)} | {m0:.0f} | {m1:.0f} | {r0:.3f} | {r1:.3f} |")
+            lines["A"].append(f"- {bench} {model} (n={len(rows)}): mean es reasoning chars {m0:.0f} original, "
+                              f"{m1:.0f} corrected; es/en against the original en {r0:.3f} original, {r1:.3f} corrected.")
         else:
             over = sum(e > 2 * st.mean(en) for *_, es, en in rows for e in es)
             n = sum(len(es) for *_, es, _ in rows)
-            items_over = sum(any(e > 2 * st.mean(en) for e in es) for *_, es, en in rows)
             o_over = sum(oes > 2 * oen for _, oes, oen, _, _ in rows)
             ratio = sum(st.mean(es) for *_, es, _ in rows) / sum(st.mean(en) for *_, en in rows)
-            summary["B"].append(f"| {bench} | {model} | {len(rows)} | {o_over}/{len(rows)} | {over}/{n} = {over / n:.3f} | "
-                                f"{items_over}/{len(rows)} | {ratio:.3f} |")
-    out += ["## Summary (A): does fixing the Spanish remove the excess?", "",
-            "Excess = Σ(es − en) chars, en = original en record. Removed share = 1 − fixed excess / original excess.", "",
-            "| bench | model | n | original excess | fixed excess (repeat means) | orig es/en | fixed es/en | removed share |",
-            "|---|---|---:|---:|---:|---:|---:|---:|", *summary["A"], "",
-            "## Summary (B): is the blow-up reproducible on correct Spanish?", "",
-            "Over 2× = es repeat chars > 2 × that item's en repeat mean. es/en = Σ es repeat means / Σ en repeat means.", "",
-            "| bench | model | n items | original es > 2× original en | es repeats over 2× en | items with ≥ 1 repeat over 2× | es/en (repeat means) |",
-            "|---|---|---:|---:|---:|---:|---:|", *summary["B"]]
+            summary["B"].append(f"| {bench} | {model} | {len(rows)} | {o_over}/{len(rows)} | {over}/{n} = {over / n:.3f} | {ratio:.3f} |")
+            lines["B"].append(f"- {bench} {model} (n={len(rows)}): {o_over}/{len(rows)} original es records over 2× their en; "
+                              f"{over}/{n} es repeats ({over / n:.3f}) over 2× the en repeat mean; es/en of repeat means {ratio:.3f}.")
+    out += ["## Group A (fixes): original vs corrected Spanish", "",
+            "Mean es = mean over items of the original record / of the repeat mean. "
+            "es/en = Σ es / Σ original en record, same ids (en not re-run for fixes).", "",
+            "| bench | model | n | mean es original | mean es corrected | es/en original | es/en corrected |",
+            "|---|---|---:|---:|---:|---:|---:|", *summary["A"], "", *lines["A"], "",
+            "## Group B (repeats on correct Spanish)", "",
+            "Over 2× = es repeat chars > 2 × the same id's en repeat mean. es/en = Σ es repeat means / Σ en repeat means.", "",
+            "| bench | model | n items | original es > 2× original en | es repeats over 2× en | es/en (repeat means) |",
+            "|---|---|---:|---:|---:|---:|", *summary["B"], "", *lines["B"], "",
+            "Command: `.venv/bin/python scripts/causal_report.py`"]
     dest = args.results / "causal_test_2026-11-12.md"
     dest.write_text("\n".join(out) + "\n", encoding="utf-8")
     print(f"wrote {dest}")
