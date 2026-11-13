@@ -1,2 +1,6 @@
 # causal 2026-11-12T22:37:40-05:00 27b, llama-server PID 23670, LD_LIBRARY_PATH=/home/jkzero/llama-build-3466812d1-phase1-bak
 /home/jkzero/llama.cpp/build/bin/llama-server -m /home/jkzero/models/Qwen3.8-27B-GSQ/Qwen3.8-27B-GSQ-RCO-IQ3_S-mtp.gguf --spec-type draft-mtp --spec-draft-n-max 3 -ngl 99 -fa on -c 65536 -ub 256 -ctk q8_0 -ctv q8_0 -ctkd q8_0 -ctvd q8_0 -t 6 --parallel 1 --reasoning-effort medium --port 8093 
+# causal 2026-11-13T13:23:01-05:00 27b, llama-server PID 15707, LD_LIBRARY_PATH=/home/jkzero/llama-build-3466812d1-phase1-bak
+/home/jkzero/llama.cpp/build/bin/llama-server -m /home/jkzero/models/Qwen3.8-27B-GSQ/Qwen3.8-27B-GSQ-RCO-IQ3_S-mtp.gguf --spec-type draft-mtp --spec-draft-n-max 3 -ngl 99 -fa on -c 65536 -ub 256 -ctk q8_0 -ctv q8_0 -ctkd q8_0 -ctvd q8_0 -t 6 --parallel 1 --reasoning-effort medium --port 8093 
+# causal 2026-11-13T13:49:26-05:00 9b, llama-server PID 36584, LD_LIBRARY_PATH=/home/jkzero/llama-build-3466812d1-phase1-bak
+/home/jkzero/llama.cpp/build/bin/llama-server -m /home/jkzero/models/Qwen3.5-9B-text-mtp-Q8_0/Qwen3.5-9B-text-mtp-Q8_0.gguf --spec-type draft-mtp --spec-draft-n-max 3 -ctkd q8_0 -ctvd q8_0 -ngl 99 -fa on -c 36864 -ub 256 -ctk q8_0 -ctv q8_0 -t 6 --parallel 4 --reasoning-effort medium --port 8093 

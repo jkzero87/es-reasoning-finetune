@@ -99,3 +99,374 @@
 [2026-11-12T22:52:11] (8/20) id=202 es finish=stop prompt=101 completion=843 wall=15.3s draft=744/595
 [2026-11-12T22:52:18] (9/20) id=236 es finish=stop prompt=88 completion=317 wall=6.4s draft=297/219
 [2026-11-12T22:52:45] (10/20) id=237 es finish=stop prompt=109 completion=1391 wall=27.0s draft=1332/947
+[2026-11-13T13:22:45] loaded: /home/jkzero/llama-build-3466812d1-phase1-bak/libggml-cuda.so.0 -> bf382e74cc5178cf9f0a00bf382a880626bb055053db6e80dc7ea3b72167124d
+[2026-11-13T13:23:01] 27B up, PID 15707, log /home/jkzero/logs/causal27b_20261113_132245.log
+[2026-11-13T13:23:01] run: --repeat 1 --bench mgsm --tag fix27b --langs es --ids 215,39,71,199,111,94 --fixes data/fixes_2026-11-12.jsonl
+[2026-11-13T13:23:02] tag=fix27b bench=mgsm thinking=on workers=1 port=8093 langs=['es']; done=6 this run=0 stop_at=None
+[2026-11-13T13:23:02] run finished: 0 written this run; total in file=6/6
+[2026-11-13T13:23:03] run: --repeat 2 --bench mgsm --tag fix27b --langs es --ids 215,39,71,199,111,94 --fixes data/fixes_2026-11-12.jsonl
+[2026-11-13T13:23:03] tag=fix27b bench=mgsm thinking=on workers=1 port=8093 langs=['es']; done=6 this run=0 stop_at=None
+[2026-11-13T13:23:03] run finished: 0 written this run; total in file=6/6
+[2026-11-13T13:23:04] run: --repeat 3 --bench mgsm --tag fix27b --langs es --ids 215,39,71,199,111,94 --fixes data/fixes_2026-11-12.jsonl
+[2026-11-13T13:23:04] tag=fix27b bench=mgsm thinking=on workers=1 port=8093 langs=['es']; done=6 this run=0 stop_at=None
+[2026-11-13T13:23:04] run finished: 0 written this run; total in file=6/6
+[2026-11-13T13:23:04] run: --repeat 4 --bench mgsm --tag fix27b --langs es --ids 215,39,71,199,111,94 --fixes data/fixes_2026-11-12.jsonl
+[2026-11-13T13:23:05] tag=fix27b bench=mgsm thinking=on workers=1 port=8093 langs=['es']; done=6 this run=0 stop_at=None
+[2026-11-13T13:23:05] run finished: 0 written this run; total in file=6/6
+[2026-11-13T13:23:05] run: --repeat 5 --bench mgsm --tag fix27b --langs es --ids 215,39,71,199,111,94 --fixes data/fixes_2026-11-12.jsonl
+[2026-11-13T13:23:06] tag=fix27b bench=mgsm thinking=on workers=1 port=8093 langs=['es']; done=6 this run=0 stop_at=None
+[2026-11-13T13:23:06] run finished: 0 written this run; total in file=6/6
+[2026-11-13T13:23:06] run: --repeat 1 --bench belebele --tag fix27b --langs es --ids 376,388,224,483,304 --fixes data/fixes_2026-11-12.jsonl
+[2026-11-13T13:23:07] tag=fix27b bench=belebele thinking=on workers=1 port=8093 langs=['es']; done=5 this run=0 stop_at=None
+[2026-11-13T13:23:07] run finished: 0 written this run; total in file=5/5
+[2026-11-13T13:23:07] run: --repeat 2 --bench belebele --tag fix27b --langs es --ids 376,388,224,483,304 --fixes data/fixes_2026-11-12.jsonl
+[2026-11-13T13:23:08] tag=fix27b bench=belebele thinking=on workers=1 port=8093 langs=['es']; done=5 this run=0 stop_at=None
+[2026-11-13T13:23:08] run finished: 0 written this run; total in file=5/5
+[2026-11-13T13:23:08] run: --repeat 3 --bench belebele --tag fix27b --langs es --ids 376,388,224,483,304 --fixes data/fixes_2026-11-12.jsonl
+[2026-11-13T13:23:09] tag=fix27b bench=belebele thinking=on workers=1 port=8093 langs=['es']; done=5 this run=0 stop_at=None
+[2026-11-13T13:23:09] run finished: 0 written this run; total in file=5/5
+[2026-11-13T13:23:09] run: --repeat 4 --bench belebele --tag fix27b --langs es --ids 376,388,224,483,304 --fixes data/fixes_2026-11-12.jsonl
+[2026-11-13T13:23:09] tag=fix27b bench=belebele thinking=on workers=1 port=8093 langs=['es']; done=5 this run=0 stop_at=None
+[2026-11-13T13:23:09] run finished: 0 written this run; total in file=5/5
+[2026-11-13T13:23:10] run: --repeat 5 --bench belebele --tag fix27b --langs es --ids 376,388,224,483,304 --fixes data/fixes_2026-11-12.jsonl
+[2026-11-13T13:23:10] tag=fix27b bench=belebele thinking=on workers=1 port=8093 langs=['es']; done=5 this run=0 stop_at=None
+[2026-11-13T13:23:10] run finished: 0 written this run; total in file=5/5
+[2026-11-13T13:23:10] run: --repeat 1 --bench mgsm --tag rep27b --langs es,en --ids 88,177,158,17,236,202,13,187,237,79
+[2026-11-13T13:23:11] tag=rep27b bench=mgsm thinking=on workers=1 port=8093 langs=['es', 'en']; done=10 this run=10 stop_at=None
+[2026-11-13T13:23:47] (1/10) id=13 en finish=stop prompt=95 completion=1852 wall=35.4s draft=1782/1260
+[2026-11-13T13:23:54] (2/10) id=17 en finish=stop prompt=81 completion=372 wall=7.2s draft=345/258
+[2026-11-13T13:24:14] (3/10) id=79 en finish=stop prompt=71 completion=1160 wall=20.6s draft=1023/821
+[2026-11-13T13:24:32] (4/10) id=88 en finish=stop prompt=107 completion=967 wall=18.1s draft=894/669
+[2026-11-13T13:24:45] (5/10) id=158 en finish=stop prompt=131 completion=734 wall=12.8s draft=624/527
+[2026-11-13T13:24:49] (6/10) id=177 en finish=stop prompt=73 completion=192 wall=3.5s draft=156/139
+[2026-11-13T13:24:59] (7/10) id=187 en finish=stop prompt=144 completion=560 wall=10.0s draft=480/401
+[2026-11-13T13:25:14] (8/10) id=202 en finish=stop prompt=98 completion=815 wall=15.2s draft=744/567
+[2026-11-13T13:25:21] (9/10) id=236 en finish=stop prompt=84 completion=357 wall=7.0s draft=330/247
+[2026-11-13T13:25:29] (10/10) id=237 en finish=stop prompt=87 completion=452 wall=8.3s draft=399/321
+[2026-11-13T13:25:29] run finished: 10 written this run; total in file=20/20
+[2026-11-13T13:25:29] run: --repeat 2 --bench mgsm --tag rep27b --langs es,en --ids 88,177,158,17,236,202,13,187,237,79
+[2026-11-13T13:25:30] tag=rep27b bench=mgsm thinking=on workers=1 port=8093 langs=['es', 'en']; done=0 this run=20 stop_at=None
+[2026-11-13T13:26:10] (1/20) id=13 es finish=stop prompt=98 completion=2012 wall=40.3s draft=2016/1341
+[2026-11-13T13:26:37] (2/20) id=17 es finish=stop prompt=92 completion=1442 wall=26.9s draft=1335/996
+[2026-11-13T13:26:58] (3/20) id=79 es finish=stop prompt=78 completion=1119 wall=20.4s draft=1008/784
+[2026-11-13T13:27:26] (4/20) id=88 es finish=stop prompt=114 completion=1467 wall=28.0s draft=1389/1006
+[2026-11-13T13:28:00] (5/20) id=158 es finish=stop prompt=143 completion=1857 wall=34.4s draft=1710/1286
+[2026-11-13T13:28:15] (6/20) id=177 es finish=stop prompt=81 completion=765 wall=14.7s draft=720/526
+[2026-11-13T13:28:32] (7/20) id=187 es finish=stop prompt=184 completion=949 wall=17.5s draft=861/661
+[2026-11-13T13:28:50] (8/20) id=202 es finish=stop prompt=101 completion=989 wall=17.4s draft=861/702
+[2026-11-13T13:28:55] (9/20) id=236 es finish=stop prompt=88 completion=242 wall=4.9s draft=228/166
+[2026-11-13T13:29:11] (10/20) id=237 es finish=stop prompt=109 completion=860 wall=16.2s draft=801/594
+[2026-11-13T13:29:32] (11/20) id=13 en finish=stop prompt=95 completion=1041 wall=20.9s draft=1032/696
+[2026-11-13T13:29:39] (12/20) id=17 en finish=stop prompt=81 completion=420 wall=7.8s draft=369/299
+[2026-11-13T13:29:48] (13/20) id=79 en finish=stop prompt=71 completion=488 wall=8.5s draft=408/353
+[2026-11-13T13:30:07] (14/20) id=88 en finish=stop prompt=107 completion=1012 wall=19.4s draft=957/695
+[2026-11-13T13:30:22] (15/20) id=158 en finish=stop prompt=131 completion=827 wall=14.8s draft=723/585
+[2026-11-13T13:30:25] (16/20) id=177 en finish=stop prompt=73 completion=178 wall=3.4s draft=150/129
+[2026-11-13T13:30:36] (17/20) id=187 en finish=stop prompt=144 completion=593 wall=10.4s draft=495/430
+[2026-11-13T13:30:47] (18/20) id=202 en finish=stop prompt=98 completion=627 wall=11.5s draft=558/441
+[2026-11-13T13:30:52] (19/20) id=236 en finish=stop prompt=84 completion=213 wall=4.1s draft=186/153
+[2026-11-13T13:31:04] (20/20) id=237 en finish=stop prompt=87 completion=630 wall=12.1s draft=585/436
+[2026-11-13T13:31:04] run finished: 20 written this run; total in file=20/20
+[2026-11-13T13:31:04] run: --repeat 3 --bench mgsm --tag rep27b --langs es,en --ids 88,177,158,17,236,202,13,187,237,79
+[2026-11-13T13:31:04] tag=rep27b bench=mgsm thinking=on workers=1 port=8093 langs=['es', 'en']; done=0 this run=20 stop_at=None
+[2026-11-13T13:31:27] (1/20) id=13 es finish=stop prompt=98 completion=1118 wall=23.0s draft=1140/740
+[2026-11-13T13:31:45] (2/20) id=17 es finish=stop prompt=92 completion=928 wall=17.6s draft=867/641
+[2026-11-13T13:32:10] (3/20) id=79 es finish=stop prompt=78 completion=1417 wall=25.0s draft=1242/1003
+[2026-11-13T13:32:29] (4/20) id=88 es finish=stop prompt=114 completion=1034 wall=18.9s draft=933/725
+[2026-11-13T13:33:04] (5/20) id=158 es finish=stop prompt=143 completion=1858 wall=35.1s draft=1743/1276
+[2026-11-13T13:33:48] (6/20) id=177 es finish=stop prompt=81 completion=2175 wall=44.1s draft=2205/1439
+[2026-11-13T13:34:15] (7/20) id=187 es finish=stop prompt=184 completion=1480 wall=27.0s draft=1335/1037
+[2026-11-13T13:34:39] (8/20) id=202 es finish=stop prompt=101 completion=1287 wall=23.8s draft=1176/895
+[2026-11-13T13:34:58] (9/20) id=236 es finish=stop prompt=88 completion=1008 wall=19.3s draft=957/689
+[2026-11-13T13:35:20] (10/20) id=237 es finish=stop prompt=109 completion=1110 wall=21.3s draft=1050/761
+[2026-11-13T13:35:39] (11/20) id=13 en finish=stop prompt=95 completion=1073 wall=19.8s draft=975/750
+[2026-11-13T13:35:48] (12/20) id=17 en finish=stop prompt=81 completion=451 wall=8.5s draft=405/315
+[2026-11-13T13:35:55] (13/20) id=79 en finish=stop prompt=71 completion=419 wall=7.5s draft=354/302
+[2026-11-13T13:36:25] (14/20) id=88 en finish=stop prompt=107 completion=1588 wall=29.7s draft=1473/1097
+[2026-11-13T13:36:41] (15/20) id=158 en finish=stop prompt=131 completion=908 wall=16.4s draft=804/640
+[2026-11-13T13:36:45] (16/20) id=177 en finish=stop prompt=73 completion=175 wall=3.3s draft=144/128
+[2026-11-13T13:36:56] (17/20) id=187 en finish=stop prompt=144 completion=644 wall=11.4s draft=543/465
+[2026-11-13T13:37:07] (18/20) id=202 en finish=stop prompt=98 completion=604 wall=10.9s draft=522/430
+[2026-11-13T13:37:16] (19/20) id=236 en finish=stop prompt=84 completion=447 wall=8.7s draft=420/309
+[2026-11-13T13:37:24] (20/20) id=237 en finish=stop prompt=87 completion=464 wall=8.9s draft=423/324
+[2026-11-13T13:37:24] run finished: 20 written this run; total in file=20/20
+[2026-11-13T13:37:25] run: --repeat 4 --bench mgsm --tag rep27b --langs es,en --ids 88,177,158,17,236,202,13,187,237,79
+[2026-11-13T13:37:25] tag=rep27b bench=mgsm thinking=on workers=1 port=8093 langs=['es', 'en']; done=0 this run=20 stop_at=None
+[2026-11-13T13:37:47] (1/20) id=13 es finish=stop prompt=98 completion=1152 wall=21.7s draft=1077/794
+[2026-11-13T13:38:02] (2/20) id=17 es finish=stop prompt=92 completion=841 wall=15.3s draft=753/589
+[2026-11-13T13:38:25] (3/20) id=79 es finish=stop prompt=78 completion=1244 wall=22.8s draft=1134/867
+[2026-11-13T13:38:40] (4/20) id=88 es finish=stop prompt=114 completion=801 wall=14.9s draft=735/558
+[2026-11-13T13:39:15] (5/20) id=158 es finish=stop prompt=143 completion=1865 wall=35.3s draft=1764/1279
+[2026-11-13T13:39:33] (6/20) id=177 es finish=stop prompt=81 completion=929 wall=18.3s draft=906/627
+[2026-11-13T13:39:52] (7/20) id=187 es finish=stop prompt=184 completion=1030 wall=18.6s draft=912/726
+[2026-11-13T13:40:04] (8/20) id=202 es finish=stop prompt=101 completion=684 wall=12.1s draft=588/488
+[2026-11-13T13:40:11] (9/20) id=236 es finish=stop prompt=88 completion=365 wall=6.6s draft=309/261
+[2026-11-13T13:40:23] (10/20) id=237 es finish=stop prompt=109 completion=619 wall=12.0s draft=585/424
+[2026-11-13T13:40:37] (11/20) id=13 en finish=stop prompt=95 completion=741 wall=14.6s draft=714/505
+[2026-11-13T13:40:44] (12/20) id=17 en finish=stop prompt=81 completion=329 wall=6.6s draft=303/229
+[2026-11-13T13:40:51] (13/20) id=79 en finish=stop prompt=71 completion=412 wall=7.3s draft=345/298
+[2026-11-13T13:41:07] (14/20) id=88 en finish=stop prompt=107 completion=889 wall=16.1s draft=789/628
+[2026-11-13T13:41:23] (15/20) id=158 en finish=stop prompt=131 completion=907 wall=15.8s draft=777/649
+[2026-11-13T13:41:27] (16/20) id=177 en finish=stop prompt=73 completion=186 wall=3.5s draft=153/136
+[2026-11-13T13:41:37] (17/20) id=187 en finish=stop prompt=144 completion=619 wall=10.9s draft=519/445
+[2026-11-13T13:41:46] (18/20) id=202 en finish=stop prompt=98 completion=440 wall=8.2s draft=390/309
+[2026-11-13T13:41:52] (19/20) id=236 en finish=stop prompt=84 completion=359 wall=6.7s draft=318/252
+[2026-11-13T13:42:04] (20/20) id=237 en finish=stop prompt=87 completion=635 wall=11.7s draft=573/446
+[2026-11-13T13:42:04] run finished: 20 written this run; total in file=20/20
+[2026-11-13T13:42:04] run: --repeat 5 --bench mgsm --tag rep27b --langs es,en --ids 88,177,158,17,236,202,13,187,237,79
+[2026-11-13T13:42:05] tag=rep27b bench=mgsm thinking=on workers=1 port=8093 langs=['es', 'en']; done=0 this run=20 stop_at=None
+[2026-11-13T13:42:43] (1/20) id=13 es finish=stop prompt=98 completion=1953 wall=38.4s draft=1908/1317
+[2026-11-13T13:43:10] (2/20) id=17 es finish=stop prompt=92 completion=1361 wall=26.4s draft=1308/927
+[2026-11-13T13:43:27] (3/20) id=79 es finish=stop prompt=78 completion=951 wall=17.7s draft=867/663
+[2026-11-13T13:44:03] (4/20) id=88 es finish=stop prompt=114 completion=1837 wall=35.4s draft=1764/1251
+[2026-11-13T13:44:48] (5/20) id=158 es finish=stop prompt=143 completion=2469 wall=45.5s draft=2265/1715
+[2026-11-13T13:45:08] (6/20) id=177 es finish=stop prompt=81 completion=1057 wall=19.8s draft=978/731
+[2026-11-13T13:45:29] (7/20) id=187 es finish=stop prompt=184 completion=1140 wall=21.3s draft=1050/790
+[2026-11-13T13:46:05] (8/20) id=202 es finish=stop prompt=101 completion=1888 wall=35.2s draft=1755/1303
+[2026-11-13T13:46:23] (9/20) id=236 es finish=stop prompt=88 completion=908 wall=18.6s draft=918/603
+[2026-11-13T13:46:41] (10/20) id=237 es finish=stop prompt=109 completion=938 wall=18.1s draft=894/641
+[2026-11-13T13:47:07] (11/20) id=13 en finish=stop prompt=95 completion=1274 wall=25.3s draft=1257/857
+[2026-11-13T13:47:13] (12/20) id=17 en finish=stop prompt=81 completion=353 wall=6.8s draft=321/245
+[2026-11-13T13:47:25] (13/20) id=79 en finish=stop prompt=71 completion=634 wall=11.5s draft=561/448
+[2026-11-13T13:47:39] (14/20) id=88 en finish=stop prompt=107 completion=762 wall=13.8s draft=672/540
+[2026-11-13T13:47:59] (15/20) id=158 en finish=stop prompt=131 completion=1129 wall=20.1s draft=993/797
+[2026-11-13T13:48:03] (16/20) id=177 en finish=stop prompt=73 completion=198 wall=3.8s draft=171/141
+[2026-11-13T13:48:16] (17/20) id=187 en finish=stop prompt=144 completion=747 wall=13.1s draft=633/536
+[2026-11-13T13:48:27] (18/20) id=202 en finish=stop prompt=98 completion=612 wall=10.9s draft=528/436
+[2026-11-13T13:48:51] (19/20) id=236 en finish=stop prompt=84 completion=1288 wall=24.8s draft=1233/876
+[2026-11-13T13:49:07] (20/20) id=237 en finish=stop prompt=87 completion=790 wall=15.2s draft=747/542
+[2026-11-13T13:49:07] run finished: 20 written this run; total in file=20/20
+[2026-11-13T13:49:14] 27B stopped
+llama-server PID 36584 (log: /home/jkzero/logs/base_20261113_134914.log) model=Qwen3.5-9B-text-mtp-Q8_0.gguf parallel=4 ctx=36864 mtp=1
+healthy after 12s
+[2026-11-13T13:49:26] run: --repeat 1 --bench mgsm --tag fix9b --langs es --ids 215,39,71,199,111,94 --fixes data/fixes_2026-11-12.jsonl
+[2026-11-13T13:49:27] saved server props -> server_props.fix9b.json
+[2026-11-13T13:49:27] tag=fix9b bench=mgsm thinking=on workers=4 port=8093 langs=['es']; done=0 this run=6 stop_at=None
+[2026-11-13T13:50:03] (4/6) id=111 es finish=stop prompt=130 completion=2104 wall=36.2s draft=2112/1399
+[2026-11-13T13:50:25] (5/6) id=199 es finish=stop prompt=111 completion=1521 wall=22.6s draft=1251/1106
+[2026-11-13T13:50:42] (1/6) id=39 es finish=stop prompt=74 completion=4355 wall=75.0s draft=4263/2936
+[2026-11-13T13:52:01] (3/6) id=94 es finish=stop prompt=101 completion=7007 wall=154.6s draft=7167/4619
+[2026-11-13T13:52:04] (6/6) id=215 es finish=stop prompt=104 completion=3908 wall=99.2s draft=3921/2602
+[2026-11-13T13:52:11] (2/6) id=71 es finish=stop prompt=83 completion=7295 wall=164.5s draft=7827/4685
+[2026-11-13T13:52:11] run finished: 6 written this run; total in file=6/6
+[2026-11-13T13:52:11] run: --repeat 2 --bench mgsm --tag fix9b --langs es --ids 215,39,71,199,111,94 --fixes data/fixes_2026-11-12.jsonl
+[2026-11-13T13:52:12] tag=fix9b bench=mgsm thinking=on workers=4 port=8093 langs=['es']; done=0 this run=6 stop_at=None
+[2026-11-13T13:52:41] (1/6) id=39 es finish=stop prompt=74 completion=1878 wall=29.6s draft=1695/1312
+[2026-11-13T13:53:17] (4/6) id=111 es finish=stop prompt=130 completion=3655 wall=64.8s draft=3663/2435
+[2026-11-13T13:53:26] (5/6) id=199 es finish=stop prompt=111 completion=2824 wall=44.9s draft=2493/1992
+[2026-11-13T13:54:22] (6/6) id=215 es finish=stop prompt=104 completion=2771 wall=65.4s draft=2571/1915
+[2026-11-13T13:54:27] (3/6) id=94 es finish=stop prompt=101 completion=6267 wall=135.2s draft=6444/4119
+[2026-11-13T13:54:38] (2/6) id=71 es finish=stop prompt=83 completion=6977 wall=146.3s draft=7329/4534
+[2026-11-13T13:54:38] run finished: 6 written this run; total in file=6/6
+[2026-11-13T13:54:38] run: --repeat 3 --bench mgsm --tag fix9b --langs es --ids 215,39,71,199,111,94 --fixes data/fixes_2026-11-12.jsonl
+[2026-11-13T13:54:39] tag=fix9b bench=mgsm thinking=on workers=4 port=8093 langs=['es']; done=0 this run=6 stop_at=None
+[2026-11-13T13:55:11] (1/6) id=39 es finish=stop prompt=74 completion=1939 wall=31.5s draft=1812/1337
+[2026-11-13T13:55:31] (4/6) id=111 es finish=stop prompt=130 completion=2973 wall=52.5s draft=3000/1974
+[2026-11-13T13:55:34] (5/6) id=199 es finish=stop prompt=111 completion=1562 wall=23.6s draft=1314/1125
+[2026-11-13T13:56:00] (2/6) id=71 es finish=stop prompt=83 completion=4643 wall=80.6s draft=4710/3075
+[2026-11-13T13:56:03] (6/6) id=215 es finish=stop prompt=104 completion=2090 wall=31.2s draft=1905/1454
+[2026-11-13T13:56:46] (3/6) id=94 es finish=stop prompt=101 completion=8013 wall=126.7s draft=8364/5227
+[2026-11-13T13:56:46] run finished: 6 written this run; total in file=6/6
+[2026-11-13T13:56:46] run: --repeat 4 --bench mgsm --tag fix9b --langs es --ids 215,39,71,199,111,94 --fixes data/fixes_2026-11-12.jsonl
+[2026-11-13T13:56:46] tag=fix9b bench=mgsm thinking=on workers=4 port=8093 langs=['es']; done=0 this run=6 stop_at=None
+[2026-11-13T13:57:45] (4/6) id=111 es finish=stop prompt=130 completion=3176 wall=58.4s draft=3348/2062
+[2026-11-13T13:57:49] (1/6) id=39 es finish=stop prompt=74 completion=3542 wall=62.8s draft=3576/2349
+[2026-11-13T13:58:15] (5/6) id=199 es finish=stop prompt=111 completion=1863 wall=30.4s draft=1644/1314
+[2026-11-13T13:58:39] (6/6) id=215 es finish=stop prompt=104 completion=2545 wall=50.0s draft=2298/1780
+[2026-11-13T13:58:56] (2/6) id=71 es finish=stop prompt=83 completion=6595 wall=129.8s draft=6561/4410
+[2026-11-13T13:59:24] (3/6) id=94 es finish=length prompt=101 completion=8192 wall=157.6s draft=8774/5266
+[2026-11-13T13:59:24] run finished: 6 written this run; total in file=6/6
+[2026-11-13T13:59:24] run: --repeat 5 --bench mgsm --tag fix9b --langs es --ids 215,39,71,199,111,94 --fixes data/fixes_2026-11-12.jsonl
+[2026-11-13T13:59:25] tag=fix9b bench=mgsm thinking=on workers=4 port=8093 langs=['es']; done=0 this run=6 stop_at=None
+[2026-11-13T13:59:54] (1/6) id=39 es finish=stop prompt=74 completion=1837 wall=29.2s draft=1677/1277
+[2026-11-13T14:00:28] (4/6) id=111 es finish=stop prompt=130 completion=3483 wall=63.6s draft=3624/2274
+[2026-11-13T14:00:31] (5/6) id=199 es finish=stop prompt=111 completion=2365 wall=37.2s draft=2082/1670
+[2026-11-13T14:00:55] (2/6) id=71 es finish=stop prompt=83 completion=4997 wall=89.7s draft=5190/3268
+[2026-11-13T14:01:14] (6/6) id=215 es finish=stop prompt=104 completion=3073 wall=46.0s draft=2919/2099
+[2026-11-13T14:01:44] (3/6) id=94 es finish=stop prompt=101 completion=8126 wall=138.9s draft=8895/5161
+[2026-11-13T14:01:44] run finished: 6 written this run; total in file=6/6
+[2026-11-13T14:01:44] run: --repeat 1 --bench belebele --tag fix9b --langs es --ids 376,388,224,483,304 --fixes data/fixes_2026-11-12.jsonl
+[2026-11-13T14:01:45] tag=fix9b bench=belebele thinking=on workers=4 port=8093 langs=['es']; done=0 this run=5 stop_at=None
+[2026-11-13T14:02:00] (4/5) id=388 es finish=stop prompt=207 completion=895 wall=15.9s draft=873/606
+[2026-11-13T14:02:25] (1/5) id=224 es finish=stop prompt=352 completion=2292 wall=40.8s draft=2289/1529
+[2026-11-13T14:02:47] (5/5) id=483 es finish=stop prompt=276 completion=2653 wall=46.1s draft=2742/1738
+[2026-11-13T14:03:04] (2/5) id=304 es finish=stop prompt=202 completion=4383 wall=79.1s draft=4809/2779
+[2026-11-13T14:03:07] (3/5) id=376 es finish=stop prompt=175 completion=4838 wall=82.1s draft=5058/3151
+[2026-11-13T14:03:07] run finished: 5 written this run; total in file=5/5
+[2026-11-13T14:03:07] run: --repeat 2 --bench belebele --tag fix9b --langs es --ids 376,388,224,483,304 --fixes data/fixes_2026-11-12.jsonl
+[2026-11-13T14:03:07] tag=fix9b bench=belebele thinking=on workers=4 port=8093 langs=['es']; done=0 this run=5 stop_at=None
+[2026-11-13T14:03:34] (1/5) id=224 es finish=stop prompt=352 completion=1578 wall=26.1s draft=1494/1082
+[2026-11-13T14:03:36] (4/5) id=388 es finish=stop prompt=207 completion=1534 wall=28.8s draft=1632/989
+[2026-11-13T14:04:31] (5/5) id=483 es finish=stop prompt=276 completion=2146 wall=57.1s draft=2178/1419
+[2026-11-13T14:04:38] (2/5) id=304 es finish=stop prompt=202 completion=3946 wall=90.6s draft=4200/2546
+[2026-11-13T14:05:38] (3/5) id=376 es finish=length prompt=175 completion=8192 wall=150.2s draft=8998/5191
+[2026-11-13T14:05:38] run finished: 5 written this run; total in file=5/5
+[2026-11-13T14:05:38] run: --repeat 3 --bench belebele --tag fix9b --langs es --ids 376,388,224,483,304 --fixes data/fixes_2026-11-12.jsonl
+[2026-11-13T14:05:39] tag=fix9b bench=belebele thinking=on workers=4 port=8093 langs=['es']; done=0 this run=5 stop_at=None
+[2026-11-13T14:05:59] (4/5) id=388 es finish=stop prompt=207 completion=1134 wall=20.3s draft=1152/749
+[2026-11-13T14:06:13] (3/5) id=376 es finish=stop prompt=175 completion=1886 wall=34.8s draft=1977/1226
+[2026-11-13T14:06:18] (1/5) id=224 es finish=stop prompt=352 completion=2333 wall=39.2s draft=2253/1582
+[2026-11-13T14:06:33] (2/5) id=304 es finish=stop prompt=202 completion=3199 wall=54.5s draft=3342/2086
+[2026-11-13T14:06:58] (5/5) id=483 es finish=stop prompt=276 completion=4070 wall=59.0s draft=4197/2670
+[2026-11-13T14:06:58] run finished: 5 written this run; total in file=5/5
+[2026-11-13T14:06:58] run: --repeat 4 --bench belebele --tag fix9b --langs es --ids 376,388,224,483,304 --fixes data/fixes_2026-11-12.jsonl
+[2026-11-13T14:06:59] tag=fix9b bench=belebele thinking=on workers=4 port=8093 langs=['es']; done=0 this run=5 stop_at=None
+[2026-11-13T14:07:17] (4/5) id=388 es finish=stop prompt=207 completion=959 wall=18.1s draft=1020/618
+[2026-11-13T14:07:58] (1/5) id=224 es finish=stop prompt=352 completion=3398 wall=58.9s draft=3357/2279
+[2026-11-13T14:08:05] (2/5) id=304 es finish=stop prompt=202 completion=3610 wall=66.4s draft=3822/2335
+[2026-11-13T14:08:58] (5/5) id=483 es finish=stop prompt=276 completion=4673 wall=101.7s draft=4941/3028
+[2026-11-13T14:09:09] (3/5) id=376 es finish=stop prompt=175 completion=6324 wall=130.9s draft=6867/4034
+[2026-11-13T14:09:09] run finished: 5 written this run; total in file=5/5
+[2026-11-13T14:09:10] run: --repeat 5 --bench belebele --tag fix9b --langs es --ids 376,388,224,483,304 --fixes data/fixes_2026-11-12.jsonl
+[2026-11-13T14:09:10] tag=fix9b bench=belebele thinking=on workers=4 port=8093 langs=['es']; done=0 this run=5 stop_at=None
+[2026-11-13T14:09:32] (4/5) id=388 es finish=stop prompt=207 completion=1177 wall=22.1s draft=1260/757
+[2026-11-13T14:09:36] (1/5) id=224 es finish=stop prompt=352 completion=1555 wall=25.9s draft=1461/1068
+[2026-11-13T14:10:04] (2/5) id=304 es finish=stop prompt=202 completion=2950 wall=53.5s draft=3222/1875
+[2026-11-13T14:10:24] (3/5) id=376 es finish=stop prompt=175 completion=3734 wall=73.7s draft=4041/2386
+[2026-11-13T14:10:39] (5/5) id=483 es finish=stop prompt=276 completion=3869 wall=66.8s draft=4017/2529
+[2026-11-13T14:10:39] run finished: 5 written this run; total in file=5/5
+[2026-11-13T14:10:39] run: --repeat 1 --bench belebele --tag rep9b --langs es,en --ids 270,33,487,127,278,374,203,134,377,466,324,140
+[2026-11-13T14:10:40] saved server props -> server_props.rep9b.json
+[2026-11-13T14:10:40] tag=rep9b bench=belebele thinking=on workers=4 port=8093 langs=['es', 'en']; done=0 this run=24 stop_at=None
+[2026-11-13T14:11:45] (1/24) id=33 es finish=stop prompt=274 completion=3240 wall=64.9s draft=3720/1999
+[2026-11-13T14:12:28] (4/24) id=140 es finish=stop prompt=210 completion=5680 wall=107.5s draft=6054/3664
+[2026-11-13T14:12:48] (2/24) id=127 es finish=stop prompt=215 completion=6230 wall=128.1s draft=7149/3846
+[2026-11-13T14:13:11] (6/24) id=270 es finish=stop prompt=167 completion=2137 wall=43.4s draft=2283/1375
+[2026-11-13T14:13:19] (5/24) id=203 es finish=stop prompt=286 completion=4647 wall=93.9s draft=5019/2975
+[2026-11-13T14:13:21] (3/24) id=134 es finish=length prompt=246 completion=8192 wall=161.3s draft=8856/5238
+[2026-11-13T14:13:50] (9/24) id=374 es finish=stop prompt=258 completion=1671 wall=31.0s draft=1737/1093
+[2026-11-13T14:14:04] (10/24) id=377 es finish=stop prompt=244 completion=2417 wall=42.9s draft=2424/1608
+[2026-11-13T14:14:20] (7/24) id=278 es finish=stop prompt=184 completion=4475 wall=92.2s draft=5016/2802
+[2026-11-13T14:14:33] (8/24) id=324 es finish=stop prompt=159 completion=4237 wall=82.5s draft=4542/2724
+[2026-11-13T14:14:34] (13/24) id=33 en finish=stop prompt=206 completion=757 wall=13.6s draft=732/513
+[2026-11-13T14:14:54] (14/24) id=127 en finish=stop prompt=185 completion=1173 wall=20.8s draft=1161/787
+[2026-11-13T14:15:40] (16/24) id=140 en finish=stop prompt=163 completion=2483 wall=45.9s draft=2535/1637
+[2026-11-13T14:16:18] (15/24) id=134 en finish=stop prompt=209 completion=5416 wall=103.7s draft=5679/3522
+[2026-11-13T14:16:35] (11/24) id=466 es finish=length prompt=303 completion=8192 wall=165.0s draft=8977/5197
+[2026-11-13T14:16:55] (17/24) id=203 en finish=stop prompt=215 completion=3713 wall=74.7s draft=3900/2415
+[2026-11-13T14:16:56] (12/24) id=487 es finish=length prompt=286 completion=8192 wall=171.4s draft=9250/5107
+[2026-11-13T14:16:57] (19/24) id=278 en finish=stop prompt=156 completion=1003 wall=21.9s draft=1095/638
+[2026-11-13T14:17:05] (20/24) id=324 en finish=stop prompt=144 completion=592 wall=10.6s draft=549/410
+[2026-11-13T14:17:29] (18/24) id=270 en finish=stop prompt=149 completion=3711 wall=71.5s draft=3822/2437
+[2026-11-13T14:17:33] (23/24) id=466 en finish=stop prompt=265 completion=1671 wall=28.1s draft=1572/1148
+[2026-11-13T14:17:50] (21/24) id=374 en finish=stop prompt=201 completion=3087 wall=54.4s draft=3162/2034
+[2026-11-13T14:18:01] (22/24) id=377 en finish=stop prompt=190 completion=3787 wall=64.1s draft=3885/2494
+[2026-11-13T14:19:15] (24/24) id=487 en finish=stop prompt=236 completion=7421 wall=106.1s draft=8106/4718
+[2026-11-13T14:19:15] run finished: 24 written this run; total in file=24/24
+[2026-11-13T14:19:15] run: --repeat 2 --bench belebele --tag rep9b --langs es,en --ids 270,33,487,127,278,374,203,134,377,466,324,140
+[2026-11-13T14:19:16] tag=rep9b bench=belebele thinking=on workers=4 port=8093 langs=['es', 'en']; done=0 this run=24 stop_at=None
+[2026-11-13T14:19:50] (1/24) id=33 es finish=stop prompt=274 completion=1905 wall=33.4s draft=1908/1271
+[2026-11-13T14:20:31] (2/24) id=127 es finish=stop prompt=215 completion=3822 wall=75.4s draft=4290/2391
+[2026-11-13T14:21:04] (6/24) id=270 es finish=stop prompt=167 completion=1746 wall=32.8s draft=1794/1150
+[2026-11-13T14:21:29] (4/24) id=140 es finish=stop prompt=210 completion=6722 wall=133.2s draft=7428/4248
+[2026-11-13T14:21:36] (3/24) id=134 es finish=stop prompt=246 completion=7118 wall=140.4s draft=7797/4521
+[2026-11-13T14:21:37] (7/24) id=278 es finish=stop prompt=184 completion=1663 wall=33.0s draft=1722/1089
+[2026-11-13T14:21:48] (5/24) id=203 es finish=stop prompt=286 completion=5968 wall=118.8s draft=6492/3803
+[2026-11-13T14:22:07] (10/24) id=377 es finish=stop prompt=244 completion=1683 wall=30.0s draft=1683/1121
+[2026-11-13T14:22:42] (11/24) id=466 es finish=stop prompt=303 completion=3036 wall=53.2s draft=3036/2023
+[2026-11-13T14:23:11] (13/24) id=33 en finish=stop prompt=206 completion=1518 wall=29.8s draft=1623/976
+[2026-11-13T14:23:27] (8/24) id=324 es finish=stop prompt=159 completion=6248 wall=117.3s draft=6477/4088
+[2026-11-13T14:23:36] (14/24) id=127 en finish=stop prompt=185 completion=1257 wall=24.6s draft=1305/823
+[2026-11-13T14:23:40] (9/24) id=374 es finish=stop prompt=258 completion=6424 wall=123.7s draft=6819/4153
+[2026-11-13T14:24:22] (16/24) id=140 en finish=stop prompt=163 completion=2380 wall=46.4s draft=2511/1543
+[2026-11-13T14:24:27] (17/24) id=203 en finish=stop prompt=215 completion=2458 wall=47.3s draft=2559/1605
+[2026-11-13T14:24:39] (15/24) id=134 en finish=stop prompt=209 completion=3826 wall=72.5s draft=3882/2533
+[2026-11-13T14:24:49] (12/24) id=487 es finish=stop prompt=286 completion=7917 wall=161.3s draft=8772/4995
+[2026-11-13T14:24:52] (20/24) id=324 en finish=stop prompt=144 completion=707 wall=12.7s draft=654/489
+[2026-11-13T14:24:56] (19/24) id=278 en finish=stop prompt=156 completion=1334 wall=29.1s draft=1533/822
+[2026-11-13T14:25:05] (21/24) id=374 en finish=stop prompt=201 completion=1022 wall=16.9s draft=933/710
+[2026-11-13T14:25:29] (22/24) id=377 en finish=stop prompt=190 completion=2146 wall=37.2s draft=2112/1442
+[2026-11-13T14:25:36] (23/24) id=466 en finish=stop prompt=265 completion=2252 wall=39.5s draft=2277/1493
+[2026-11-13T14:25:48] (18/24) id=270 en finish=stop prompt=149 completion=4710 wall=85.9s draft=4947/3061
+[2026-11-13T14:26:19] (24/24) id=487 en finish=stop prompt=236 completion=4775 wall=73.2s draft=5139/3062
+[2026-11-13T14:26:19] run finished: 24 written this run; total in file=24/24
+[2026-11-13T14:26:19] run: --repeat 3 --bench belebele --tag rep9b --langs es,en --ids 270,33,487,127,278,374,203,134,377,466,324,140
+[2026-11-13T14:26:19] tag=rep9b bench=belebele thinking=on workers=4 port=8093 langs=['es', 'en']; done=0 this run=24 stop_at=None
+[2026-11-13T14:27:01] (2/24) id=127 es finish=stop prompt=215 completion=2306 wall=42.1s draft=2448/1489
+[2026-11-13T14:27:08] (1/24) id=33 es finish=stop prompt=274 completion=2557 wall=48.1s draft=2769/1634
+[2026-11-13T14:27:18] (3/24) id=134 es finish=stop prompt=246 completion=3189 wall=58.1s draft=3330/2078
+[2026-11-13T14:27:32] (6/24) id=270 es finish=stop prompt=167 completion=1401 wall=24.9s draft=1383/940
+[2026-11-13T14:28:44] (4/24) id=140 es finish=stop prompt=210 completion=7455 wall=144.9s draft=8088/4758
+[2026-11-13T14:29:05] (8/24) id=324 es finish=stop prompt=159 completion=4743 wall=92.8s draft=5025/3070
+[2026-11-13T14:29:14] (5/24) id=203 es finish=stop prompt=286 completion=6821 wall=132.6s draft=7194/4422
+[2026-11-13T14:29:36] (9/24) id=374 es finish=stop prompt=258 completion=2662 wall=51.5s draft=2703/1760
+[2026-11-13T14:29:41] (7/24) id=278 es finish=stop prompt=184 completion=6829 wall=143.1s draft=7707/4261
+[2026-11-13T14:29:47] (10/24) id=377 es finish=stop prompt=244 completion=2156 wall=42.1s draft=2202/1424
+[2026-11-13T14:29:59] (13/24) id=33 en finish=stop prompt=206 completion=1029 wall=18.8s draft=1047/680
+[2026-11-13T14:30:04] (14/24) id=127 en finish=stop prompt=185 completion=958 wall=16.7s draft=930/647
+[2026-11-13T14:30:45] (16/24) id=140 en finish=stop prompt=163 completion=2297 wall=40.7s draft=2292/1533
+[2026-11-13T14:31:55] (15/24) id=134 en finish=stop prompt=209 completion=6027 wall=115.7s draft=6294/3929
+[2026-11-13T14:31:57] (11/24) id=466 es finish=stop prompt=303 completion=8092 wall=162.8s draft=8814/5154
+[2026-11-13T14:32:27] (12/24) id=487 es finish=length prompt=286 completion=8192 wall=171.0s draft=9225/5115
+[2026-11-13T14:32:29] (19/24) id=278 en finish=stop prompt=156 completion=1608 wall=32.2s draft=1665/1052
+[2026-11-13T14:32:34] (17/24) id=203 en finish=stop prompt=215 completion=5446 wall=109.5s draft=5760/3525
+[2026-11-13T14:32:39] (20/24) id=324 en finish=stop prompt=144 completion=707 wall=12.4s draft=648/491
+[2026-11-13T14:32:53] (21/24) id=374 en finish=stop prompt=201 completion=1351 wall=23.8s draft=1314/913
+[2026-11-13T14:33:01] (18/24) id=270 en finish=stop prompt=149 completion=3279 wall=66.0s draft=3519/2105
+[2026-11-13T14:33:02] (22/24) id=377 en finish=stop prompt=190 completion=1592 wall=27.9s draft=1545/1079
+[2026-11-13T14:33:04] (23/24) id=466 en finish=stop prompt=265 completion=1409 wall=25.1s draft=1353/958
+[2026-11-13T14:34:13] (24/24) id=487 en finish=stop prompt=236 completion=5672 wall=79.9s draft=6180/3613
+[2026-11-13T14:34:13] run finished: 24 written this run; total in file=24/24
+[2026-11-13T14:34:13] run: --repeat 4 --bench belebele --tag rep9b --langs es,en --ids 270,33,487,127,278,374,203,134,377,466,324,140
+[2026-11-13T14:34:14] tag=rep9b bench=belebele thinking=on workers=4 port=8093 langs=['es', 'en']; done=0 this run=24 stop_at=None
+[2026-11-13T14:35:01] (1/24) id=33 es finish=stop prompt=274 completion=2549 wall=47.7s draft=2748/1632
+[2026-11-13T14:35:31] (4/24) id=140 es finish=stop prompt=210 completion=4129 wall=77.3s draft=4392/2664
+[2026-11-13T14:35:44] (2/24) id=127 es finish=stop prompt=215 completion=4590 wall=90.1s draft=5085/2894
+[2026-11-13T14:36:11] (5/24) id=203 es finish=stop prompt=286 completion=3636 wall=69.8s draft=3810/2368
+[2026-11-13T14:36:12] (6/24) id=270 es finish=stop prompt=167 completion=2096 wall=41.1s draft=2202/1361
+[2026-11-13T14:36:31] (3/24) id=134 es finish=stop prompt=246 completion=7265 wall=137.3s draft=7599/4734
+[2026-11-13T14:37:05] (10/24) id=377 es finish=stop prompt=244 completion=1877 wall=33.9s draft=1914/1238
+[2026-11-13T14:38:01] (9/24) id=374 es finish=stop prompt=258 completion=5603 wall=108.7s draft=5946/3621
+[2026-11-13T14:38:07] (8/24) id=324 es finish=stop prompt=159 completion=5988 wall=116.3s draft=6309/3885
+[2026-11-13T14:38:12] (7/24) id=278 es finish=stop prompt=184 completion=7277 wall=148.5s draft=8028/4603
+[2026-11-13T14:38:21] (13/24) id=33 en finish=stop prompt=206 completion=769 wall=13.5s draft=705/536
+[2026-11-13T14:38:26] (14/24) id=127 en finish=stop prompt=185 completion=816 wall=14.1s draft=759/563
+[2026-11-13T14:38:49] (16/24) id=140 en finish=stop prompt=163 completion=1318 wall=23.2s draft=1263/896
+[2026-11-13T14:39:18] (17/24) id=203 en finish=stop prompt=215 completion=1565 wall=29.0s draft=1539/1053
+[2026-11-13T14:39:46] (18/24) id=270 en finish=stop prompt=149 completion=1436 wall=27.4s draft=1425/961
+[2026-11-13T14:39:51] (11/24) id=466 es finish=length prompt=303 completion=8192 wall=165.7s draft=8844/5242
+[2026-11-13T14:40:04] (20/24) id=324 en finish=stop prompt=144 completion=810 wall=13.9s draft=726/570
+[2026-11-13T14:40:26] (21/24) id=374 en finish=stop prompt=201 completion=1230 wall=21.2s draft=1122/856
+[2026-11-13T14:40:42] (15/24) id=134 en finish=stop prompt=209 completion=7177 wall=141.3s draft=7494/4678
+[2026-11-13T14:40:53] (12/24) id=487 es finish=length prompt=286 completion=8192 wall=172.1s draft=9066/5168
+[2026-11-13T14:40:58] (22/24) id=377 en finish=stop prompt=190 completion=1669 wall=31.9s draft=1626/1129
+[2026-11-13T14:41:12] (23/24) id=466 en finish=stop prompt=265 completion=1736 wall=29.4s draft=1638/1190
+[2026-11-13T14:41:12] (19/24) id=278 en finish=stop prompt=156 completion=4074 wall=86.2s draft=4635/2529
+[2026-11-13T14:42:50] (24/24) id=487 en finish=length prompt=236 completion=8192 wall=117.2s draft=9119/5151
+[2026-11-13T14:42:50] run finished: 24 written this run; total in file=24/24
+[2026-11-13T14:42:50] run: --repeat 5 --bench belebele --tag rep9b --langs es,en --ids 270,33,487,127,278,374,203,134,377,466,324,140
+[2026-11-13T14:42:51] tag=rep9b bench=belebele thinking=on workers=4 port=8093 langs=['es', 'en']; done=0 this run=24 stop_at=None
+[2026-11-13T14:43:24] (1/24) id=33 es finish=stop prompt=274 completion=1677 wall=32.8s draft=1884/1048
+[2026-11-13T14:43:59] (3/24) id=134 es finish=stop prompt=246 completion=3762 wall=68.7s draft=3927/2452
+[2026-11-13T14:44:42] (6/24) id=270 es finish=stop prompt=167 completion=2249 wall=42.5s draft=2325/1473
+[2026-11-13T14:44:45] (2/24) id=127 es finish=stop prompt=215 completion=5834 wall=114.7s draft=6435/3688
+[2026-11-13T14:45:10] (5/24) id=203 es finish=stop prompt=286 completion=5400 wall=106.3s draft=5829/3458
+[2026-11-13T14:45:11] (4/24) id=140 es finish=stop prompt=210 completion=7157 wall=139.9s draft=7752/4572
+[2026-11-13T14:45:42] (10/24) id=377 es finish=stop prompt=244 completion=1827 wall=31.7s draft=1797/1227
+[2026-11-13T14:45:45] (9/24) id=374 es finish=stop prompt=258 completion=1960 wall=35.2s draft=1950/1311
+[2026-11-13T14:46:14] (7/24) id=278 es finish=stop prompt=184 completion=4539 wall=92.3s draft=5043/2860
+[2026-11-13T14:46:56] (13/24) id=33 en finish=stop prompt=206 completion=2235 wall=41.5s draft=2250/1486
+[2026-11-13T14:47:24] (14/24) id=127 en finish=stop prompt=185 completion=1511 wall=28.3s draft=1473/1020
+[2026-11-13T14:47:26] (8/24) id=324 es finish=stop prompt=159 completion=7925 wall=160.7s draft=8712/5020
+[2026-11-13T14:47:29] (11/24) id=466 es finish=stop prompt=303 completion=5208 wall=106.2s draft=5706/3305
+[2026-11-13T14:47:48] (16/24) id=140 en finish=stop prompt=163 completion=1180 wall=22.3s draft=1179/787
+[2026-11-13T14:48:12] (15/24) id=134 en finish=stop prompt=209 completion=2438 wall=47.9s draft=2535/1592
+[2026-11-13T14:48:23] (17/24) id=203 en finish=stop prompt=215 completion=2819 wall=54.5s draft=2904/1852
+[2026-11-13T14:48:33] (12/24) id=487 es finish=length prompt=286 completion=8192 wall=167.6s draft=8985/5196
+[2026-11-13T14:48:36] (18/24) id=270 en finish=stop prompt=149 completion=2307 wall=47.2s draft=2475/1481
+[2026-11-13T14:48:38] (20/24) id=324 en finish=stop prompt=144 completion=821 wall=14.8s draft=750/570
+[2026-11-13T14:48:49] (22/24) id=377 en finish=stop prompt=190 completion=766 wall=13.8s draft=774/507
+[2026-11-13T14:48:50] (21/24) id=374 en finish=stop prompt=201 completion=1031 wall=17.7s draft=963/710
+[2026-11-13T14:48:52] (23/24) id=466 en finish=stop prompt=265 completion=843 wall=14.5s draft=822/569
+[2026-11-13T14:49:44] (19/24) id=278 en finish=stop prompt=156 completion=3841 wall=92.1s draft=4284/2412
+[2026-11-13T14:50:14] (24/24) id=487 en finish=stop prompt=236 completion=4217 wall=84.6s draft=4746/2636
+[2026-11-13T14:50:14] run finished: 24 written this run; total in file=24/24
+[2026-11-13T14:50:20] 9B stopped
+[2026-11-13T14:50:20] counts:
+mgsm_raw.fix27b 30/30
+belebele_raw.fix27b 25/25
+mgsm_raw.rep27b 100/100
+mgsm_raw.fix9b 30/30
+belebele_raw.fix9b 25/25
+belebele_raw.rep9b 120/120
+[2026-11-13T14:50:20] CAUSAL_DONE written
